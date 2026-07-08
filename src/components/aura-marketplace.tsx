@@ -15,8 +15,8 @@ interface AuraMarketplaceProps {
 
 const rarityColors: Record<MarketplaceItem['rarity'], { dot: string; border: string; label: string }> = {
   common: { dot: 'bg-stone-400', border: 'border-stone-300', label: 'Common' },
-  rare: { dot: 'bg-blue-500', border: 'border-blue-400', label: 'Rare' },
-  epic: { dot: 'bg-purple-500', border: 'border-purple-400', label: 'Epic' },
+  rare: { dot: 'bg-[#4D7C0F]', border: 'border-[#4D7C0F]/40', label: 'Rare' },
+  epic: { dot: 'bg-amber-600', border: 'border-amber-400', label: 'Epic' },
   legendary: { dot: 'bg-orange-500', border: 'border-orange-400', label: 'Legendary' },
 };
 
@@ -38,7 +38,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
     case 'border':
       return (
         <div
-          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-purple-500' : item.rarity === 'rare' ? 'border-blue-400' : 'border-stone-400'} bg-white flex items-center justify-center`}
+          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-amber-500' : item.rarity === 'rare' ? 'border-[#4D7C0F]' : 'border-stone-400'} bg-white flex items-center justify-center`}
         >
           <div className="w-3/4 h-3/4 rounded-md border-2 border-dashed border-stone-200 flex items-center justify-center">
             <Shield className="size-5 text-stone-300" />
@@ -49,7 +49,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       return (
         <div className="w-full aspect-square rounded-lg bg-stone-50 flex items-center justify-center px-3">
           <span className={`text-sm font-bold text-center ${
-            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-purple-600' : 'text-stone-700'
+            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-amber-700' : 'text-stone-700'
           }`}>
             {item.name}
           </span>
@@ -59,7 +59,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       return (
         <div className="w-full aspect-square rounded-lg bg-stone-50 flex items-center justify-center">
           <div className={`size-12 rounded-full flex items-center justify-center ${
-            item.rarity === 'legendary' ? 'bg-orange-100' : item.rarity === 'epic' ? 'bg-purple-100' : item.rarity === 'rare' ? 'bg-blue-100' : 'bg-stone-100'
+            item.rarity === 'legendary' ? 'bg-orange-100' : item.rarity === 'epic' ? 'bg-amber-100' : item.rarity === 'rare' ? 'bg-[#4D7C0F]/10' : 'bg-stone-100'
           }`}>
             {item.name.includes('Flame') ? previewIconMap.Flame :
              item.name.includes('Crown') ? previewIconMap.Crown :

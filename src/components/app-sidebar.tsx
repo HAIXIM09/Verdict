@@ -9,6 +9,8 @@ import {
   User,
   LogOut,
   Scale,
+  Flame,
+  Coins,
 } from 'lucide-react';
 
 type Page =
@@ -161,15 +163,17 @@ export default function AppSidebar({
           </div>
           <div className="h-6 w-px bg-stone-200" />
           <div className="text-center">
-            <p className="text-xs font-semibold text-stone-700">
-              🔥 {user.streak}
+            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-700">
+              <Flame className="size-3 text-orange-500" />
+              {user.streak}
             </p>
             <p className="text-[10px] text-stone-400">Streak</p>
           </div>
           <div className="h-6 w-px bg-stone-200" />
           <div className="text-center">
-            <p className="text-xs font-semibold text-stone-700">
-              🪙 {user.coins}
+            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-700">
+              <Coins className="size-3 text-amber-500" />
+              {user.coins}
             </p>
             <p className="text-[10px] text-stone-400">Coins</p>
           </div>

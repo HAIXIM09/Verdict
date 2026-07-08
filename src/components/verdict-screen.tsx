@@ -26,7 +26,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
   const auraGained = verdict?.auraChange?.gained ?? 120;
 
   return (
-    <div className="min-h-screen bg-stone-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-stone-900 flex items-center justify-center p-4">
       <div className="w-full max-w-lg space-y-6">
         {/* Verdict Header */}
         <div className="text-center">
@@ -38,7 +38,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         </div>
 
         {/* Winner Announcement */}
-        <Card className="bg-stone-900 border-stone-800">
+        <Card className="bg-stone-800 border-stone-700">
           <CardContent className="p-6 text-center">
             <Trophy className="size-10 text-orange-500 mx-auto mb-3" />
             <h2 className="text-2xl font-bold text-white">
@@ -48,13 +48,13 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         </Card>
 
         {/* Score Bar */}
-        <Card className="bg-stone-900 border-stone-800">
+        <Card className="bg-stone-800 border-stone-700">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-white">Team {battle.sideA}</span>
-              <span className="text-sm font-medium text-white">Team {battle.sideB}</span>
+              <span className="text-sm font-medium text-stone-300">Team {battle.sideA}</span>
+              <span className="text-sm font-medium text-stone-300">Team {battle.sideB}</span>
             </div>
-            <div className="h-4 rounded-full overflow-hidden bg-stone-800 flex">
+            <div className="h-4 rounded-full overflow-hidden bg-stone-700 flex">
               <div
                 className="bg-orange-600 transition-all duration-1000"
                 style={{ width: `${pctA}%` }}
@@ -73,7 +73,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         </Card>
 
         {/* AI Judge Breakdown */}
-        <Card className="bg-stone-900 border-stone-800">
+        <Card className="bg-stone-800 border-stone-700">
           <CardContent className="p-6 space-y-4">
             <h3 className="text-sm font-semibold text-stone-400 uppercase tracking-wider">AI Judge Breakdown</h3>
 
@@ -81,7 +81,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
             {verdict?.bestArgument && (
               <div>
                 <p className="text-xs text-stone-500 mb-1">Best Argument</p>
-                <div className="bg-stone-800 rounded-lg p-3 border-l-3 border-l-orange-500">
+                <div className="bg-stone-700 rounded-lg p-3 border-l-3 border-l-orange-500">
                   <p className="text-sm font-medium text-white mb-1">
                     {verdict.bestArgument.username}
                   </p>
@@ -120,12 +120,12 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         </Card>
 
         {/* Rewards Section */}
-        <Card className="bg-stone-900 border-stone-800">
+        <Card className="bg-stone-800 border-stone-700">
           <CardContent className="p-6 space-y-3">
             <h3 className="text-sm font-semibold text-stone-400 uppercase tracking-wider">Rewards</h3>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-stone-800 rounded-lg p-3 text-center">
+              <div className="bg-stone-700 rounded-lg p-3 text-center">
                 <div className="flex items-center justify-center gap-1 text-orange-500">
                   <Coins className="size-4" />
                   <span className="text-lg font-bold">+{coinsEarned}</span>
@@ -133,7 +133,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
                 <p className="text-xs text-stone-500 mt-0.5">Coins Earned</p>
               </div>
 
-              <div className="bg-stone-800 rounded-lg p-3 text-center">
+              <div className="bg-stone-700 rounded-lg p-3 text-center">
                 <div className="flex items-center justify-center gap-1 text-[#4D7C0F]">
                   <TrendingUp className="size-4" />
                   <ArrowUpRight className="size-4" />
@@ -143,7 +143,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
               </div>
             </div>
 
-            <div className="bg-stone-800 rounded-lg p-3 flex items-center justify-between">
+            <div className="bg-stone-700 rounded-lg p-3 flex items-center justify-between">
               <span className="text-sm text-stone-400">Streak</span>
               <span className="text-sm font-bold text-white">
                 {mockCurrentUser.streak} wins <Flame className="size-3.5 inline text-orange-500" />

@@ -213,3 +213,6 @@ export default function ParticleTextEffect() {
     </div>
   );
 }
+
+// Named export alias for flexible importing
+export { ParticleTextEffect };

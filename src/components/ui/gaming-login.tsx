@@ -13,18 +13,20 @@ import {
 } from 'lucide-react';
 
 // ─── Video Background ────────────────────────────────────────────────
-export function VideoBackground({ children }: { children: React.ReactNode }) {
+export function VideoBackground({ children, videoUrl }: { children: React.ReactNode; videoUrl?: string }) {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-stone-950">
       {/* Video element */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-        src=""
-      />
+      {videoUrl && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          src={videoUrl}
+        />
+      )}
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-stone-950/70" />
       {/* Content */}

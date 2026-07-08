@@ -16,6 +16,8 @@ export interface User {
   coins: number;
   badges: string[];
   joinDate: string;
+  ownedItemIds: string[];
+  equippedItemIds: string[];
 }
 
 export interface BattleCase {
@@ -76,6 +78,7 @@ export interface Quest {
   target: number;
   reward: { coins: number; aura: number };
   completed: boolean;
+  claimed: boolean;
 }
 
 export interface MarketplaceItem {
@@ -87,6 +90,8 @@ export interface MarketplaceItem {
   rarityColor: string;
   owned: boolean;
   equipped: boolean;
+  previewType: "border" | "text" | "icon" | "description";
+  description: string;
 }
 
 export interface GroupInfo {
@@ -116,6 +121,8 @@ export const mockCurrentUser: User = {
   coins: 850,
   badges: ["Hot Streak", "Case Master"],
   joinDate: "2025-01-15",
+  ownedItemIds: ["mp-1", "mp-3", "mp-5"],
+  equippedItemIds: ["mp-3"],
 };
 
 export const mockUsers: User[] = [
@@ -133,6 +140,8 @@ export const mockUsers: User[] = [
     coins: 12400,
     badges: ["Top 10", "Hot Streak", "Case Master", "Unstoppable"],
     joinDate: "2024-06-10",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-2",
@@ -148,6 +157,8 @@ export const mockUsers: User[] = [
     coins: 8200,
     badges: ["Top 10", "Case Master"],
     joinDate: "2024-08-22",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-3",
@@ -163,6 +174,8 @@ export const mockUsers: User[] = [
     coins: 5600,
     badges: ["Case Master"],
     joinDate: "2024-09-05",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-4",
@@ -178,6 +191,8 @@ export const mockUsers: User[] = [
     coins: 4300,
     badges: ["Hot Streak"],
     joinDate: "2024-10-12",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-5",
@@ -193,6 +208,8 @@ export const mockUsers: User[] = [
     coins: 3200,
     badges: [],
     joinDate: "2024-11-01",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-6",
@@ -208,6 +225,8 @@ export const mockUsers: User[] = [
     coins: 2100,
     badges: ["Case Master"],
     joinDate: "2024-11-20",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-7",
@@ -223,6 +242,8 @@ export const mockUsers: User[] = [
     coins: 1400,
     badges: [],
     joinDate: "2024-12-05",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-8",
@@ -238,6 +259,8 @@ export const mockUsers: User[] = [
     coins: 800,
     badges: [],
     joinDate: "2025-01-08",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-9",
@@ -253,6 +276,8 @@ export const mockUsers: User[] = [
     coins: 500,
     badges: [],
     joinDate: "2025-02-14",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-10",
@@ -268,6 +293,8 @@ export const mockUsers: User[] = [
     coins: 250,
     badges: [],
     joinDate: "2025-03-01",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-11",
@@ -283,6 +310,8 @@ export const mockUsers: User[] = [
     coins: 100,
     badges: [],
     joinDate: "2025-04-10",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
   {
     id: "u-12",
@@ -298,6 +327,8 @@ export const mockUsers: User[] = [
     coins: 50,
     badges: [],
     joinDate: "2025-05-01",
+  ownedItemIds: [],
+  equippedItemIds: [],
   },
 ];
 
@@ -1247,6 +1278,7 @@ export const mockQuests: Quest[] = [
     target: 2,
     reward: { coins: 100, aura: 50 },
     completed: false,
+    claimed: false,
   },
   {
     id: "q-2",
@@ -1256,6 +1288,7 @@ export const mockQuests: Quest[] = [
     target: 3,
     reward: { coins: 150, aura: 75 },
     completed: false,
+    claimed: false,
   },
   {
     id: "q-3",
@@ -1265,6 +1298,7 @@ export const mockQuests: Quest[] = [
     target: 1,
     reward: { coins: 200, aura: 100 },
     completed: true,
+    claimed: true,
   },
   {
     id: "q-4",
@@ -1274,6 +1308,7 @@ export const mockQuests: Quest[] = [
     target: 5,
     reward: { coins: 75, aura: 25 },
     completed: false,
+    claimed: false,
   },
 ];
 
@@ -1288,9 +1323,11 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     type: "frame",
     cost: 500,
     rarity: "rare",
-    rarityColor: "text-blue-500",
+    rarityColor: "text-[#4D7C0F]",
     owned: true,
     equipped: false,
+    previewType: "border",
+    description: "A blazing orange frame that pulses with the heat of your arguments.",
   },
   {
     id: "mp-2",
@@ -1298,9 +1335,11 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     type: "frame",
     cost: 1200,
     rarity: "epic",
-    rarityColor: "text-purple-500",
+    rarityColor: "text-amber-700",
     owned: false,
     equipped: false,
+    previewType: "border",
+    description: "An olive and gold crown for those who rule the courtroom with elegance.",
   },
   {
     id: "mp-3",
@@ -1308,9 +1347,11 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     type: "title",
     cost: 800,
     rarity: "rare",
-    rarityColor: "text-blue-500",
+    rarityColor: "text-[#4D7C0F]",
     owned: true,
     equipped: true,
+    previewType: "text",
+    description: "Only the sharpest tongues earn this title. Wear it with pride.",
   },
   {
     id: "mp-4",
@@ -1321,6 +1362,8 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     rarityColor: "text-orange-600",
     owned: false,
     equipped: false,
+    previewType: "text",
+    description: "The highest title in the land. Your word is final.",
   },
   {
     id: "mp-5",
@@ -1331,6 +1374,8 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     rarityColor: "text-stone-500",
     owned: true,
     equipped: false,
+    previewType: "text",
+    description: "You always bring the decisive argument that ends the debate.",
   },
   {
     id: "mp-6",
@@ -1338,9 +1383,11 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     type: "badge",
     cost: 600,
     rarity: "rare",
-    rarityColor: "text-blue-500",
+    rarityColor: "text-[#4D7C0F]",
     owned: false,
     equipped: false,
+    previewType: "icon",
+    description: "Awarded for winning 3+ battles in a row. Fire up!",
   },
   {
     id: "mp-7",
@@ -1348,9 +1395,11 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     type: "badge",
     cost: 1500,
     rarity: "epic",
-    rarityColor: "text-purple-500",
+    rarityColor: "text-amber-700",
     owned: false,
     equipped: false,
+    previewType: "icon",
+    description: "The spectators love you. Most reactions received in a single battle.",
   },
   {
     id: "mp-8",
@@ -1361,6 +1410,8 @@ export const mockMarketplaceItems: MarketplaceItem[] = [
     rarityColor: "text-orange-600",
     owned: false,
     equipped: false,
+    previewType: "description",
+    description: "A subtle orange aura radiates from your avatar during battles.",
   },
 ];
 

@@ -44,7 +44,7 @@ function difficultyBadgeStyle(d: string): string {
     case 'Bronze': return 'text-stone-500 border-stone-300 bg-stone-50';
     case 'Silver': return 'text-stone-500 border-stone-400 bg-stone-50';
     case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-50';
-    case 'Platinum': return 'text-purple-600 border-purple-300 bg-purple-50';
+    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-50';
     default: return 'text-stone-500 border-stone-300 bg-stone-50';
   }
 }
@@ -89,7 +89,7 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
   );
 }
 
-function ChatMessageItem({ msg }: { msg: ChatMessage }) {
+function ChatMessageItem({ msg, teamColor }: { msg: ChatMessage; teamColor?: string }) {
   if (msg.type === 'ai_kick') {
     return (
       <div className="px-3 py-2 bg-red-50 border border-red-100 rounded-lg mx-1">
@@ -119,9 +119,9 @@ function ChatMessageItem({ msg }: { msg: ChatMessage }) {
     );
   }
 
-  // Regular argument message
+  // Regular argument message with team color indicator
   return (
-    <div className="px-3 py-1.5 mx-1">
+    <div className={`px-3 py-1.5 mx-1 flex items-start gap-2 ${teamColor === 'A' ? 'border-l-2 border-l-orange-400' : teamColor === 'B' ? 'border-l-2 border-l-[#4D7C0F]' : ''}`}>
       <p className="text-xs">
         <span className="font-bold text-stone-800">{msg.username}</span>
         <span className="text-stone-400 ml-1.5">{msg.text}</span>
@@ -206,7 +206,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
                 cy="60"
                 r="54"
                 fill="none"
-                stroke="#e7e5e4"
+                stroke="#f5f5f4"
                 strokeWidth="6"
               />
               <circle
@@ -353,9 +353,15 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         {/* Message List */}
         <ScrollArea className="flex-1 max-h-[50vh] lg:max-h-none">
           <div className="py-2 space-y-1">
-            {battle.chatMessages.map(msg => (
-              <ChatMessageItem key={msg.id} msg={msg} />
-            ))}
+            {battle.chatMessages.map(msg => {
+              // Determine team color for argument messages
+              const isTeamA = battle.teamA.some(p => p?.id === msg.userId);
+              const isTeamB = battle.teamB.some(p => p?.id === msg.userId);
+              const teamColor = isTeamA ? 'A' : isTeamB ? 'B' : undefined;
+              return (
+                <ChatMessageItem key={msg.id} msg={msg} teamColor={teamColor} />
+              );
+            })}
             <div ref={chatEndRef} />
           </div>
         </ScrollArea>
@@ -367,15 +373,15 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             return (
               <button
                 key={pu.label}
-                className={`bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-xs text-stone-300 flex items-center gap-1.5 transition-colors ${
-                  canAfford ? 'hover:bg-stone-700 hover:text-white' : 'opacity-40 cursor-not-allowed'
+                className={`bg-white border border-stone-200 rounded-lg px-3 py-2 text-xs text-stone-700 flex items-center gap-1.5 transition-colors ${
+                  canAfford ? 'hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700' : 'opacity-40 cursor-not-allowed'
                 }`}
                 disabled={!canAfford}
               >
                 <span>{pu.emoji}</span>
                 <div className="flex flex-col items-start leading-tight">
                   <span className="font-medium">{pu.label}</span>
-                  <span className="text-stone-500">{pu.cost} coins</span>
+                  <span className="text-stone-400">{pu.cost} coins</span>
                 </div>
               </button>
             );

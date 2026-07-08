@@ -39,14 +39,14 @@ const medalConfig = [
   {
     badge: '#3 VETERAN',
     badgeClass: 'bg-orange-100 text-orange-700 border-none',
-    borderClass: 'border-[#4D7C0F]/40',
+    borderClass: 'border-orange-200',
     medalIcon: <Medal className="size-6 text-orange-700" />,
     sizeClass: 'p-4',
   },
 ];
 
 function avatarBg(index: number): string {
-  const colors = ['#EA580C', '#4D7C0F', '#B45309', '#0F766E', '#9333EA', '#DC2626', '#2563EB', '#7C3AED', '#0891B2', '#C2410C', '#15803D', '#7E22CE'];
+  const colors = ['#EA580C', '#4D7C0F', '#B45309', '#166534', '#9A3412', '#DC2626', '#15803D', '#A16207', '#0F766E', '#C2410C', '#3F6212', '#78716C'];
   return colors[index % colors.length];
 }
 

@@ -16,6 +16,7 @@ import {
 interface HomeSectionProps {
   onNavigateToBattle: (battleId: string) => void;
   onNavigateToCategory: (category: string) => void;
+  onNavigateToQuests: () => void;
 }
 
 function difficultyBadgeStyle(d: string): string {
@@ -23,7 +24,7 @@ function difficultyBadgeStyle(d: string): string {
     case 'Bronze': return 'text-stone-500 border-stone-300 bg-stone-50';
     case 'Silver': return 'text-stone-500 border-stone-400 bg-stone-50';
     case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-50';
-    case 'Platinum': return 'text-purple-600 border-purple-300 bg-purple-50';
+    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-50';
     default: return 'text-stone-500 border-stone-300 bg-stone-50';
   }
 }
@@ -43,7 +44,7 @@ function statusBadge(s: string) {
   }
 }
 
-export default function HomeSection({ onNavigateToBattle, onNavigateToCategory }: HomeSectionProps) {
+export default function HomeSection({ onNavigateToBattle, onNavigateToCategory, onNavigateToQuests }: HomeSectionProps) {
   const liveBattles = mockBattles.filter(b => b.status === 'live').slice(0, 4);
   const trendingBattles = [...mockBattles]
     .filter(b => b.status === 'live' || b.status === 'waiting')
@@ -185,7 +186,7 @@ export default function HomeSection({ onNavigateToBattle, onNavigateToCategory }
       <section>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold text-stone-900">Daily Quests</h2>
-          <Button variant="ghost" className="text-orange-600 hover:text-orange-700 text-sm p-0 h-auto">
+          <Button variant="ghost" className="text-orange-600 hover:text-orange-700 text-sm p-0 h-auto" onClick={onNavigateToQuests}>
             View All Quests
             <ChevronRight className="size-4" />
           </Button>

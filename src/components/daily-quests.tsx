@@ -53,7 +53,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                     {isComplete && (
                       <Badge className="bg-green-100 text-green-700 border-green-200">
                         <Check className="size-3" />
-                        Claimed ✓
+                        Claimed
                       </Badge>
                     )}
                     {!isComplete && !quest.claimed && (

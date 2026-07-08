@@ -53,7 +53,7 @@ function difficultyBadgeStyle(d: string): string {
     case 'Bronze': return 'text-stone-500 border-stone-300 bg-stone-50';
     case 'Silver': return 'text-stone-500 border-stone-400 bg-stone-50';
     case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-50';
-    case 'Platinum': return 'text-purple-600 border-purple-300 bg-purple-50';
+    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-50';
     default: return 'text-stone-500 border-stone-300 bg-stone-50';
   }
 }
@@ -96,9 +96,6 @@ function actionButton(status: string, onClick: () => void) {
 }
 
 function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
-  const teamAFilled = battle.teamA.filter(Boolean).length;
-  const teamBFilled = battle.teamB.filter(Boolean).length;
-
   return (
     <Card className="bg-white border border-stone-200 hover:shadow-md transition-all">
       <CardContent className="p-5">
@@ -127,15 +124,18 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideA}</span>
             <div className="flex gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
+              {battle.teamA.map((player, i) => (
                 <div
                   key={`a-${i}`}
-                  className={`size-6 rounded-full border-2 ${
-                    i < teamAFilled
+                  title={player?.username}
+                  className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
+                    player
                       ? 'bg-[#4D7C0F] border-[#4D7C0F]'
                       : 'bg-transparent border-stone-300'
                   }`}
-                />
+                >
+                  {player ? player.avatar.substring(0, 2) : null}
+                </div>
               ))}
             </div>
           </div>
@@ -145,15 +145,18 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideB}</span>
             <div className="flex gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
+              {battle.teamB.map((player, i) => (
                 <div
                   key={`b-${i}`}
-                  className={`size-6 rounded-full border-2 ${
-                    i < teamBFilled
+                  title={player?.username}
+                  className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
+                    player
                       ? 'bg-orange-500 border-orange-500'
                       : 'bg-transparent border-stone-300'
                   }`}
-                />
+                >
+                  {player ? player.avatar.substring(0, 2) : null}
+                </div>
               ))}
             </div>
           </div>
@@ -331,7 +334,7 @@ export default function BattlesSection({
             size="sm"
             className={
               filter === tab.key
-                ? 'bg-stone-900 text-white hover:bg-stone-800'
+                ? 'bg-orange-600 text-white hover:bg-orange-700'
                 : 'border-stone-200 text-stone-500 hover:text-stone-700 hover:border-stone-300'
             }
             onClick={() => setFilter(tab.key)}

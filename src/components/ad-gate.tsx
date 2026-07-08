@@ -33,22 +33,22 @@ export default function AdGate({ onAdComplete, onSkip }: AdGateProps) {
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-950/90 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-stone-900 border border-stone-700 rounded-2xl p-6 max-w-sm w-full space-y-6">
+      <div className="bg-stone-800 border border-stone-700 rounded-2xl p-6 max-w-sm w-full space-y-6">
         <div className="text-center">
           <h2 className="text-xl font-bold text-white">Watch to Continue</h2>
           <p className="text-stone-400 text-sm mt-1">Support the arena while waiting</p>
         </div>
 
         {/* Fake Ad Placeholder */}
-        <div className="bg-stone-800 rounded-lg p-8 flex flex-col items-center justify-center min-h-[180px]">
+        <div className="bg-stone-700 rounded-lg p-8 flex flex-col items-center justify-center min-h-[180px]">
           <p className="text-stone-500 text-sm font-medium">Advertisement</p>
-          <div className="w-full bg-stone-700 rounded-full h-2 mt-4 overflow-hidden">
+          <div className="w-full bg-stone-600 rounded-full h-2 mt-4 overflow-hidden">
             <div
-              className="bg-stone-600 h-full transition-all duration-100 ease-linear rounded-full"
+              className="bg-orange-600 h-full transition-all duration-100 ease-linear rounded-full"
               style={{ width: `${adProgress}%` }}
             />
           </div>
-          <p className="text-stone-600 text-xs mt-2">
+          <p className="text-stone-500 text-xs mt-2">
             {adFinished ? 'Ad complete' : `${Math.round(adProgress)}%`}
           </p>
         </div>
