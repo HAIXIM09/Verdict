@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { SplineScene } from '@/components/ui/splite';
+import { SplineScene } from '@/components/ui/spline';
 import { Spotlight } from '@/components/ui/spotlight';
 import {
   mockBattles,
@@ -75,8 +75,8 @@ export default function HomeSection({ onNavigateToBattle, onNavigateToCategory, 
               {mockCurrentUser.username}
             </h1>
             <p className="mt-4 text-stone-400 max-w-lg text-sm md:text-base leading-relaxed">
-              Your next verdict awaits. Join live battles, argue your case, and
-              climb the leaderboard with strategic brilliance.
+              Your next roast awaits. Join live battles, drop the sickest burns, and
+              climb the leaderboard with savage precision.
             </p>
             <div className="flex items-center gap-3 mt-6">
               <Button
@@ -84,11 +84,11 @@ export default function HomeSection({ onNavigateToBattle, onNavigateToCategory, 
                 onClick={() => onNavigateToCategory('Movies')}
               >
                 <Swords className="size-4 mr-2" />
-                Find a Battle
+                Find a Roast
               </Button>
               <Button
                 variant="outline"
-                className="border-stone-600 text-stone-600 hover:bg-stone-800 hover:text-white"
+                className="border-stone-600 text-stone-400 hover:bg-stone-800 hover:text-white"
                 onClick={onNavigateToQuests}
               >
                 Daily Quests
@@ -244,7 +244,7 @@ export default function HomeSection({ onNavigateToBattle, onNavigateToCategory, 
                 <div className="flex items-center gap-2">
                   <Progress
                     value={(quest.progress / quest.target) * 100}
-                    className="h-2 flex-1 [&>div]:bg-orange-950/300"
+                    className="h-2 flex-1 [&>div]:bg-orange-600"
                   />
                   <span className="text-xs text-stone-500 whitespace-nowrap">
                     {quest.progress}/{quest.target}

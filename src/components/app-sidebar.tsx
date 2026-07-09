@@ -161,17 +161,17 @@ export default function AppSidebar({
             </p>
             <p className="text-[10px] text-stone-400">Aura</p>
           </div>
-          <div className="h-6 w-px bg-stone-200" />
+          <div className="h-6 w-px bg-stone-700" />
           <div className="text-center">
-            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-600">
+            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-300">
               <Flame className="size-3 text-orange-500" />
               {user.streak}
             </p>
             <p className="text-[10px] text-stone-400">Streak</p>
           </div>
-          <div className="h-6 w-px bg-stone-200" />
+          <div className="h-6 w-px bg-stone-700" />
           <div className="text-center">
-            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-600">
+            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-300">
               <Coins className="size-3 text-amber-500" />
               {user.coins}
             </p>

@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { mockCurrentUser, mockBattles } from '@/lib/mock-data';
 
+function getInitials(name: string): string { return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2); }
+
 interface ProfileSectionProps {
   userId: string | null;
   onNavigateToReplays: () => void;
@@ -13,10 +15,10 @@ interface ProfileSectionProps {
 }
 
 const badgeConfig: Record<string, { icon: React.ReactNode; description: string }> = {
-  'Hot Streak': { icon: <Flame className="size-5" />, description: 'Win 3+ battles in a row' },
-  'Case Master': { icon: <Star className="size-5" />, description: 'Win 50+ battles total' },
-  'Top 10': { icon: <Trophy className="size-5" />, description: 'Reach top 10 on leaderboard' },
-  'Unstoppable': { icon: <Shield className="size-5" />, description: 'Win 10+ battles in a row' },
+  'Hot Streak': { icon: <Flame className="size-5" />, description: 'Win 3+ roast battles in a row. Opponents left in ashes.' },
+  'Case Master': { icon: <Star className="size-5" />, description: 'Win 50+ battles. Your roasts are legendary.' },
+  'Top 10': { icon: <Trophy className="size-5" />, description: 'Reach top 10 on the leaderboard. Elite roaster territory.' },
+  'Unstoppable': { icon: <Shield className="size-5" />, description: 'Win 10+ battles in a row. Absolute savage.' },
 };
 
 const rankIconMap: Record<string, React.ReactNode> = {
@@ -57,7 +59,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
         <CardContent className="px-6">
           <div className="flex items-center gap-4">
             <div className="flex size-16 items-center justify-center rounded-full bg-[#4D7C0F] text-xl font-bold text-white shrink-0">
-              {user.avatar}
+              {getInitials(user.username)}
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
@@ -167,7 +169,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Flame className="size-5 text-orange-600" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-100">{user.streak} 🔥</p>
+              <p className="text-lg font-bold text-stone-100">{user.streak}</p>
               <p className="text-xs text-stone-500">Current Streak</p>
               {user.streak >= 3 && (
                 <p className="text-[10px] font-medium text-[#4D7C0F] mt-0.5">1.5x Aura Multiplier</p>
@@ -227,7 +229,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
                   key={badgeName}
                   className="flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-stone-700 bg-stone-800 p-3 min-h-[72px]"
                 >
-                  <Shield className="size-5 text-stone-600" />
+                  <Shield className="size-5 text-stone-500" />
                   <p className="text-xs font-medium text-stone-400">Locked</p>
                 </div>
               );

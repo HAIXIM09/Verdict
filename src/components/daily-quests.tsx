@@ -43,7 +43,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
             <div
               key={quest.id}
               className={`rounded-xl border bg-stone-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
-                isComplete ? 'border-l-4 border-l-orange-500' : 'border-l-4 border-l-stone-300'
+                isComplete ? 'border-l-4 border-l-orange-500' : 'border-l-4 border-l-stone-600'
               } border-stone-700`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -96,7 +96,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
 
       {/* Total Rewards Preview */}
       <div className="rounded-xl border border-stone-700 bg-orange-950/20 p-4">
-        <p className="text-sm font-semibold text-stone-600">Today&apos;s potential</p>
+        <p className="text-sm font-semibold text-stone-300">Today&apos;s potential</p>
         <div className="flex items-center gap-4 mt-2">
           <span className="flex items-center gap-1.5 text-sm text-[#4D7C0F] font-medium">
             <Coins className="size-4" />

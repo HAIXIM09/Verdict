@@ -31,7 +31,7 @@ const medalConfig = [
   },
   {
     badge: '#2 ELITE',
-    badgeClass: 'bg-stone-200 text-stone-600 border-none',
+    badgeClass: 'bg-stone-600 text-stone-200 border-none',
     borderClass: 'border-stone-600',
     medalIcon: <Medal className="size-6 text-stone-400" />,
     sizeClass: 'p-4',
@@ -48,6 +48,10 @@ const medalConfig = [
 function avatarBg(index: number): string {
   const colors = ['#EA580C', '#4D7C0F', '#B45309', '#166534', '#9A3412', '#DC2626', '#15803D', '#A16207', '#0F766E', '#C2410C', '#3F6212', '#78716C'];
   return colors[index % colors.length];
+}
+
+function getInitials(name: string): string {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
 export default function LeaderboardSection({ onViewProfile }: LeaderboardSectionProps) {
@@ -88,12 +92,12 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                   className="size-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
                   style={{ backgroundColor: avatarBg(i) }}
                 >
-                  {user.avatar.substring(0, 2)}
+                  {getInitials(user.username)}
                 </div>
 
                 <div>
                   <h3 className="font-bold text-stone-100 text-sm">{user.username}</h3>
-                  <p className="text-stone-400 text-xs mt-0.5">{user.id}</p>
+                  <p className="text-stone-400 text-xs mt-0.5">{user.rank}</p>
                 </div>
 
                 <Badge className="bg-orange-600/15 text-orange-500 border-none text-xs">
@@ -141,19 +145,19 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                           className="size-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
                           style={{ backgroundColor: avatarBg(index) }}
                         >
-                          {user.avatar.substring(0, 2)}
+                          {getInitials(user.username)}
                         </div>
                         <div className="min-w-0">
                           <p className={`text-sm font-medium truncate ${isUser ? 'text-orange-600' : 'text-stone-100'}`}>
                             {user.username}
                             {isUser && <span className="text-orange-400 ml-1">(You)</span>}
                           </p>
-                          <p className="text-xs text-stone-400">{user.id}</p>
+                          <p className="text-xs text-stone-400">{user.rank}</p>
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right text-sm text-stone-600">{user.wins}</TableCell>
-                    <TableCell className="text-right text-sm text-stone-600">{user.winRate}%</TableCell>
+                    <TableCell className="text-right text-sm text-stone-300">{user.wins}</TableCell>
+                    <TableCell className="text-right text-sm text-stone-300">{user.winRate}%</TableCell>
                     <TableCell className="text-right">
                       <Badge variant="secondary" className="bg-orange-600/15 text-orange-500 border-none text-xs font-semibold">
                         {user.aura.toLocaleString()}
@@ -173,8 +177,8 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-orange-950/200 flex items-center justify-center text-xs font-bold text-white">
-                  {mockCurrentUser.avatar.substring(0, 2)}
+                <div className="size-8 rounded-full bg-orange-950/20 flex items-center justify-center text-xs font-bold text-white">
+                  {getInitials(mockCurrentUser.username)}
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-stone-100">

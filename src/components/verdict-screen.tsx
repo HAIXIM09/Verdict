@@ -75,12 +75,12 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         {/* AI Judge Breakdown */}
         <Card className="bg-stone-800 border-stone-700">
           <CardContent className="p-6 space-y-4">
-            <h3 className="text-sm font-semibold text-stone-400 uppercase tracking-wider">AI Judge Breakdown</h3>
+            <h3 className="text-sm font-semibold text-stone-400 uppercase tracking-wider">AI Roast Judge Breakdown</h3>
 
             {/* Best Argument */}
             {verdict?.bestArgument && (
               <div>
-                <p className="text-xs text-stone-500 mb-1">Best Argument</p>
+                <p className="text-xs text-stone-500 mb-1">Best Roast</p>
                 <div className="bg-stone-700 rounded-lg p-3 border-l-3 border-l-orange-500">
                   <p className="text-sm font-medium text-white mb-1">
                     {verdict.bestArgument.username}
@@ -110,7 +110,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
 
             {/* AI Summary */}
             <div>
-              <p className="text-xs text-stone-500 mb-1">AI Summary</p>
+              <p className="text-xs text-stone-500 mb-1">AI Verdict</p>
               <p className="text-sm text-stone-300 leading-relaxed">
                 {verdict?.summary ||
                   'Team Pushpa won through superior cultural impact arguments and iconic dialogue references. The AI Judge found their emotional appeal and mass-market penetration evidence more compelling.'}
@@ -152,7 +152,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
 
             <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white h-11 text-base font-semibold">
               <Coins className="size-4" />
-              Claim Rewards
+              Claim Loot
             </Button>
           </CardContent>
         </Card>
@@ -160,10 +160,10 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         {/* Appeal Option */}
         <div className="text-center pt-2 pb-4">
           <p className="text-stone-500 text-xs mb-2">
-            Disagree with the verdict? Appeal to the community
+            Think the AI got it wrong? Appeal to the roast community
           </p>
           <Button variant="ghost" size="sm" className="text-stone-400 hover:text-stone-200 text-xs" onClick={onAppeal}>
-            File Appeal
+            Appeal Verdict
           </Button>
         </div>
       </div>

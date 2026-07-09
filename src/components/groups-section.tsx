@@ -20,6 +20,7 @@ const categoryColors: Record<string, string> = {
   Music: 'bg-stone-800 text-stone-400 border-stone-600',
   Tech: 'bg-orange-600/15 text-orange-400 border-orange-700/50',
   Viral: 'bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/30',
+  Cartoons: 'bg-yellow-600/15 text-yellow-400 border-yellow-600/30',
 };
 
 export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps) {
@@ -65,7 +66,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="text-sm font-semibold text-stone-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-600 border-stone-700'}>
+                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-400 border-stone-700'}>
                         {group.category}
                       </Badge>
                       <Badge className="bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/20">
@@ -106,7 +107,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="text-sm font-semibold text-stone-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-600 border-stone-700'}>
+                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-400 border-stone-700'}>
                         {group.category}
                       </Badge>
                     </div>

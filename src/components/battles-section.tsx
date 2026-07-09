@@ -6,6 +6,7 @@ import {
   Trophy,
   Music,
   Gamepad2,
+  Tv,
   UtensilsCrossed,
   Cpu,
   Sparkles,
@@ -27,6 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+function getInitials(name: string): string {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
 import { mockBattles, mockCategories, type BattleCase } from '@/lib/mock-data';
 
 interface BattlesSectionProps {
@@ -42,6 +47,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Trophy,
   Music,
   Gamepad2,
+  Tv,
   UtensilsCrossed,
   Cpu,
   Sparkles,
@@ -134,13 +140,13 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                       : 'bg-transparent border-stone-600'
                   }`}
                 >
-                  {player ? player.avatar.substring(0, 2) : null}
+                  {player ? getInitials(player.username) : null}
                 </div>
               ))}
             </div>
           </div>
 
-          <span className="text-stone-600 font-bold text-sm">VS</span>
+          <span className="text-stone-400 font-bold text-sm">VS</span>
 
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideB}</span>
@@ -151,11 +157,11 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                   title={player?.username}
                   className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                     player
-                      ? 'bg-orange-950/300 border-orange-500'
+                      ? 'bg-orange-950/30 border-orange-500'
                       : 'bg-transparent border-stone-600'
                   }`}
                 >
-                  {player ? player.avatar.substring(0, 2) : null}
+                  {player ? getInitials(player.username) : null}
                 </div>
               ))}
             </div>
@@ -171,7 +177,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           {battle.viewers > 0 && (
             <span>{battle.viewers} watching</span>
           )}
-          <span>🪙 {battle.auraStake} Aura at stake</span>
+          <span><Flame className="size-3 text-orange-500 inline" /> {battle.auraStake} Aura at stake</span>
         </div>
 
         {/* Action */}
@@ -254,7 +260,7 @@ export default function BattlesSection({
 
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-sm text-stone-600">Category</Label>
+                    <Label className="text-sm text-stone-400">Category</Label>
                     <Select value={submitCategory} onValueChange={setSubmitCategory}>
                       <SelectTrigger className="w-full mt-1">
                         <SelectValue placeholder="Select a category" />
@@ -268,7 +274,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-600">Side A</Label>
+                    <Label className="text-sm text-stone-400">Side A</Label>
                     <Input
                       placeholder="e.g. Pushpa"
                       value={submitSideA}
@@ -278,7 +284,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-600">Side B</Label>
+                    <Label className="text-sm text-stone-400">Side B</Label>
                     <Input
                       placeholder="e.g. KGF"
                       value={submitSideB}
@@ -380,7 +386,7 @@ export default function BattlesSection({
 
               <div className="space-y-3">
                 <div>
-                  <Label className="text-sm text-stone-600">Side A</Label>
+                  <Label className="text-sm text-stone-400">Side A</Label>
                   <Input
                     placeholder={`e.g. Enter ${selectedCategory} option`}
                     value={submitSideA}
@@ -390,7 +396,7 @@ export default function BattlesSection({
                 </div>
 
                 <div>
-                  <Label className="text-sm text-stone-600">Side B</Label>
+                  <Label className="text-sm text-stone-400">Side B</Label>
                   <Input
                     placeholder="e.g. Enter opponent"
                     value={submitSideB}

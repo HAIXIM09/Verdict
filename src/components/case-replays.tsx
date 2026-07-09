@@ -78,7 +78,7 @@ function ReplayCard({ battle, onWatch }: { battle: BattleCase; onWatch: (id: str
             onClick={() => onWatch(battle.id)}
           >
             <Play className="size-3.5" />
-            Watch Replay
+            Watch Roast
           </Button>
         </div>
       </CardContent>
@@ -110,7 +110,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: CaseReplaysProps)
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-stone-100">Case Replays</h2>
+        <h2 className="text-2xl font-bold text-stone-100">Roast Replays</h2>
         <Button
           variant="ghost"
           size="sm"
@@ -118,7 +118,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: CaseReplaysProps)
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />
-          Back to Profile
+          Back
         </Button>
       </div>
 
@@ -143,8 +143,8 @@ export default function CaseReplays({ onBack, onWatchReplay }: CaseReplaysProps)
             </div>
           ) : (
             <div className="text-center py-12">
-              <Trophy className="size-10 text-stone-600 mx-auto mb-3" />
-              <p className="text-stone-500 text-sm">No replays found in this category.</p>
+              <Trophy className="size-10 text-stone-500 mx-auto mb-3" />
+              <p className="text-stone-500 text-sm">No roast replays found in this category.</p>
             </div>
           )}
         </TabsContent>

@@ -39,6 +39,10 @@ const POWER_UPS = [
   { emoji: '⏱️', label: 'Extra Time', desc: '+2 min', cost: 75 },
 ];
 
+function getInitials(name: string): string {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
 function difficultyBadgeStyle(d: string): string {
   switch (d) {
     case 'Bronze': return 'text-stone-500 border-stone-600 bg-stone-800';
@@ -60,7 +64,7 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
     return (
       <div className="flex items-center gap-2 py-1.5 px-2">
         <div className="size-8 rounded-full border-2 border-dashed border-stone-600 flex items-center justify-center shrink-0">
-          <Plus className="size-3.5 text-stone-600" />
+          <Plus className="size-3.5 text-stone-500" />
         </div>
         <span className="text-xs text-stone-400">Open</span>
       </div>
@@ -77,7 +81,7 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
         }`}
         style={{ backgroundColor: '#EA580C' }}
       >
-        {player.avatar.substring(0, 2)}
+        {getInitials(player.username)}
       </div>
       <div className="min-w-0">
         <p className={`text-xs font-medium truncate ${isCurrent ? 'text-orange-600' : 'text-stone-200'}`}>
@@ -301,7 +305,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
               {REACTIONS.map((r, i) => (
                 <button
                   key={r.emoji}
-                  className="bg-stone-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-stone-200 transition-colors"
+                  className="bg-stone-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-stone-700 transition-colors"
                   onClick={() => {
                     const next = [...reactionCounts];
                     next[i] += 1;
@@ -324,14 +328,14 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             {battle.spectators.slice(0, 5).map(spectator => (
               <div
                 key={spectator.id}
-                className="size-7 rounded-full bg-stone-300 border-2 border-stone-800 flex items-center justify-center text-[9px] font-bold text-white"
+                className="size-7 rounded-full bg-stone-600 border-2 border-stone-800 flex items-center justify-center text-[9px] font-bold text-white"
                 style={{ backgroundColor: '#78716C' }}
               >
-                {spectator.avatar.substring(0, 2)}
+                {getInitials(spectator.username)}
               </div>
             ))}
             {battle.spectators.length > 5 && (
-              <div className="size-7 rounded-full bg-stone-200 border-2 border-stone-800 flex items-center justify-center text-[9px] font-medium text-stone-500">
+              <div className="size-7 rounded-full bg-stone-700 border-2 border-stone-800 flex items-center justify-center text-[9px] font-medium text-stone-400">
                 +{battle.spectators.length - 5}
               </div>
             )}
@@ -373,7 +377,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             return (
               <button
                 key={pu.label}
-                className={`bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-stone-600 flex items-center gap-1.5 transition-colors ${
+                className={`bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-stone-400 flex items-center gap-1.5 transition-colors ${
                   canAfford ? 'hover:bg-orange-950/30 hover:border-orange-600 hover:text-orange-400' : 'opacity-40 cursor-not-allowed'
                 }`}
                 disabled={!canAfford}
@@ -393,7 +397,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
           {isPlayer ? (
             <div className="flex items-center gap-2">
               <Input
-                placeholder="Type your argument..."
+                placeholder="Drop your roast..."
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}

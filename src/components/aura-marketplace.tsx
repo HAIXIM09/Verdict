@@ -17,7 +17,7 @@ const rarityColors: Record<MarketplaceItem['rarity'], { dot: string; border: str
   common: { dot: 'bg-stone-400', border: 'border-stone-600', label: 'Common' },
   rare: { dot: 'bg-[#4D7C0F]', border: 'border-[#4D7C0F]/40', label: 'Rare' },
   epic: { dot: 'bg-amber-600', border: 'border-amber-400', label: 'Epic' },
-  legendary: { dot: 'bg-orange-950/300', border: 'border-orange-400', label: 'Legendary' },
+  legendary: { dot: 'bg-orange-600', border: 'border-orange-400', label: 'Legendary' },
 };
 
 const typeIcons: Record<MarketplaceItem['type'], React.ReactNode> = {
@@ -41,7 +41,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
           className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-amber-500' : item.rarity === 'rare' ? 'border-[#4D7C0F]' : 'border-stone-500'} bg-stone-900 flex items-center justify-center`}
         >
           <div className="w-3/4 h-3/4 rounded-md border-2 border-dashed border-stone-700 flex items-center justify-center">
-            <Shield className="size-5 text-stone-600" />
+            <Shield className="size-5 text-stone-500" />
           </div>
         </div>
       );
@@ -49,7 +49,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       return (
         <div className="w-full aspect-square rounded-lg bg-stone-800 flex items-center justify-center px-3">
           <span className={`text-sm font-bold text-center ${
-            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-amber-700' : 'text-stone-600'
+            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-amber-400' : 'text-stone-500'
           }`}>
             {item.name}
           </span>
