@@ -34,6 +34,7 @@ function getInitials(name: string): string {
 }
 
 import { mockBattles, mockCategories, type BattleCase } from '@/lib/mock-data';
+import { GuideTip } from '@/components/newbie-guide';
 
 interface BattlesSectionProps {
   onSelectBattle: (battleId: string) => void;
@@ -217,6 +218,10 @@ export default function BattlesSection({
           </div>
         </div>
 
+        <GuideTip id="arena_categories" title="Start Here" variant="inline" className="mb-4">
+          Each category contains live and upcoming roast battles. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> battles have the highest Aura rewards — but only the sharpest roasters survive. Pick a category to see available battles!
+        </GuideTip>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {mockCategories.map(cat => {
             const IconComp = iconMap[cat.icon];
@@ -331,6 +336,10 @@ export default function BattlesSection({
           <p className="text-zinc-500 text-sm">{categoryBattles.length} roasts in this category</p>
         </div>
       </div>
+
+        <GuideTip id="arena_battle_list" title="Choosing a Battle" variant="inline" className="mb-4">
+          <strong className="text-zinc-200">LIVE</strong> battles are happening now — jump in! <strong className="text-zinc-200">WAITING</strong> battles need players — great for your first roast. Use the filters above to find your preferred match type.
+        </GuideTip>
 
       {/* Filter Tabs */}
       <div className="flex gap-2 mb-6">

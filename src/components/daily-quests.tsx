@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { mockQuests, type Quest as QuestType } from '@/lib/mock-data';
+import { GuideTip } from '@/components/newbie-guide';
 
 interface DailyQuestsProps {
   onBack: () => void;
@@ -28,10 +29,14 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
           className="text-zinc-500 hover:text-zinc-300"
           onClick={onBack}
         >
-          <ArrowLeft className="size-4" />
+          <ArrowLeft className="size-4 mr-1" />
           Back
         </Button>
       </div>
+
+      <GuideTip id="quests_how" title="Free Rewards Every Day" variant="inline">
+        Quests reset every 24 hours. Complete them to earn <strong className="text-zinc-200">Coins</strong> (spend in the Aura Marketplace) and <strong className="text-zinc-200">Aura</strong> (your ranking score). Newbies should focus on &quot;Win 1 Battle&quot; first — it&apos;s the easiest quest!
+      </GuideTip>
 
       {/* Quest Cards */}
       <div className="space-y-3">

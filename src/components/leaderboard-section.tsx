@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { mockUsers, mockCurrentUser } from '@/lib/mock-data';
+import { GuideTip } from '@/components/newbie-guide';
 
 interface RankingsSectionProps {
   onViewProfile: (userId: string) => void;
@@ -70,6 +71,10 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
           Top roast warriors, ranked by Aura earned in roast
         </p>
       </div>
+
+      <GuideTip id="leaderboard_explain" title="Aura = Your Score" variant="inline">
+        The leaderboard ranks every roaster by total <strong className="text-zinc-200">Aura</strong> — the points you earn from winning battles. Win more, roast harder, and climb to the top. Top 3 get special badges!
+      </GuideTip>
 
       {/* Top 3 Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

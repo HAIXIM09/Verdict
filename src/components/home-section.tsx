@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { SplineScene } from '@/components/ui/spline';
 import { Spotlight } from '@/components/ui/spotlight';
+import { GuideTip } from '@/components/newbie-guide';
 import {
   mockBattles,
   mockQuests,
@@ -139,6 +140,14 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
         </div>
       </section>
 
+      {/* Newbie Guide — How it works */}
+      <GuideTip id="home_how_it_works" title="How Verdict Works" variant="card">
+        <p className="mb-2"><strong className="text-zinc-200">1. Pick a category</strong> — Anime, Movies, Games, Cartoons, and more.</p>
+        <p className="mb-2"><strong className="text-zinc-200">2. Join a Roast Battle</strong> — Choose Team A or Team B and argue why your side is better.</p>
+        <p className="mb-2"><strong className="text-zinc-200">3. Get scored</strong> — The AI Roastmaster rates your arguments on Creativity, Humor, and Savagery.</p>
+        <p><strong className="text-zinc-200">4. Climb the ranks</strong> — Win battles to earn Aura, complete Daily Quests, and become a legend.</p>
+      </GuideTip>
+
       {/* Roast of the Day */}
       <section>
         <div className="flex items-center gap-2 mb-3">
@@ -181,6 +190,11 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
           </CardContent>
         </Card>
       </section>
+
+      {/* Newbie Guide — Roast of the Day */}
+      <GuideTip id="home_roast_of_day" title="Pro Tip" variant="inline" className="mb-2">
+        This is today&apos;s hottest roast — voted by the community. Watch the replay to learn what makes a winning argument before you jump into your own battles.
+      </GuideTip>
 
       {/* Live Now */}
       <section>
@@ -260,6 +274,18 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </section>
+
+      {/* Newbie Guide — Quests */}
+      <GuideTip
+        id="home_quests_tip"
+        title="Quests = Free Aura"
+        variant="inline"
+        className="mb-2"
+        ctaText="View all quests"
+        onCtaClick={onNavigateToQuests}
+      >
+        Complete daily quests to earn Aura points and coins. Quests refresh every 24 hours — don&apos;t miss out on easy rewards!
+      </GuideTip>
 
       {/* Daily Quests Preview */}
       <section>

@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { mockCurrentUser, mockBattles } from '@/lib/mock-data';
+import { GuideTip } from '@/components/newbie-guide';
 
 function getInitials(name: string): string { return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2); }
 
@@ -54,6 +55,10 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
   return (
     <div className="space-y-6">
+      <GuideTip id="profile_overview" title="Your Roast Identity" variant="inline">
+        This is your profile — your <strong className="text-zinc-200">Rank</strong> goes up as you win battles, <strong className="text-zinc-200">Aura</strong> is your total score, and <strong className="text-zinc-200">Badges</strong> are earned through milestones. Visit the <strong className="text-zinc-200">Marketplace</strong> to buy Aura skins!
+      </GuideTip>
+
       {/* Profile Header Card */}
       <Card className="rounded-2xl py-5">
         <CardContent className="px-6">

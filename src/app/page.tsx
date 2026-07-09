@@ -15,6 +15,7 @@ import DailyQuests from '@/components/daily-quests';
 import CaseReplays from '@/components/case-replays';
 import VerdictScreen from '@/components/verdict-screen';
 import AdGate from '@/components/ad-gate';
+import { GuideTip, WelcomeOnboarding } from '@/components/newbie-guide';
 import { mockCurrentUser } from '@/lib/mock-data';
 import {
   Home,
@@ -54,10 +55,12 @@ export default function RoastArenaApp() {
   const [showVerdict, setShowVerdict] = useState(false);
   const [showAdGate, setShowAdGate] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const handleLogin = useCallback(() => {
     setView('app');
     setCurrentPage('home');
+    setShowOnboarding(true);
   }, []);
 
   const navigateTo = useCallback((page: Page) => {
@@ -307,6 +310,11 @@ export default function RoastArenaApp() {
           })}
         </div>
       </nav>
+
+      {/* Welcome Onboarding Modal */}
+      {showOnboarding && (
+        <WelcomeOnboarding onDismiss={() => setShowOnboarding(false)} />
+      )}
     </div>
   );
 }

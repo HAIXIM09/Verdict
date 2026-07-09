@@ -25,6 +25,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { mockBattles, mockCurrentUser, type BattleCase, type ChatMessage, type User } from '@/lib/mock-data';
+import { GuideTip } from '@/components/newbie-guide';
 
 interface RoastRoomProps {
   battleId: string;
@@ -209,6 +210,12 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         </Card>
 
         {/* Timer */}
+
+        {/* Newbie Guide — Battle Room */}
+        <GuideTip id="battle_room_basics" title="Your First Roast" variant="inline">
+          The timer counts down to the verdict. Type your roasts in the chat on the right — the AI Roastmaster scores each argument. Be creative, funny, and savage for max points!
+        </GuideTip>
+
         <div className="flex justify-center py-4">
           <div className="relative flex items-center justify-center">
             <svg className="size-32 -rotate-90" viewBox="0 0 120 120">
@@ -317,6 +324,9 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         </Card>
 
         {/* Spectator Reactions Bar */}
+        <GuideTip id="battle_reactions" title="Reactions & Power-Ups" variant="inline" className="mb-1">
+          Spectators can react with emojis — high reactions boost visibility! If you&apos;re a player, use <strong className="text-zinc-200">Power-Ups</strong> (bottom of chat) to shield yourself, double your Aura, or buy extra time. Each costs coins.
+        </GuideTip>
         <Card className="bg-zinc-900 border border-zinc-800">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 flex-wrap">
