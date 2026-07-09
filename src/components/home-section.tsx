@@ -15,6 +15,7 @@ import {
   mockCurrentUser,
   type BattleCase,
 } from '@/lib/mock-data';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
 
 interface HomeSectionProps {
   onNavigateToRoast: (roastId: string) => void;
@@ -67,8 +68,12 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
         <div className="scanline-overlay absolute inset-0 z-[2] pointer-events-none" />
 
         {/* Fire glow effects */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-amber-600/8 rounded-full blur-[80px]" />
+        {/* Animated floating orbs */}
+        <div className="absolute top-10 left-1/4 w-80 h-80 bg-red-600/12 rounded-full blur-[100px] orb-1" />
+        <div className="absolute bottom-10 right-1/4 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] orb-2" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-orange-600/8 rounded-full blur-[60px] orb-1" />
+        {/* Noise texture for depth */}
+        <div className="absolute inset-0 noise-overlay rounded-2xl" />
 
         <Spotlight
           className="-top-40 left-0 md:left-60 md:-top-20"
@@ -87,7 +92,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
                 Live Roasts Happening Now
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-amber-400 to-red-500 leading-tight drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">
+            <h1 className="text-4xl md:text-6xl font-black font-heading bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-amber-400 to-red-500 leading-tight drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">
               Drop Your<br />Hottest Takes
             </h1>
             <p className="mt-4 text-zinc-500 max-w-md text-sm md:text-base leading-relaxed">
@@ -95,37 +100,37 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             </p>
             <div className="flex items-center gap-3 mt-8">
               <Button
-                className="btn-fire animate-glow-red text-white font-bold shadow-lg shadow-red-600/20 rounded-xl"
+                className="btn-fire btn-press animate-glow-red text-white font-bold shadow-lg shadow-red-600/20 rounded-xl"
                 onClick={() => onNavigateToCategory('Movies')}
               >
                 <Flame className="size-4 mr-2" />
-                Enter the Arena
+                Start a Fire
               </Button>
               <Button
                 variant="outline"
-                className="border-zinc-700 text-zinc-300 hover:bg-zinc-800/80 hover:text-white hover:border-zinc-600 rounded-xl"
+                className="btn-press border-zinc-700 text-zinc-300 hover:bg-zinc-800/80 hover:text-white hover:border-zinc-600 rounded-xl"
                 onClick={onNavigateToQuests}
               >
                 <Zap className="size-4 mr-2" />
-                Daily Quests
+                Earn Burn Credits
               </Button>
             </div>
 
             {/* Quick stats */}
             <div className="flex items-center gap-6 mt-10">
               <div>
-                <p className="text-2xl font-black text-white stat-fire">12.4K</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Active Roasters</p>
+                <p className="text-2xl font-black text-white font-mono-stat stat-fire"><AnimatedCounter target={12400} formatFn={(n) => (n / 1000).toFixed(1) + 'K'} /></p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-heading">Active Roasters</p>
               </div>
               <div className="h-8 w-px bg-zinc-800" />
               <div>
-                <p className="text-2xl font-black text-white stat-fire">847</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Live Roasts</p>
+                <p className="text-2xl font-black text-white font-mono-stat stat-fire"><AnimatedCounter target={847} /></p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-heading">Live Roasts</p>
               </div>
               <div className="h-8 w-px bg-zinc-800" />
               <div>
-                <p className="text-2xl font-black text-white stat-fire">2.1M</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Total Burns</p>
+                <p className="text-2xl font-black text-white font-mono-stat stat-fire"><AnimatedCounter target={2100000} formatFn={(n) => (n / 1000000).toFixed(1) + 'M'} /></p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-heading">Total Burns</p>
               </div>
             </div>
           </div>
@@ -141,7 +146,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       </section>
 
       {/* Newbie Guide — How it works */}
-      <GuideTip id="home_how_it_works" title="How Verdict Works" variant="card">
+      <GuideTip id="home_how_it_works" title="How Verdict Works" variant="card" className="stagger-1">
         <p className="mb-2"><strong className="text-zinc-200">1. Pick a category</strong> — Anime, Movies, Games, Cartoons, and more.</p>
         <p className="mb-2"><strong className="text-zinc-200">2. Join a Roast Battle</strong> — Choose Team A or Team B and argue why your side is better.</p>
         <p className="mb-2"><strong className="text-zinc-200">3. Get scored</strong> — The AI Roastmaster rates your arguments on Creativity, Humor, and Savagery.</p>
@@ -149,11 +154,11 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       </GuideTip>
 
       {/* Roast of the Day */}
-      <section>
+      <section className="stagger-2">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-1 h-5 bg-red-600 rounded-full" />
+          <div className="w-1 h-5 bg-amber-500 rounded-full" />
           <FlameKindling className="size-5 text-red-500" />
-          <h2 className="text-lg font-bold text-zinc-100">Roast of the Day</h2>
+          <h2 className="text-lg font-bold text-zinc-100">Scorch of the Day</h2>
         </div>
         <Card className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden card-fire-hover relative">
           <div className="absolute inset-0 bg-gradient-to-r from-red-600/5 to-transparent pointer-events-none" />
@@ -181,7 +186,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             </p>
             <Button
               variant="outline"
-              className="mt-4 border-red-700/50 text-red-400 hover:bg-red-950/30 hover:text-red-300 hover:border-red-600/50 rounded-xl"
+              className="btn-press mt-4 border-red-700/50 text-red-400 hover:bg-red-950/30 hover:text-red-300 hover:border-red-600/50 rounded-xl"
               onClick={() => onNavigateToBattle(topRoast?.id || 'b-3')}
             >
               <Eye className="size-4" />
@@ -197,10 +202,10 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       </GuideTip>
 
       {/* Live Now */}
-      <section>
+      <section className="stagger-3">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-1 h-5 bg-red-600 rounded-full" />
-          <h2 className="text-lg font-bold text-zinc-100">On Fire Now</h2>
+          <h2 className="text-lg font-bold text-zinc-100">Inferno Live</h2>
           <span className="relative flex size-2.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
             <span className="relative inline-flex size-2.5 rounded-full bg-red-500" />
@@ -210,7 +215,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
           {liveRoasts.map(roast => (
             <Card
               key={roast.id}
-              className="bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-xl transition-all cursor-pointer group overflow-hidden card-fire-hover"
+              className="card-premium rounded-xl transition-all cursor-pointer group overflow-hidden card-fire-hover"
               onClick={() => onNavigateToBattle(roast.id)}
             >
               <CardContent className="p-4">
@@ -242,11 +247,11 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       </section>
 
       {/* Trending */}
-      <section>
+      <section className="stagger-4">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-1 h-5 bg-red-600 rounded-full" />
+          <div className="w-1 h-5 bg-orange-500 rounded-full" />
           <TrendingUp className="size-5 text-amber-500" />
-          <h2 className="text-lg font-bold text-zinc-100">Trending Topics</h2>
+          <h2 className="text-lg font-bold text-zinc-100">Rising Flames</h2>
         </div>
         <ScrollArea className="w-full whitespace-nowrap">
           <div className="flex gap-3 pb-4">
@@ -280,7 +285,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
         id="home_quests_tip"
         title="Quests = Free Aura"
         variant="inline"
-        className="mb-2"
+        className="mb-2 stagger-5"
         ctaText="View all quests"
         onCtaClick={onNavigateToQuests}
       >
@@ -288,14 +293,14 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       </GuideTip>
 
       {/* Daily Quests Preview */}
-      <section>
+      <section className="stagger-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-1 h-5 bg-red-600 rounded-full" />
-            <h2 className="text-lg font-bold text-zinc-100">Daily Quests</h2>
+            <div className="w-1 h-5 bg-[#4D7C0F] rounded-full" />
+            <h2 className="text-lg font-bold text-zinc-100">Burn Orders</h2>
           </div>
-          <Button variant="ghost" className="text-red-500 hover:text-red-400 text-sm p-0 h-auto" onClick={onNavigateToQuests}>
-            All Quests
+          <Button variant="ghost" className="btn-press text-red-500 hover:text-red-400 text-sm p-0 h-auto" onClick={onNavigateToQuests}>
+            All Orders
             <ChevronRight className="size-4" />
           </Button>
         </div>

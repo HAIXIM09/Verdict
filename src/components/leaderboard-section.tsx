@@ -65,7 +65,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
       <div>
         <div className="flex items-center gap-3">
           <Trophy className="size-7 text-red-400" />
-          <h1 className="text-2xl md:text-3xl font-bold text-zinc-100">Roast Kings</h1>
+          <h1 className="text-2xl md:text-3xl font-bold font-heading text-zinc-100">Roast Kings</h1>
         </div>
         <p className="text-zinc-500 text-sm mt-1 ml-10">
           Top roast warriors, ranked by Aura earned in roast
@@ -77,13 +77,13 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
       </GuideTip>
 
       {/* Top 3 Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="stagger-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
         {top3.map((user, i) => {
           const config = medalConfig[i];
           return (
             <Card
               key={user.id}
-              className={`bg-zinc-900 border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
+              className={`card-premium border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
             >
               <CardContent className="p-0 flex flex-col items-center text-center gap-3">
                 <div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                 </div>
 
                 <Badge className="bg-red-600/15 text-red-400 border-none text-xs">
-                  {user.aura.toLocaleString()} Aura
+                  <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
                 </Badge>
 
                 <p className="text-xs text-zinc-500">
@@ -119,7 +119,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
       </div>
 
       {/* Full Rankings Table */}
-      <Card className="bg-zinc-900 border border-zinc-800">
+      <Card className="stagger-2 bg-zinc-900 border border-zinc-800">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -161,10 +161,10 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right text-sm text-zinc-300">{user.wins}</TableCell>
-                    <TableCell className="text-right text-sm text-zinc-300">{user.winRate}%</TableCell>
+                    <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.wins}</TableCell>
+                    <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.winRate}%</TableCell>
                     <TableCell className="text-right">
-                      <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold">
+                      <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold font-mono-stat">
                         {user.aura.toLocaleString()}
                       </Badge>
                     </TableCell>
@@ -187,7 +187,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-zinc-100">
-                    Your Rank: #{currentUserRank}
+                    Your Position: #{currentUserRank}
                   </p>
                   <p className="text-xs text-zinc-500">
                     {mockCurrentUser.aura.toLocaleString()} Aura · {mockCurrentUser.winRate}% WR
@@ -200,7 +200,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                 className="text-red-400 border-red-700/50 hover:bg-red-950/20 text-xs"
                 onClick={() => onViewProfile(mockCurrentUser.id)}
               >
-                View Profile
+                View Burner
               </Button>
             </div>
           </CardContent>

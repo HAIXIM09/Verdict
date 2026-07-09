@@ -37,8 +37,8 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-zinc-100">Roast Arena Groups</h2>
-        <p className="text-sm text-zinc-500 mt-1">Join communities, find roast partners</p>
+        <h2 className="text-2xl font-bold font-heading text-zinc-100">War Rooms</h2>
+        <p className="text-sm text-zinc-500 mt-1">Assemble your crew. Dominate the arena.</p>
       </div>
 
       {/* Search Bar */}
@@ -54,8 +54,8 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
 
       {/* My Crews */}
       {myGroups.length > 0 && (
-        <section>
-          <h3 className="text-base font-semibold text-zinc-100 mb-3">My Crews</h3>
+        <section className="stagger-1">
+          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">My Crews</h3>
           <div className="space-y-3">
             {myGroups.map((group) => (
               <div
@@ -95,8 +95,8 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
 
       {/* Find Crews */}
       {discoverGroups.length > 0 && (
-        <section>
-          <h3 className="text-base font-semibold text-zinc-100 mb-3">Find Crews</h3>
+        <section className="stagger-2">
+          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">Find Crews</h3>
           <div className="space-y-3">
             {discoverGroups.map((group) => (
               <div

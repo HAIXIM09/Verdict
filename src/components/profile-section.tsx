@@ -87,11 +87,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
         <CardContent className="px-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-shrink-0">
-              <p className="text-4xl font-bold text-red-500">{user.aura.toLocaleString()}</p>
+              <p className="text-4xl font-bold font-mono-stat text-red-500">{user.aura.toLocaleString()}</p>
               <p className="text-sm font-medium text-zinc-500 mt-0.5">AURA</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 flex-1 min-w-0">
-              <div className="flex items-center gap-2 rounded-lg bg-green-950/30 border border-green-800/50 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-lg bg-red-950/20 border border-red-800/40 px-3 py-2">
                 <TrendingUp className="size-4 text-emerald-400" />
                 <span className="text-sm text-zinc-400">Last Roast:</span>
                 <span className="text-sm font-semibold text-emerald-400">+{lastRoastAuraChange} Aura</span>
@@ -138,7 +138,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Trophy className="size-5 text-red-500" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{user.wins}</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.wins}</p>
               <p className="text-xs text-zinc-500">Wins</p>
             </div>
           </CardContent>
@@ -150,7 +150,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <History className="size-5 text-red-500" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{user.losses}</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.losses}</p>
               <p className="text-xs text-zinc-500">Losses</p>
             </div>
           </CardContent>
@@ -162,7 +162,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Star className="size-5 text-emerald-400" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{winRate}%</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{winRate}%</p>
               <p className="text-xs text-zinc-500">Win Rate</p>
             </div>
           </CardContent>
@@ -174,7 +174,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Flame className="size-5 text-red-500" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{user.streak}</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.streak}</p>
               <p className="text-xs text-zinc-500">Current Streak</p>
               {user.streak >= 3 && (
                 <p className="text-[10px] font-medium text-emerald-400 mt-0.5">1.5x Aura Multiplier</p>
@@ -189,7 +189,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Coins className="size-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{user.coins}</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.coins}</p>
               <p className="text-xs text-zinc-500">Coins</p>
             </div>
           </CardContent>
@@ -201,7 +201,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <Shield className="size-5 text-zinc-400" />
             </div>
             <div>
-              <p className="text-lg font-bold text-zinc-100">{totalRoasts}</p>
+              <p className="text-lg font-bold font-mono-stat text-zinc-100">{totalRoasts}</p>
               <p className="text-xs text-zinc-500">Total Roasts</p>
             </div>
           </CardContent>
@@ -211,7 +211,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       {/* Badges Section */}
       <Card className="rounded-2xl py-5">
         <CardContent className="px-6">
-          <h3 className="text-base font-semibold text-zinc-100 mb-4">Badges</h3>
+          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-4">Badges</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {allBadges.map((badgeName) => {
               const isUnlocked = user.badges.includes(badgeName);
@@ -246,7 +246,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       {/* Roast History */}
       <Card className="rounded-2xl py-5">
         <CardContent className="px-6">
-          <h3 className="text-base font-semibold text-zinc-100 mb-4">Recent Roasts</h3>
+          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-4">Recent Roasts</h3>
           <div className="space-y-3">
             {recentRoastResults.map((roast, i) => (
               <div

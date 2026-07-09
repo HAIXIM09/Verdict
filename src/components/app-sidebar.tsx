@@ -46,11 +46,11 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { page: 'home', label: 'Feed', icon: Home },
-  { page: 'battles', label: 'Roast Arena', icon: Flame, badge: '3 Live' },
-  { page: 'leaderboard', label: 'Rankings', icon: Trophy },
-  { page: 'groups', label: 'Crews', icon: Users },
-  { page: 'profile', label: 'Profile', icon: User },
+  { page: 'home', label: 'The Pit', icon: Home },
+  { page: 'battles', label: 'Battle Zone', icon: Flame, badge: '3 Live' },
+  { page: 'leaderboard', label: 'Hall of Flame', icon: Trophy },
+  { page: 'groups', label: 'War Rooms', icon: Users },
+  { page: 'profile', label: 'My Burner', icon: User },
 ];
 
 function getInitials(username: string): string {
@@ -85,8 +85,8 @@ export default function AppSidebar({
           <Flame className="h-4.5 w-4.5 text-white" />
         </div>
         {expanded && (
-          <span className="text-base font-black tracking-tight text-white whitespace-nowrap">
-            ROAST<span className="text-red-500">ARENA</span>
+          <span className="text-xl font-heading tracking-wide text-white whitespace-nowrap">
+            VERDICT<span className="text-red-500">.</span>
           </span>
         )}
       </div>
@@ -121,7 +121,7 @@ export default function AppSidebar({
                   />
                   {expanded && (
                     <>
-                      <span className="flex-1 text-left whitespace-nowrap">{item.label}</span>
+                      <span className="flex-1 text-left whitespace-nowrap tracking-wide">{item.label}</span>
                       {item.badge && (
                         <span
                           className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold transition-colors ${
@@ -159,7 +159,7 @@ export default function AppSidebar({
                 <p className="truncate text-sm font-semibold text-zinc-100">
                   {user.username}
                 </p>
-                <span className="inline-flex items-center gap-1 rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                <span className="inline-flex items-center gap-1 rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-400 font-heading">
                   <FlameKindling className="size-2.5" />
                   {user.rank}
                 </span>
@@ -169,24 +169,24 @@ export default function AppSidebar({
             {/* Stats Row */}
             <div className="mt-2.5 flex items-center justify-around rounded-lg bg-zinc-900 px-2 py-2.5">
               <div className="text-center">
-                <p className="text-xs font-bold text-red-500">{user.aura.toLocaleString()}</p>
-                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Aura</p>
+                <p className="text-xs font-bold text-red-500 font-mono-stat">{user.aura.toLocaleString()}</p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Aura</p>
               </div>
               <div className="h-5 w-px bg-zinc-800" />
               <div className="text-center">
                 <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
                   <Zap className="size-3 text-amber-500" />
-                  {user.streak}
+                  <span className="font-mono-stat">{user.streak}</span>
                 </p>
-                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Streak</p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Streak</p>
               </div>
               <div className="h-5 w-px bg-zinc-800" />
               <div className="text-center">
                 <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
                   <Coins className="size-3 text-amber-500" />
-                  {user.coins}
+                  <span className="font-mono-stat">{user.coins}</span>
                 </p>
-                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Coins</p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Coins</p>
               </div>
             </div>
 
@@ -194,10 +194,10 @@ export default function AppSidebar({
             <button
               type="button"
               onClick={onLogout}
-              className="mt-2.5 flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-zinc-600 transition-colors hover:bg-zinc-800/80 hover:text-red-500"
+              className="mt-2.5 flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-zinc-600 transition-colors hover:bg-zinc-800/80 hover:text-red-500 btn-press"
             >
               <LogOut className="h-4 w-4" />
-              <span>Log Out</span>
+              <span>Bail Out</span>
             </button>
           </>
         ) : (

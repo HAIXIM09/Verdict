@@ -38,7 +38,7 @@ function ReplayCard({ battle, onWatch }: { battle: BattleCase; onWatch: (id: str
             <h4 className="text-sm font-semibold text-zinc-100 leading-snug">{caseName}</h4>
             {isVOD && (
               <Badge className="bg-red-600/15 text-red-400 border-red-700/50 shrink-0 text-[10px]">
-                Roast of the Day
+                Scorch of the Day
               </Badge>
             )}
           </div>
@@ -72,7 +72,7 @@ function ReplayCard({ battle, onWatch }: { battle: BattleCase; onWatch: (id: str
             onClick={() => onWatch(battle.id)}
           >
             <Play className="size-3.5" />
-            Watch Roast
+            Watch the Burn
           </Button>
         </div>
       </CardContent>
@@ -104,7 +104,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: { onBack: () => v
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-zinc-100">Roast Replays</h2>
+        <h2 className="text-2xl font-bold text-zinc-100 font-heading">Burn Archives</h2>
         <Button
           variant="ghost"
           size="sm"
@@ -112,7 +112,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: { onBack: () => v
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />
-          Back
+          Retreat
         </Button>
       </div>
 
@@ -120,8 +120,8 @@ export default function CaseReplays({ onBack, onWatchReplay }: { onBack: () => v
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as FilterTab)}>
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="roast-of-the-day">Roast of the Day</TabsTrigger>
-          <TabsTrigger value="most-viewed">Most Viewed</TabsTrigger>
+          <TabsTrigger value="roast-of-the-day">Scorch of the Day</TabsTrigger>
+          <TabsTrigger value="most-viewed">Most Watched</TabsTrigger>
         </TabsList>
 
         <TabsContent value={activeTab} className="mt-4">
@@ -138,7 +138,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: { onBack: () => v
           ) : (
             <div className="text-center py-12">
               <Trophy className="size-10 text-zinc-500 mx-auto mb-3" />
-              <p className="text-zinc-500 text-sm">No roast replays found in this category.</p>
+              <p className="text-zinc-500 text-sm">No archives in this category. The flames haven't left a trace.</p>
             </div>
           )}
         </TabsContent>

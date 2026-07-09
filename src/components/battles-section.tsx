@@ -98,7 +98,7 @@ function actionButton(status: string, onClick: () => void) {
   }
   return (
     <Button size="sm" variant="outline" className="border-zinc-700 text-zinc-500 text-xs h-8" onClick={onClick}>
-      VIEW VERDICT
+      See Who Burned
     </Button>
   );
 }
@@ -213,8 +213,8 @@ export default function BattlesSection({
             <ArrowLeft className="size-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-zinc-100">Roast Arena</h1>
-            <p className="text-zinc-500 text-sm">Choose a category to find your next roast</p>
+            <h1 className="text-2xl font-bold font-heading text-zinc-100">Roast Arena</h1>
+            <p className="text-zinc-500 text-sm">Pick your battlefield. Choose wisely.</p>
           </div>
         </div>
 
@@ -222,7 +222,7 @@ export default function BattlesSection({
           Each category contains live and upcoming roast battles. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> battles have the highest Aura rewards — but only the sharpest roasters survive. Pick a category to see available battles!
         </GuideTip>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="stagger-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {mockCategories.map(cat => {
             const IconComp = iconMap[cat.icon];
             return (
@@ -248,21 +248,21 @@ export default function BattlesSection({
         </div>
 
         {/* Inline submit form */}
-        <div className="mt-8">
+        <div className="stagger-2 mt-8">
           <Button
             variant="outline"
             className="border-dashed border-zinc-700 text-zinc-500 hover:text-red-500 hover:border-red-500 w-full py-8 flex flex-col items-center gap-2"
             onClick={() => setShowSubmitForm(!showSubmitForm)}
           >
             <Plus className="size-5" />
-            <span>Start a New Roast</span>
+            <span>Ignite a New Roast</span>
           </Button>
 
           {showSubmitForm && (
             <Card className="mt-4 bg-zinc-900 border border-zinc-800">
               <CardContent className="p-6 space-y-4">
-                <h3 className="font-semibold text-zinc-100">Start a New Roast</h3>
-                <p className="text-zinc-500 text-sm">Community will upvote — if popular, it becomes an official roast!</p>
+                <h3 className="font-semibold text-zinc-100">Ignite a New Roast</h3>
+                <p className="text-zinc-500 text-sm">The community votes — if it catches fire, it becomes an official roast.</p>
 
                 <div className="space-y-3">
                   <div>
@@ -301,7 +301,7 @@ export default function BattlesSection({
 
                   <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
                     <Send className="size-4" />
-                    Submit Roast
+                    Light It Up
                   </Button>
                 </div>
               </CardContent>
@@ -363,10 +363,10 @@ export default function BattlesSection({
       {/* Roast Cards Grid */}
       {filteredBattles.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-zinc-400 text-sm">No roasts found with this filter.</p>
+          <p className="text-zinc-400 text-sm">The arena is quiet... too quiet.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="stagger-1 grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredBattles.map(battle => (
             <BattleCard
               key={battle.id}
@@ -391,8 +391,8 @@ export default function BattlesSection({
         {showSubmitForm && (
           <Card className="mt-4 bg-zinc-900 border border-zinc-800">
             <CardContent className="p-6 space-y-4">
-              <h3 className="font-semibold text-zinc-100">Start a New Roast</h3>
-              <p className="text-zinc-500 text-sm">Community will upvote — if popular, it becomes an official roast!</p>
+              <h3 className="font-semibold text-zinc-100">Ignite a New Roast</h3>
+              <p className="text-zinc-500 text-sm">The community votes — if it catches fire, it becomes an official roast.</p>
 
               <div className="space-y-3">
                 <div>
@@ -417,7 +417,7 @@ export default function BattlesSection({
 
                 <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
                   <Send className="size-4" />
-                  Submit Roast
+                  Light It Up
                 </Button>
               </div>
             </CardContent>

@@ -16,6 +16,8 @@ import CaseReplays from '@/components/case-replays';
 import VerdictScreen from '@/components/verdict-screen';
 import AdGate from '@/components/ad-gate';
 import { GuideTip, WelcomeOnboarding } from '@/components/newbie-guide';
+import { PageTransition } from '@/components/ui/page-transition';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { mockCurrentUser } from '@/lib/mock-data';
 import {
   Home,
@@ -40,11 +42,11 @@ type Page =
 type AppView = 'login' | 'app';
 
 const MOBILE_NAV_ITEMS: { page: Page; label: string; icon: React.ElementType }[] = [
-  { page: 'home', label: 'Feed', icon: Home },
-  { page: 'battles', label: 'Arena', icon: Flame },
-  { page: 'leaderboard', label: 'Ranks', icon: Trophy },
-  { page: 'groups', label: 'Crews', icon: Users },
-  { page: 'profile', label: 'Me', icon: User },
+  { page: 'home', label: 'The Pit', icon: Home },
+  { page: 'battles', label: 'Battle Zone', icon: Flame },
+  { page: 'leaderboard', label: 'Flame', icon: Trophy },
+  { page: 'groups', label: 'War Rooms', icon: Users },
+  { page: 'profile', label: 'Burner', icon: User },
 ];
 
 export default function RoastArenaApp() {
@@ -131,7 +133,7 @@ export default function RoastArenaApp() {
           <LoginPage.LoginForm onSubmit={handleLogin} />
         </div>
         <footer className="absolute bottom-4 left-0 right-0 text-center text-zinc-600 text-sm z-20">
-          © 2025 Roast Arena. All rights reserved.
+          © 2025 Verdict. All rights reserved.
         </footer>
       </LoginPage.VideoBackground>
     );
@@ -179,7 +181,7 @@ export default function RoastArenaApp() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-20 md:pb-6 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.03),transparent_50%)]">
+      <main className="noise-overlay relative flex-1 overflow-y-auto pb-20 md:pb-6 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.03),transparent_50%)]">
         {/* Mobile Top Bar */}
         <div className="md:hidden sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 flex items-center justify-between relative">
           <button
@@ -191,8 +193,8 @@ export default function RoastArenaApp() {
           </button>
           <div className="flex items-center gap-1.5">
             <Flame className="size-4 text-red-500" />
-            <span className="font-black text-sm tracking-tight text-white">
-              ROAST<span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-amber-400">ARENA</span>
+            <span className="font-heading text-sm tracking-widest text-white">
+              VERDICT<span className="text-red-500">.</span>
             </span>
           </div>
           <div className="size-7 rounded-full bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
@@ -202,6 +204,7 @@ export default function RoastArenaApp() {
         </div>
 
         <div className="max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
+          <PageTransition pageKey={currentPage} className="space-y-8">
           {currentPage === 'home' && (
             <HomeSection
               onNavigateToRoast={handleSelectRoast}
@@ -270,6 +273,7 @@ export default function RoastArenaApp() {
               onWatchReplay={(roastId) => handleSelectRoast(roastId)}
             />
           )}
+          </PageTransition>
         </div>
 
         {/* Overlays */}
@@ -300,7 +304,7 @@ export default function RoastArenaApp() {
                   isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-300'
                 }`}
               >
-                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/15 shadow-[0_0_12px_rgba(239,68,68,0.2)]' : ''}`}>
+                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/15 shadow-[0_0_12px_rgba(239,68,68,0.2)] nav-spring' : ''}`}>
                   <Icon className="size-4.5" />
                 </div>
                 <span className="text-[10px] font-medium">{item.label}</span>

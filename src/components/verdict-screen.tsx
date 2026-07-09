@@ -4,6 +4,7 @@ import { Scale, Trophy, Flame, TrendingUp, Coins, ArrowUpRight, Swords } from 'l
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { mockBattles, mockCurrentUser } from '@/lib/mock-data';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
 
 interface VerdictScreenProps {
   onContinue: () => void;
@@ -26,7 +27,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
   const auraGained = roast?.auraChange?.gained ?? 120;
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-[#09090b] flex items-center justify-center p-4 relative gradient-mesh noise-overlay">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(234,88,12,0.08)_0%,transparent_70%)] pointer-events-none" />
       <div className="w-full max-w-lg space-y-6 relative z-10">
         {/* Roast Arena Header */}
@@ -34,22 +35,22 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           <div className="inline-flex items-center gap-2 mb-2">
             <Scale className="size-8 text-red-400" />
           </div>
-          <h1 className="text-4xl font-black text-red-400 tracking-wide text-shimmer drop-shadow-[0_0_30px_rgba(239,68,68,0.4)]">VERDICT</h1>
+          <h1 className="text-4xl font-black font-heading text-red-400 tracking-wide text-shimmer drop-shadow-[0_0_30px_rgba(239,68,68,0.4)]">VERDICT</h1>
           <p className="text-zinc-400 text-sm mt-1">{battle.sideA} <Swords className="size-4 inline text-red-500 mx-1.5" /> {battle.sideB}</p>
         </div>
 
         {/* Winner Announcement */}
-        <Card className="bg-zinc-800 border-zinc-800 shadow-[0_0_40px_rgba(234,88,12,0.2)] border border-red-600/30">
+        <Card className="bg-zinc-800 border-zinc-800 shadow-[0_0_40px_rgba(234,88,12,0.2)] border border-red-600/30 gradient-border premium-glow stagger-1">
           <CardContent className="p-6 text-center">
             <Trophy className="size-10 text-red-400 mx-auto mb-3" />
             <h2 className="text-2xl font-bold text-white">
-              Team {winnerSide} Wins!
+              Team {winnerSide} Destroyed the Opposition!
             </h2>
           </CardContent>
         </Card>
 
         {/* Score Bar */}
-        <Card className="bg-zinc-800 border-zinc-800">
+        <Card className="bg-zinc-800 border-zinc-800 stagger-2">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-zinc-300">Team {battle.sideA}</span>
@@ -66,22 +67,22 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
               />
             </div>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-3xl font-bold text-red-400">{scoreA}</span>
+              <span className="text-3xl font-bold text-red-400 font-mono-stat"><AnimatedCounter target={scoreA} duration={800} /></span>
               <span className="text-zinc-500 text-sm">points</span>
-              <span className="text-3xl font-bold text-emerald-400">{scoreB}</span>
+              <span className="text-3xl font-bold text-emerald-400 font-mono-stat"><AnimatedCounter target={scoreB} duration={800} /></span>
             </div>
           </CardContent>
         </Card>
 
         {/* AI Roastmaster Breakdown */}
-        <Card className="bg-zinc-800 border-zinc-800">
+        <Card className="bg-zinc-800 border-zinc-800 stagger-3">
           <CardContent className="p-6 space-y-4">
-            <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">AI Roast Judge Breakdown</h3>
+            <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">The Roastmaster's Ruling</h3>
 
             {/* Best Argument */}
             {roast?.bestArgument && (
               <div>
-                <p className="text-xs text-zinc-500 mb-1">Best Roast</p>
+                <p className="text-xs text-zinc-500 mb-1">Lethal Shot</p>
                 <div className="bg-zinc-800 rounded-lg p-3 border-l-[3px] border-l-red-500">
                   <p className="text-sm font-medium text-white mb-1">
                     {roast.bestArgument.username}
@@ -96,7 +97,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
             {/* Most Roasted */}
             {roast?.mostRoasted && (
               <div>
-                <p className="text-xs text-zinc-500 mb-1">Most Roasted</p>
+                <p className="text-xs text-zinc-500 mb-1">Biggest Casualty</p>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-white">
                     {roast.mostRoasted.username}
@@ -111,7 +112,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
 
             {/* AI Summary */}
             <div>
-              <p className="text-xs text-zinc-500 mb-1">AI Summary</p>
+              <p className="text-xs text-zinc-500 mb-1">Final Word</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 {roast?.summary ||
                   'Team Pushpa won through superior cultural impact arguments and iconic dialogue references. The AI Roastmaster found their emotional appeal and mass-market penetration evidence more compelling.'}
@@ -121,26 +122,26 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         </Card>
 
         {/* Rewards Section */}
-        <Card className="bg-zinc-800 border-zinc-800">
+        <Card className="bg-zinc-800 border-zinc-800 stagger-4">
           <CardContent className="p-6 space-y-3">
-            <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Rewards</h3>
+            <h3 className="text-sm font-semibold font-heading text-zinc-400 uppercase tracking-wider">Rewards</h3>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-zinc-900 rounded-lg p-3 text-center border border-zinc-800 shadow-[0_0_20px_rgba(234,88,12,0.08)]">
+              <div className="card-premium p-3 text-center">
                 <div className="flex items-center justify-center gap-1 text-red-400">
                   <Coins className="size-4" />
-                  <span className="text-lg font-bold">+{coinsEarned}</span>
+                  <span className="text-lg font-bold font-mono-stat"><AnimatedCounter target={coinsEarned} duration={600} formatFn={(n) => '+' + n} /></span>
                 </div>
-                <p className="text-xs text-zinc-500 mt-0.5">Coins Earned</p>
+                <p className="text-xs text-zinc-500 mt-0.5">Loot Claimed</p>
               </div>
 
-              <div className="bg-zinc-900 rounded-lg p-3 text-center border border-zinc-800 shadow-[0_0_20px_rgba(234,88,12,0.08)]">
+              <div className="card-premium p-3 text-center">
                 <div className="flex items-center justify-center gap-1 text-emerald-400">
                   <TrendingUp className="size-4" />
                   <ArrowUpRight className="size-4" />
-                  <span className="text-lg font-bold">+{auraGained}</span>
+                  <span className="text-lg font-bold font-mono-stat"><AnimatedCounter target={auraGained} duration={600} formatFn={(n) => '+' + n} /></span>
                 </div>
-                <p className="text-xs text-zinc-500 mt-0.5">Aura Change</p>
+                <p className="text-xs text-zinc-500 mt-0.5">Aura Scorched</p>
               </div>
             </div>
 
@@ -151,7 +152,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
               </span>
             </div>
 
-            <Button className="w-full btn-fire h-11 text-base font-semibold animate-glow-red">
+            <Button className="w-full btn-fire btn-press h-11 text-base font-semibold animate-glow-red">
               <Coins className="size-4" />
               Claim Rewards
             </Button>
@@ -161,10 +162,10 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         {/* Appeal Option */}
         <div className="text-center pt-2 pb-4">
           <p className="text-zinc-500 text-xs mb-2">
-            Think the AI got it wrong? Appeal to the roast community
+            Think the Roastmaster was blind? Take it to the people.
           </p>
           <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-zinc-200 text-xs" onClick={onAppeal}>
-            Appeal Roast Arena
+            Appeal to the Council
           </Button>
         </div>
       </div>

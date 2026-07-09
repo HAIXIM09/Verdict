@@ -20,7 +20,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-100">Daily Quests</h2>
+          <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Orders</h2>
           <p className="text-sm text-zinc-400 mt-1">Resets in 14h 23m</p>
         </div>
         <Button
@@ -39,7 +39,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       </GuideTip>
 
       {/* Quest Cards */}
-      <div className="space-y-3">
+      <div className="stagger-1 space-y-3">
         {mockQuests.map((quest: QuestType) => {
           const progressPercent = Math.round((quest.progress / quest.target) * 100);
           const isComplete = quest.completed;
@@ -47,7 +47,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
           return (
             <div
               key={quest.id}
-              className={`rounded-xl border bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
+              className={`rounded-xl border card-premium p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
                 isComplete ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-zinc-700'
               } border-zinc-800`}
             >
@@ -73,7 +73,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                       value={progressPercent}
                       className="h-2 flex-1 [&>div]:bg-red-600"
                     />
-                    <span className="text-xs font-medium text-zinc-500 shrink-0">
+                    <span className="text-xs font-medium font-mono-stat text-zinc-500 shrink-0">
                       {quest.progress}/{quest.target}
                     </span>
                   </div>
@@ -81,13 +81,13 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                   {/* Reward */}
                   <div className="mt-2 flex items-center gap-3 text-xs">
                     {quest.reward.coins > 0 && (
-                      <span className="flex items-center gap-1 text-emerald-400">
+                      <span className="flex items-center gap-1 text-emerald-400 font-mono-stat">
                         <Coins className="size-3" />
                         +{quest.reward.coins} Coins
                       </span>
                     )}
                     {quest.reward.aura > 0 && (
-                      <span className="text-red-500 font-medium">
+                      <span className="text-red-500 font-medium font-mono-stat">
                         +{quest.reward.aura} Aura
                       </span>
                     )}
@@ -103,11 +103,11 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       <div className="rounded-xl border border-zinc-800 bg-red-950/20 p-4">
         <p className="text-sm font-semibold text-zinc-300">Today&apos;s potential</p>
         <div className="flex items-center gap-4 mt-2">
-          <span className="flex items-center gap-1.5 text-sm text-emerald-400 font-medium">
+          <span className="flex items-center gap-1.5 text-sm text-emerald-400 font-medium font-mono-stat">
             <Coins className="size-4" />
             +{totalCoins} Coins
           </span>
-          <span className="text-sm text-red-500 font-medium">
+          <span className="text-sm text-red-500 font-medium font-mono-stat">
             +{totalAura} Aura
           </span>
         </div>

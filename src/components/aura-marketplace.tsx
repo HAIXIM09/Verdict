@@ -126,7 +126,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
   };
 
   const renderGrid = (items: MarketplaceItem[]) => (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+    <div className="stagger-2 grid grid-cols-2 sm:grid-cols-3 gap-3">
       {items.map((item) => {
         const isOwned = ownedItems.has(item.id);
         const isEquipped = equippedItems.has(item.id);
@@ -160,7 +160,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                 <div className="mt-2 flex items-center justify-between">
                   <span className="text-sm font-bold text-red-500">{item.cost} Aura</span>
                   {isEquipped ? (
-                    <Badge className="bg-green-900/30 text-green-400 border-green-800/50">
+                    <Badge className="bg-red-950/30 text-red-400 border-red-800/50">
                       <Check className="size-3" />
                       Equipped
                     </Badge>
@@ -180,7 +180,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                       disabled={!canAfford}
                       onClick={() => handleBuy(item)}
                     >
-                      {canAfford ? 'Buy' : 'Not Enough Aura'}
+                      {canAfford ? 'Buy' : 'Need More Fire'}
                     </Button>
                   )}
                 </div>
@@ -197,9 +197,9 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-100">Burn Shop</h2>
+          <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Shop</h2>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-sm text-zinc-500">Your balance:</span>
+            <span className="text-sm text-zinc-500">Your stash:</span>
             <span className="text-lg font-bold text-red-500">{aura.toLocaleString()}</span>
             <span className="text-sm text-zinc-500">Aura</span>
           </div>
@@ -217,7 +217,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
 
       {/* Filter Tabs */}
       <Tabs defaultValue="all">
-        <TabsList>
+        <TabsList className="stagger-1">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="frame">Frames</TabsTrigger>
           <TabsTrigger value="title">Titles</TabsTrigger>

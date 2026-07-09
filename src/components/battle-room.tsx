@@ -180,7 +180,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
       {/* Left Column — Roast Area */}
       <div className="flex-1 lg:w-[60%] space-y-4">
         {/* Header */}
-        <Card className="bg-zinc-900 border border-zinc-800">
+        <Card className="stagger-1 bg-zinc-900 border border-zinc-800">
           <CardContent className="p-4">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
@@ -202,8 +202,8 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
                   )}
                 </div>
               </div>
-              <Button variant="outline" size="sm" className="text-zinc-500 border-zinc-700" onClick={onLeave}>
-                Leave
+              <Button variant="outline" size="sm" className="text-zinc-500 border-zinc-700 btn-press" onClick={onLeave}>
+                Retreat
               </Button>
             </div>
           </CardContent>
@@ -253,7 +253,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <Clock className={`size-4 mb-1 ${isLowTime ? 'text-red-500' : 'text-zinc-400'}`} />
-              <span className={`text-3xl font-bold tabular-nums ${isLowTime ? 'text-red-500' : 'text-zinc-100'}`}>
+              <span className={`text-3xl font-bold tabular-nums font-mono-stat ${isLowTime ? 'text-red-500' : 'text-zinc-100'}`}>
                 {formatTime(timer)}
               </span>
             </div>
@@ -261,7 +261,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         </div>
 
         {/* Teams Section */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="stagger-2 grid grid-cols-2 gap-4">
           {/* Team A */}
           <Card className="bg-red-950/20 border border-red-900/40">
             <CardContent className="p-4">
@@ -282,9 +282,9 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
           </Card>
 
           {/* Team B */}
-          <Card className="bg-blue-500/10 border border-blue-500/20">
+          <Card className="bg-[#4D7C0F]/10 border border-[#4D7C0F]/30">
             <CardContent className="p-4">
-              <h3 className="text-sm font-bold text-blue-400 mb-2 text-center">
+              <h3 className="text-sm font-bold text-[#4D7C0F] mb-2 text-center">
                 Team {battle.sideB}
               </h3>
               <div className="space-y-0.5">
@@ -302,7 +302,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         </div>
 
         {/* AI Moderation Bar */}
-        <Card className="bg-zinc-800/80 border border-zinc-800">
+        <Card className="stagger-3 bg-zinc-800/80 border border-zinc-800">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-2">
               <Scale className="size-4 text-red-500" />
@@ -327,7 +327,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         <GuideTip id="battle_reactions" title="Reactions & Power-Ups" variant="inline" className="mb-1">
           Spectators can react with emojis — high reactions boost visibility! If you&apos;re a player, use <strong className="text-zinc-200">Power-Ups</strong> (bottom of chat) to shield yourself, double your Aura, or buy extra time. Each costs coins.
         </GuideTip>
-        <Card className="bg-zinc-900 border border-zinc-800">
+        <Card className="stagger-4 bg-zinc-900 border border-zinc-800">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 flex-wrap">
               {REACTIONS.map((r, i) => (
@@ -351,7 +351,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         {/* Spectator Count */}
         <div className="flex items-center gap-2 px-1">
           <Eye className="size-4 text-zinc-400" />
-          <span className="text-sm text-zinc-500">{battle.spectators.length} Spectating</span>
+          <span className="text-sm text-zinc-500">{battle.spectators.length} Inferno Audience</span>
           <div className="flex -space-x-2 ml-2">
             {battle.spectators.slice(0, 5).map(spectator => (
               <div
@@ -377,9 +377,9 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         <div className="px-4 py-3 border-b border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <MessageSquare className="size-4 text-red-500" />
-            <span className="font-semibold text-zinc-100 text-sm">Roast Chat</span>
+            <span className="font-semibold text-zinc-100 text-sm">War Chat</span>
           </div>
-          <span className="text-xs text-zinc-400">{battle.chatMessages.length} messages</span>
+          <span className="text-xs text-zinc-400">{battle.chatMessages.length} shots fired</span>
         </div>
 
         {/* Message List */}
@@ -425,7 +425,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
           {isPlayer ? (
             <div className="flex items-center gap-2">
               <Input
-                placeholder="Drop your roast..."
+                placeholder="Drop your hottest take..."
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}
@@ -433,7 +433,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
               />
               <Button
                 size="icon"
-                className="bg-red-600 hover:bg-red-700 text-white shrink-0 shadow-lg shadow-red-600/25"
+                className="bg-red-600 hover:bg-red-700 text-white shrink-0 shadow-lg shadow-red-600/25 btn-press"
                 onClick={handleSend}
               >
                 <Send className="size-4" />
@@ -442,10 +442,10 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
           ) : (
             <div className="flex items-center justify-between">
               <Badge variant="secondary" className="text-xs bg-zinc-800 text-zinc-500 border-none">
-                Spectating
+                Watching the Flames
               </Badge>
-              <Button variant="outline" size="sm" className="btn-fire text-xs">
-                Request to Join
+              <Button variant="outline" size="sm" className="btn-fire text-xs btn-press">
+                Jump Into the Fire
               </Button>
             </div>
           )}
