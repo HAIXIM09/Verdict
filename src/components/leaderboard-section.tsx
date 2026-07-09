@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/table';
 import { mockUsers, mockCurrentUser } from '@/lib/mock-data';
 
-interface LeaderboardSectionProps {
+interface RankingsSectionProps {
   onViewProfile: (userId: string) => void;
 }
 
@@ -23,24 +23,24 @@ const top3 = sortedUsers.slice(0, 3);
 
 const medalConfig = [
   {
-    badge: '#1 CHAMPION',
-    badgeClass: 'bg-orange-600 text-white border-none',
+    badge: '#1 INFERNO',
+    badgeClass: 'bg-red-600 text-white border-none',
     borderClass: 'border-orange-400',
-    medalIcon: <Trophy className="size-6 text-orange-500" />,
+    medalIcon: <Trophy className="size-6 text-red-400" />,
     sizeClass: 'p-5',
   },
   {
-    badge: '#2 ELITE',
-    badgeClass: 'bg-stone-600 text-stone-200 border-none',
-    borderClass: 'border-stone-600',
-    medalIcon: <Medal className="size-6 text-stone-400" />,
+    badge: '#2 BLAZE',
+    badgeClass: 'bg-stone-600 text-zinc-200 border-none',
+    borderClass: 'border-zinc-700',
+    medalIcon: <Medal className="size-6 text-zinc-400" />,
     sizeClass: 'p-4',
   },
   {
-    badge: '#3 VETERAN',
-    badgeClass: 'bg-orange-600/15 text-orange-500 border-none',
-    borderClass: 'border-orange-600',
-    medalIcon: <Medal className="size-6 text-orange-700" />,
+    badge: '#3 EMBER',
+    badgeClass: 'bg-red-600/15 text-red-400 border-none',
+    borderClass: 'border-red-600',
+    medalIcon: <Medal className="size-6 text-red-500" />,
     sizeClass: 'p-4',
   },
 ];
@@ -54,7 +54,7 @@ function getInitials(name: string): string {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
-export default function LeaderboardSection({ onViewProfile }: LeaderboardSectionProps) {
+export default function RankingsSection({ onViewProfile }: RankingsSectionProps) {
   const currentUserRank = sortedUsers.findIndex(u => u.id === mockCurrentUser.id) + 1;
   const isCurrentInTop10 = currentUserRank <= 10 && currentUserRank > 0;
 
@@ -63,11 +63,11 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
       {/* Header */}
       <div>
         <div className="flex items-center gap-3">
-          <Trophy className="size-7 text-orange-500" />
-          <h1 className="text-2xl md:text-3xl font-bold text-stone-100">Champions</h1>
+          <Trophy className="size-7 text-red-400" />
+          <h1 className="text-2xl md:text-3xl font-bold text-zinc-100">Roast Kings</h1>
         </div>
-        <p className="text-stone-500 text-sm mt-1 ml-10">
-          Top verdict warriors, ranked by Aura earned in battle
+        <p className="text-zinc-500 text-sm mt-1 ml-10">
+          Top roast warriors, ranked by Aura earned in roast
         </p>
       </div>
 
@@ -78,7 +78,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
           return (
             <Card
               key={user.id}
-              className={`bg-stone-900 border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
+              className={`bg-zinc-900 border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
             >
               <CardContent className="p-0 flex flex-col items-center text-center gap-3">
                 <div className="flex items-center gap-2">
@@ -96,15 +96,15 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-stone-100 text-sm">{user.username}</h3>
-                  <p className="text-stone-400 text-xs mt-0.5">{user.rank}</p>
+                  <h3 className="font-bold text-zinc-100 text-sm">{user.username}</h3>
+                  <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
                 </div>
 
-                <Badge className="bg-orange-600/15 text-orange-500 border-none text-xs">
+                <Badge className="bg-red-600/15 text-red-400 border-none text-xs">
                   {user.aura.toLocaleString()} Aura
                 </Badge>
 
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-zinc-500">
                   {user.wins}W · {user.winRate}% WR
                 </p>
               </CardContent>
@@ -114,16 +114,16 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
       </div>
 
       {/* Full Rankings Table */}
-      <Card className="bg-stone-900 border border-stone-700">
+      <Card className="bg-zinc-900 border border-zinc-800">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="bg-stone-800/80 hover:bg-stone-800/80">
-                <TableHead className="w-12 text-stone-500 text-xs font-medium">#</TableHead>
-                <TableHead className="text-stone-500 text-xs font-medium">Fighter</TableHead>
-                <TableHead className="text-stone-500 text-xs font-medium text-right">Wins</TableHead>
-                <TableHead className="text-stone-500 text-xs font-medium text-right">Win Rate</TableHead>
-                <TableHead className="text-stone-500 text-xs font-medium text-right">Aura</TableHead>
+              <TableRow className="bg-zinc-800/80 hover:bg-zinc-800/80">
+                <TableHead className="w-12 text-zinc-500 text-xs font-medium">#</TableHead>
+                <TableHead className="text-zinc-500 text-xs font-medium">Roaster</TableHead>
+                <TableHead className="text-zinc-500 text-xs font-medium text-right">Wins</TableHead>
+                <TableHead className="text-zinc-500 text-xs font-medium text-right">Win Rate</TableHead>
+                <TableHead className="text-zinc-500 text-xs font-medium text-right">Aura</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -133,12 +133,12 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                 return (
                   <TableRow
                     key={user.id}
-                    className={`${isUser ? 'bg-orange-950/20' : rank % 2 === 0 ? 'bg-stone-800/30' : 'bg-stone-900'} ${
-                      rank === 1 ? 'border-l-4 border-l-orange-500' : ''
-                    } cursor-pointer hover:bg-stone-800`}
+                    className={`${isUser ? 'bg-red-950/20' : rank % 2 === 0 ? 'bg-zinc-800/30' : 'bg-zinc-900'} ${
+                      rank === 1 ? 'border-l-4 border-l-red-500' : ''
+                    } cursor-pointer hover:bg-zinc-800`}
                     onClick={() => onViewProfile(user.id)}
                   >
-                    <TableCell className="text-sm font-bold text-stone-100">{rank}</TableCell>
+                    <TableCell className="text-sm font-bold text-zinc-100">{rank}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div
@@ -148,18 +148,18 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                           {getInitials(user.username)}
                         </div>
                         <div className="min-w-0">
-                          <p className={`text-sm font-medium truncate ${isUser ? 'text-orange-600' : 'text-stone-100'}`}>
+                          <p className={`text-sm font-medium truncate ${isUser ? 'text-red-500' : 'text-zinc-100'}`}>
                             {user.username}
-                            {isUser && <span className="text-orange-400 ml-1">(You)</span>}
+                            {isUser && <span className="text-red-400 ml-1">(You)</span>}
                           </p>
-                          <p className="text-xs text-stone-400">{user.rank}</p>
+                          <p className="text-xs text-zinc-400">{user.rank}</p>
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right text-sm text-stone-300">{user.wins}</TableCell>
-                    <TableCell className="text-right text-sm text-stone-300">{user.winRate}%</TableCell>
+                    <TableCell className="text-right text-sm text-zinc-300">{user.wins}</TableCell>
+                    <TableCell className="text-right text-sm text-zinc-300">{user.winRate}%</TableCell>
                     <TableCell className="text-right">
-                      <Badge variant="secondary" className="bg-orange-600/15 text-orange-500 border-none text-xs font-semibold">
+                      <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold">
                         {user.aura.toLocaleString()}
                       </Badge>
                     </TableCell>
@@ -173,18 +173,18 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
 
       {/* Your Rank Sticky Footer */}
       {!isCurrentInTop10 && currentUserRank > 0 && (
-        <Card className="bg-stone-900 border-2 border-orange-300 sticky bottom-4">
+        <Card className="bg-zinc-900 border-2 border-red-400 sticky bottom-4">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-orange-950/20 flex items-center justify-center text-xs font-bold text-white">
+                <div className="size-8 rounded-full bg-red-950/20 flex items-center justify-center text-xs font-bold text-white">
                   {getInitials(mockCurrentUser.username)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-stone-100">
+                  <p className="text-sm font-semibold text-zinc-100">
                     Your Rank: #{currentUserRank}
                   </p>
-                  <p className="text-xs text-stone-500">
+                  <p className="text-xs text-zinc-500">
                     {mockCurrentUser.aura.toLocaleString()} Aura · {mockCurrentUser.winRate}% WR
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
               <Button
                 variant="outline"
                 size="sm"
-                className="text-orange-500 border-orange-700/50 hover:bg-orange-950/20 text-xs"
+                className="text-red-400 border-red-700/50 hover:bg-red-950/20 text-xs"
                 onClick={() => onViewProfile(mockCurrentUser.id)}
               >
                 View Profile

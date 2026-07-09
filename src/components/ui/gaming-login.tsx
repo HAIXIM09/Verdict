@@ -15,7 +15,7 @@ import {
 // ─── Video Background ────────────────────────────────────────────────
 export function VideoBackground({ children, videoUrl }: { children: React.ReactNode; videoUrl?: string }) {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-stone-950">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#09090b]">
       {/* Video element */}
       {videoUrl && (
         <video
@@ -28,7 +28,7 @@ export function VideoBackground({ children, videoUrl }: { children: React.ReactN
         />
       )}
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-stone-950/70" />
+      <div className="absolute inset-0 bg-[#09090b]/70" />
       {/* Content */}
       <div className="relative z-10 flex min-h-screen items-center justify-center p-4">
         {children}
@@ -65,12 +65,12 @@ function FormInput({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="text-sm font-medium text-stone-300"
+        className="text-sm font-medium text-zinc-300"
       >
         {label}
       </label>
       <div className="relative">
-        <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
+        <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
         <input
           id={id}
           type={inputType}
@@ -78,13 +78,13 @@ function FormInput({
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full rounded-lg bg-stone-800/50 border border-stone-700 py-2.5 pl-10 pr-10 text-sm text-white placeholder-stone-400 transition-colors duration-200 focus:border-orange-600/50 focus:outline-none focus:ring-1 focus:ring-orange-600/20"
+          className="w-full rounded-lg bg-zinc-800/50 border border-zinc-800 py-2.5 pl-10 pr-10 text-sm text-white placeholder-stone-400 transition-colors duration-200 focus:border-red-600/50 focus:outline-none focus:ring-1 focus:ring-red-600/20"
         />
         {isPassword && (
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-300 transition-colors duration-200"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-300 transition-colors duration-200"
             tabIndex={-1}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
@@ -114,7 +114,7 @@ function SocialButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex items-center justify-center gap-2 rounded-lg bg-stone-800/50 border border-stone-700 px-4 py-2.5 text-sm text-stone-300 transition-colors duration-200 hover:bg-stone-700/50 hover:text-white"
+      className="flex items-center justify-center gap-2 rounded-lg bg-zinc-800/50 border border-zinc-800 px-4 py-2.5 text-sm text-zinc-300 transition-colors duration-200 hover:bg-zinc-800/50 hover:text-white"
     >
       <Icon className="h-4 w-4" />
       <span>{label}</span>
@@ -139,8 +139,8 @@ function ToggleSwitch({
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-600/30 focus:ring-offset-2 focus:ring-offset-stone-900 ${
-          checked ? 'bg-orange-600' : 'bg-stone-700'
+        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-600/30 focus:ring-offset-2 focus:ring-offset-zinc-900 ${
+          checked ? 'bg-red-600' : 'bg-zinc-800'
         }`}
       >
         <span
@@ -149,7 +149,7 @@ function ToggleSwitch({
           }`}
         />
       </button>
-      <span className="text-sm text-stone-400">{label}</span>
+      <span className="text-sm text-zinc-400">{label}</span>
     </label>
   );
 }
@@ -181,14 +181,14 @@ export function LoginForm({
 
   return (
     <div className="w-full max-w-md">
-      <div className="backdrop-blur-sm bg-stone-900/60 border border-stone-700 rounded-2xl p-8 shadow-xl">
+      <div className="backdrop-blur-sm bg-zinc-900/60 border border-zinc-800 rounded-2xl p-8 shadow-xl">
         {/* Title */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-white">
-            Verdict
+          <h1 className="text-3xl font-black tracking-tight text-white">
+            ROAST<span className="text-red-500">ARENA</span>
           </h1>
-          <p className="mt-2 text-sm text-stone-400">
-            The internet&apos;s court awaits
+          <p className="mt-2 text-sm text-zinc-500">
+            Where opinions get burned
           </p>
         </div>
 
@@ -227,7 +227,7 @@ export function LoginForm({
               <button
                 type="button"
                 onClick={onForgotPassword}
-                className="text-sm text-stone-400 hover:text-orange-300 transition-colors duration-200"
+                className="text-sm text-zinc-400 hover:text-red-300 transition-colors duration-200"
               >
                 Forgot password?
               </button>
@@ -238,7 +238,7 @@ export function LoginForm({
           <button
             type="submit"
             disabled={isLoading}
-            className="relative w-full rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-600/20 transition-all duration-200 hover:bg-orange-700 hover:shadow-orange-600/30 focus:outline-none focus:ring-2 focus:ring-orange-600/40 focus:ring-offset-2 focus:ring-offset-stone-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="relative w-full rounded-xl bg-red-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition-all duration-200 hover:bg-red-700 hover:shadow-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-600/40 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">
@@ -264,16 +264,16 @@ export function LoginForm({
                 Entering...
               </span>
             ) : (
-              'Enter Verdict'
+              'Enter the Arena'
             )}
           </button>
         </form>
 
         {/* Divider */}
         <div className="my-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-stone-700" />
-          <span className="text-xs text-stone-500">or continue with</span>
-          <div className="h-px flex-1 bg-stone-700" />
+          <div className="h-px flex-1 bg-zinc-800" />
+          <span className="text-xs text-zinc-500">or continue with</span>
+          <div className="h-px flex-1 bg-zinc-800" />
         </div>
 
         {/* Social Buttons */}
@@ -296,12 +296,12 @@ export function LoginForm({
         </div>
 
         {/* Create Account */}
-        <p className="mt-6 text-center text-sm text-stone-400">
+        <p className="mt-6 text-center text-sm text-zinc-400">
           Don&apos;t have an account?{' '}
           <button
             type="button"
             onClick={onCreateAccount}
-            className="font-medium text-stone-300 hover:text-orange-300 transition-colors duration-200"
+            className="font-medium text-zinc-300 hover:text-red-300 transition-colors duration-200"
           >
             Create Account
           </button>

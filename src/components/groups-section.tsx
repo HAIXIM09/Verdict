@@ -12,14 +12,14 @@ interface GroupsSectionProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Movies: 'bg-orange-600/15 text-orange-400 border-orange-700/50',
-  Games: 'bg-orange-600/15 text-orange-400 border-orange-700/50',
-  Anime: 'bg-stone-800 text-stone-400 border-stone-600',
-  Sports: 'bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/30',
-  Food: 'bg-orange-600/15 text-orange-400 border-orange-700/50',
-  Music: 'bg-stone-800 text-stone-400 border-stone-600',
-  Tech: 'bg-orange-600/15 text-orange-400 border-orange-700/50',
-  Viral: 'bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/30',
+  Movies: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Games: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Anime: 'bg-zinc-800 text-zinc-400 border-zinc-700',
+  Sports: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
+  Food: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Music: 'bg-zinc-800 text-zinc-400 border-zinc-700',
+  Tech: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Viral: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
   Cartoons: 'bg-yellow-600/15 text-yellow-400 border-yellow-600/30',
 };
 
@@ -37,13 +37,13 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-stone-100">Verdict Groups</h2>
-        <p className="text-sm text-stone-500 mt-1">Join communities, find battle partners</p>
+        <h2 className="text-2xl font-bold text-zinc-100">Roast Arena Groups</h2>
+        <p className="text-sm text-zinc-500 mt-1">Join communities, find roast partners</p>
       </div>
 
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-stone-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
         <Input
           placeholder="Search groups..."
           value={searchQuery}
@@ -52,36 +52,36 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
         />
       </div>
 
-      {/* My Groups */}
+      {/* My Crews */}
       {myGroups.length > 0 && (
         <section>
-          <h3 className="text-base font-semibold text-stone-100 mb-3">My Groups</h3>
+          <h3 className="text-base font-semibold text-zinc-100 mb-3">My Crews</h3>
           <div className="space-y-3">
             {myGroups.map((group) => (
               <div
                 key={group.id}
-                className="rounded-xl border border-stone-700 bg-stone-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
+                className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-semibold text-stone-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-400 border-stone-700'}>
+                      <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
+                      <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
                         {group.category}
                       </Badge>
-                      <Badge className="bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/20">
+                      <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20">
                         Joined
                       </Badge>
                     </div>
-                    <p className="text-sm text-stone-500 mt-1">{group.description}</p>
-                    <div className="flex items-center gap-1 mt-2 text-xs text-stone-400">
+                    <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
+                    <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400">
                       <Users className="size-3.5" />
                       <span>{group.members.toLocaleString()} members</span>
                     </div>
                   </div>
                   <Button
                     size="sm"
-                    className="bg-orange-600 text-white hover:bg-orange-700 shrink-0 mt-1"
+                    className="bg-red-600 text-white hover:bg-red-700 shrink-0 mt-1"
                     onClick={() => onChallengeFriend(group.id)}
                   >
                     Challenge
@@ -93,26 +93,26 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
         </section>
       )}
 
-      {/* Discover Groups */}
+      {/* Find Crews */}
       {discoverGroups.length > 0 && (
         <section>
-          <h3 className="text-base font-semibold text-stone-100 mb-3">Discover Groups</h3>
+          <h3 className="text-base font-semibold text-zinc-100 mb-3">Find Crews</h3>
           <div className="space-y-3">
             {discoverGroups.map((group) => (
               <div
                 key={group.id}
-                className="rounded-xl border border-stone-700 bg-stone-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
+                className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-semibold text-stone-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-stone-800 text-stone-400 border-stone-700'}>
+                      <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
+                      <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
                         {group.category}
                       </Badge>
                     </div>
-                    <p className="text-sm text-stone-500 mt-1">{group.description}</p>
-                    <div className="flex items-center gap-1 mt-2 text-xs text-stone-400">
+                    <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
+                    <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400">
                       <Users className="size-3.5" />
                       <span>{group.members.toLocaleString()} members</span>
                     </div>
@@ -120,7 +120,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/20 hover:text-[#4D7C0F] shrink-0 mt-1"
+                    className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 shrink-0 mt-1"
                   >
                     Join
                   </Button>
@@ -133,7 +133,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
 
       {myGroups.length === 0 && discoverGroups.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-stone-500 text-sm">No groups found matching &quot;{searchQuery}&quot;</p>
+          <p className="text-zinc-500 text-sm">No groups found matching &quot;{searchQuery}&quot;</p>
         </div>
       )}
     </div>

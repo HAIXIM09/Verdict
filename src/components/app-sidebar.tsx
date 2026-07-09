@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import {
   Home,
-  Swords,
+  Flame,
   Trophy,
   Users,
   User,
   LogOut,
-  Scale,
-  Flame,
+  FlameKindling,
+  Zap,
   Coins,
 } from 'lucide-react';
 
@@ -46,16 +46,12 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { page: 'home', label: 'Home', icon: Home },
-  { page: 'battles', label: 'Battles', icon: Swords, badge: '3 Live' },
-  { page: 'leaderboard', label: 'Leaderboard', icon: Trophy },
-  { page: 'groups', label: 'Groups', icon: Users },
+  { page: 'home', label: 'Feed', icon: Home },
+  { page: 'battles', label: 'Roast Arena', icon: Flame, badge: '3 Live' },
+  { page: 'leaderboard', label: 'Rankings', icon: Trophy },
+  { page: 'groups', label: 'Crews', icon: Users },
   { page: 'profile', label: 'Profile', icon: User },
 ];
-
-function formatNumber(n: number): string {
-  return n.toLocaleString('en-US');
-}
 
 function getInitials(username: string): string {
   return username
@@ -73,21 +69,30 @@ export default function AppSidebar({
   user,
 }: AppSidebarProps) {
   const [hoveredItem, setHoveredItem] = useState<Page | null>(null);
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-60 flex-col bg-stone-950 border-r border-stone-800">
-      {/* Logo / Brand */}
-      <div className="flex items-center gap-2.5 px-5 py-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-600">
-          <Scale className="h-4.5 w-4.5 text-white" />
+    <aside
+      className={`fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-zinc-800 bg-[#09090b] transition-all duration-300 ${
+        expanded ? 'w-56' : 'w-16'
+      }`}
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(false)}
+    >
+      {/* Logo */}
+      <div className="flex items-center gap-2.5 px-4 py-5 h-16 shrink-0">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-600">
+          <Flame className="h-4.5 w-4.5 text-white" />
         </div>
-        <span className="text-lg font-bold tracking-tight text-stone-100">
-          Verdict
-        </span>
+        {expanded && (
+          <span className="text-base font-black tracking-tight text-white whitespace-nowrap">
+            ROAST<span className="text-red-500">ARENA</span>
+          </span>
+        )}
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-2" aria-label="Main navigation">
+      <nav className="flex-1 px-2 py-2" aria-label="Main navigation">
         <ul className="space-y-1">
           {NAV_ITEMS.map((item) => {
             const isActive = currentPage === item.page;
@@ -102,30 +107,35 @@ export default function AppSidebar({
                   onMouseEnter={() => setHoveredItem(item.page)}
                   onMouseLeave={() => setHoveredItem(null)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors duration-200 ${
+                  title={!expanded ? item.label : undefined}
+                  className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2.5 text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-orange-950/30 text-orange-600 border-l-2 border-orange-600'
-                      : 'text-stone-400 hover:bg-stone-800 hover:text-stone-100 border-l-2 border-transparent'
+                      ? 'bg-red-600/10 text-red-500 shadow-[inset_0_0_0_1px_rgba(239,68,68,0.3)]'
+                      : 'text-zinc-500 hover:bg-zinc-800/80 hover:text-zinc-200'
                   }`}
                 >
                   <Icon
-                    className={`h-4 w-4 shrink-0 ${
-                      isActive ? 'text-orange-600' : 'text-stone-400'
+                    className={`h-4.5 w-4.5 shrink-0 transition-colors ${
+                      isActive ? 'text-red-500' : ''
                     }`}
                   />
-                  <span className="flex-1 text-left">{item.label}</span>
-                  {item.badge && (
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium transition-colors duration-200 ${
-                        isActive
-                          ? 'bg-orange-600/15 text-orange-400'
-                          : isHovered
-                            ? 'bg-stone-800 text-stone-400'
-                            : 'bg-stone-800 text-stone-500'
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
+                  {expanded && (
+                    <>
+                      <span className="flex-1 text-left whitespace-nowrap">{item.label}</span>
+                      {item.badge && (
+                        <span
+                          className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold transition-colors ${
+                            isActive
+                              ? 'bg-red-600/20 text-red-400'
+                              : isHovered
+                                ? 'bg-zinc-800 text-zinc-400'
+                                : 'bg-zinc-800 text-zinc-600'
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                    </>
                   )}
                 </button>
               </li>
@@ -134,60 +144,79 @@ export default function AppSidebar({
         </ul>
       </nav>
 
-      {/* Bottom Section */}
-      <div className="mt-auto border-t border-stone-700 px-3 py-4">
-        {/* User Info Card */}
-        <div className="flex items-center gap-3 rounded-lg px-3 py-2">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#4D7C0F]">
-            <span className="text-xs font-semibold text-white">
-              {getInitials(user.username)}
-            </span>
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-stone-100">
-              {user.username}
-            </p>
-            <span className="inline-block rounded bg-stone-800 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-stone-500">
-              {user.rank}
-            </span>
-          </div>
-        </div>
+      {/* Bottom User Section */}
+      <div className="border-t border-zinc-800 px-2 py-3">
+        {expanded ? (
+          <>
+            {/* User Card */}
+            <div className="flex items-center gap-3 rounded-lg px-2.5 py-2">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-amber-600">
+                <span className="text-xs font-bold text-white">
+                  {getInitials(user.username)}
+                </span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-zinc-100">
+                  {user.username}
+                </p>
+                <span className="inline-flex items-center gap-1 rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                  <FlameKindling className="size-2.5" />
+                  {user.rank}
+                </span>
+              </div>
+            </div>
 
-        {/* Stats Row */}
-        <div className="mt-3 flex items-center justify-around rounded-lg bg-stone-800 px-2 py-2">
-          <div className="text-center">
-            <p className="text-xs font-semibold text-orange-600">
-              {formatNumber(user.aura)}
-            </p>
-            <p className="text-[10px] text-stone-400">Aura</p>
-          </div>
-          <div className="h-6 w-px bg-stone-700" />
-          <div className="text-center">
-            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-300">
-              <Flame className="size-3 text-orange-500" />
-              {user.streak}
-            </p>
-            <p className="text-[10px] text-stone-400">Streak</p>
-          </div>
-          <div className="h-6 w-px bg-stone-700" />
-          <div className="text-center">
-            <p className="flex items-center justify-center gap-0.5 text-xs font-semibold text-stone-300">
-              <Coins className="size-3 text-amber-500" />
-              {user.coins}
-            </p>
-            <p className="text-[10px] text-stone-400">Coins</p>
-          </div>
-        </div>
+            {/* Stats Row */}
+            <div className="mt-2.5 flex items-center justify-around rounded-lg bg-zinc-900 px-2 py-2.5">
+              <div className="text-center">
+                <p className="text-xs font-bold text-red-500">{user.aura.toLocaleString()}</p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Aura</p>
+              </div>
+              <div className="h-5 w-px bg-zinc-800" />
+              <div className="text-center">
+                <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
+                  <Zap className="size-3 text-amber-500" />
+                  {user.streak}
+                </p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Streak</p>
+              </div>
+              <div className="h-5 w-px bg-zinc-800" />
+              <div className="text-center">
+                <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
+                  <Coins className="size-3 text-amber-500" />
+                  {user.coins}
+                </p>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-wider">Coins</p>
+              </div>
+            </div>
 
-        {/* Logout */}
-        <button
-          type="button"
-          onClick={onLogout}
-          className="mt-3 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-stone-400 transition-colors duration-200 hover:bg-stone-800 hover:text-red-500"
-        >
-          <LogOut className="h-4 w-4" />
-          <span>Log Out</span>
-        </button>
+            {/* Logout */}
+            <button
+              type="button"
+              onClick={onLogout}
+              className="mt-2.5 flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-zinc-600 transition-colors hover:bg-zinc-800/80 hover:text-red-500"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Log Out</span>
+            </button>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-amber-600">
+              <span className="text-[10px] font-bold text-white">
+                {getInitials(user.username)}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={onLogout}
+              className="text-zinc-600 hover:text-red-500 transition-colors"
+              title="Log Out"
+            >
+              <LogOut className="size-4" />
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );

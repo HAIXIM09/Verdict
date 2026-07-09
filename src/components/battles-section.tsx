@@ -56,11 +56,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 function difficultyBadgeStyle(d: string): string {
   switch (d) {
-    case 'Bronze': return 'text-stone-500 border-stone-600 bg-stone-800';
-    case 'Silver': return 'text-stone-500 border-stone-500 bg-stone-800';
-    case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-950/30';
+    case 'Bronze': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
+    case 'Silver': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
+    case 'Gold': return 'text-red-500 border-red-400 bg-red-950/30';
     case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-950/30';
-    default: return 'text-stone-500 border-stone-600 bg-stone-800';
+    default: return 'text-zinc-500 border-zinc-700 bg-zinc-800';
   }
 }
 
@@ -69,11 +69,11 @@ function statusBadge(s: string) {
     case 'live':
       return <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>;
     case 'waiting':
-      return <Badge className="bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/20 text-xs">WAITING</Badge>;
-    case 'verdict':
-      return <Badge className="bg-orange-600/15 text-orange-500 border-orange-700/50 text-xs">VERDICT</Badge>;
+      return <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20 text-xs">WAITING</Badge>;
+    case 'roast':
+      return <Badge className="bg-red-600/15 text-red-400 border-red-700/50 text-xs">VERDICT</Badge>;
     case 'finished':
-      return <Badge className="bg-stone-800 text-stone-500 border-stone-700 text-xs">FINISHED</Badge>;
+      return <Badge className="bg-zinc-800 text-zinc-500 border-zinc-800 text-xs">FINISHED</Badge>;
     default:
       return null;
   }
@@ -82,20 +82,20 @@ function statusBadge(s: string) {
 function actionButton(status: string, onClick: () => void) {
   if (status === 'live') {
     return (
-      <Button size="sm" className="bg-orange-600 hover:bg-orange-700 text-white text-xs h-8" onClick={onClick}>
+      <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white text-xs h-8" onClick={onClick}>
         JOIN
       </Button>
     );
   }
   if (status === 'waiting') {
     return (
-      <Button size="sm" variant="outline" className="border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/20 text-xs h-8" onClick={onClick}>
+      <Button size="sm" variant="outline" className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 text-xs h-8" onClick={onClick}>
         SPECTATE
       </Button>
     );
   }
   return (
-    <Button size="sm" variant="outline" className="border-stone-600 text-stone-500 text-xs h-8" onClick={onClick}>
+    <Button size="sm" variant="outline" className="border-zinc-700 text-zinc-500 text-xs h-8" onClick={onClick}>
       VIEW VERDICT
     </Button>
   );
@@ -103,12 +103,12 @@ function actionButton(status: string, onClick: () => void) {
 
 function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
   return (
-    <Card className="bg-stone-900 border border-stone-700 hover:shadow-md transition-all">
+    <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all">
       <CardContent className="p-5">
         {/* Top Row */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-stone-100 truncate">
+            <h3 className="text-lg font-bold text-zinc-100 truncate">
               {battle.sideA} ⚔️ {battle.sideB}
             </h3>
           </div>
@@ -120,7 +120,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
             {battle.difficulty}
           </Badge>
-          <Badge variant="secondary" className="text-xs bg-[#4D7C0F]/20 text-[#4D7C0F] border-none">
+          <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
             {battle.category}
           </Badge>
         </div>
@@ -128,7 +128,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
         {/* Team Slots */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex flex-col items-center gap-1">
-            <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideA}</span>
+            <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideA}</span>
             <div className="flex gap-1">
               {battle.teamA.map((player, i) => (
                 <div
@@ -136,8 +136,8 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                   title={player?.username}
                   className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                     player
-                      ? 'bg-[#4D7C0F] border-[#4D7C0F]'
-                      : 'bg-transparent border-stone-600'
+                      ? 'bg-[#4D7C0F] border-emerald-500'
+                      : 'bg-transparent border-zinc-700'
                   }`}
                 >
                   {player ? getInitials(player.username) : null}
@@ -146,10 +146,10 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
             </div>
           </div>
 
-          <span className="text-stone-400 font-bold text-sm">VS</span>
+          <span className="text-zinc-400 font-bold text-sm">VS</span>
 
           <div className="flex flex-col items-center gap-1">
-            <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideB}</span>
+            <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideB}</span>
             <div className="flex gap-1">
               {battle.teamB.map((player, i) => (
                 <div
@@ -157,8 +157,8 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                   title={player?.username}
                   className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                     player
-                      ? 'bg-orange-950/30 border-orange-500'
-                      : 'bg-transparent border-stone-600'
+                      ? 'bg-red-950/30 border-orange-500'
+                      : 'bg-transparent border-zinc-700'
                   }`}
                 >
                   {player ? getInitials(player.username) : null}
@@ -169,7 +169,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
         </div>
 
         {/* Stats Row */}
-        <div className="flex items-center justify-between text-xs text-stone-500 mb-4">
+        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
           <span className="flex items-center gap-1">
             <Eye className="size-3.5" />
             {battle.spectators.length} spectators
@@ -177,7 +177,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           {battle.viewers > 0 && (
             <span>{battle.viewers} watching</span>
           )}
-          <span><Flame className="size-3 text-orange-500 inline" /> {battle.auraStake} Aura at stake</span>
+          <span><Flame className="size-3 text-red-400 inline" /> {battle.auraStake} Aura at stake</span>
         </div>
 
         {/* Action */}
@@ -207,12 +207,12 @@ export default function BattlesSection({
     return (
       <div>
         <div className="flex items-center gap-3 mb-6">
-          <Button variant="ghost" size="icon" onClick={onBack} className="text-stone-500">
+          <Button variant="ghost" size="icon" onClick={onBack} className="text-zinc-500">
             <ArrowLeft className="size-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-stone-100">Battle Arena</h1>
-            <p className="text-stone-500 text-sm">Choose a category to find your next battle</p>
+            <h1 className="text-2xl font-bold text-zinc-100">Roast Arena</h1>
+            <p className="text-zinc-500 text-sm">Choose a category to find your next roast</p>
           </div>
         </div>
 
@@ -222,7 +222,7 @@ export default function BattlesSection({
             return (
               <Card
                 key={cat.id}
-                className="bg-stone-900 rounded-xl border border-stone-700 p-6 hover:shadow-md hover:border-orange-500 transition-all cursor-pointer"
+                className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 hover:shadow-md hover:border-red-500 transition-all cursor-pointer"
                 onClick={() => onSelectCategory?.(cat.name)}
               >
                 <CardContent className="p-0 flex flex-col items-center text-center gap-3">
@@ -230,9 +230,9 @@ export default function BattlesSection({
                     {IconComp && <IconComp className="size-6" />}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-stone-100 text-sm">{cat.name}</h3>
-                    <Badge variant="secondary" className="mt-1.5 text-xs bg-stone-800 text-stone-400 border-none">
-                      {cat.battleCount} battles
+                    <h3 className="font-semibold text-zinc-100 text-sm">{cat.name}</h3>
+                    <Badge variant="secondary" className="mt-1.5 text-xs bg-zinc-800 text-zinc-400 border-none">
+                      {cat.battleCount} roasts
                     </Badge>
                   </div>
                 </CardContent>
@@ -245,22 +245,22 @@ export default function BattlesSection({
         <div className="mt-8">
           <Button
             variant="outline"
-            className="border-dashed border-stone-600 text-stone-500 hover:text-orange-600 hover:border-orange-500 w-full py-8 flex flex-col items-center gap-2"
+            className="border-dashed border-zinc-700 text-zinc-500 hover:text-red-500 hover:border-red-500 w-full py-8 flex flex-col items-center gap-2"
             onClick={() => setShowSubmitForm(!showSubmitForm)}
           >
             <Plus className="size-5" />
-            <span>Submit a New Case</span>
+            <span>Start a New Roast</span>
           </Button>
 
           {showSubmitForm && (
-            <Card className="mt-4 bg-stone-900 border border-stone-700">
+            <Card className="mt-4 bg-zinc-900 border border-zinc-800">
               <CardContent className="p-6 space-y-4">
-                <h3 className="font-semibold text-stone-100">Submit a Case for Voting</h3>
-                <p className="text-stone-500 text-sm">Community will upvote — if popular, it becomes an official battle!</p>
+                <h3 className="font-semibold text-zinc-100">Start a New Roast</h3>
+                <p className="text-zinc-500 text-sm">Community will upvote — if popular, it becomes an official roast!</p>
 
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-sm text-stone-400">Category</Label>
+                    <Label className="text-sm text-zinc-400">Category</Label>
                     <Select value={submitCategory} onValueChange={setSubmitCategory}>
                       <SelectTrigger className="w-full mt-1">
                         <SelectValue placeholder="Select a category" />
@@ -274,7 +274,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-400">Side A</Label>
+                    <Label className="text-sm text-zinc-400">Side A</Label>
                     <Input
                       placeholder="e.g. Pushpa"
                       value={submitSideA}
@@ -284,7 +284,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-400">Side B</Label>
+                    <Label className="text-sm text-zinc-400">Side B</Label>
                     <Input
                       placeholder="e.g. KGF"
                       value={submitSideB}
@@ -293,9 +293,9 @@ export default function BattlesSection({
                     />
                   </div>
 
-                  <Button className="bg-orange-600 hover:bg-orange-700 text-white w-full">
+                  <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
                     <Send className="size-4" />
-                    Submit for Voting
+                    Submit Roast
                   </Button>
                 </div>
               </CardContent>
@@ -306,7 +306,7 @@ export default function BattlesSection({
     );
   }
 
-  // Category Battles View
+  // Category Roasts View
   const categoryBattles = mockBattles.filter(b => b.category === selectedCategory);
   const filteredBattles = filter === 'all'
     ? categoryBattles
@@ -322,12 +322,12 @@ export default function BattlesSection({
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        <Button variant="ghost" size="icon" onClick={onBackToCategories} className="text-stone-500">
+        <Button variant="ghost" size="icon" onClick={onBackToCategories} className="text-zinc-500">
           <ArrowLeft className="size-5" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold text-stone-100">{selectedCategory}</h1>
-          <p className="text-stone-500 text-sm">{categoryBattles.length} battles in this category</p>
+          <h1 className="text-2xl font-bold text-zinc-100">{selectedCategory}</h1>
+          <p className="text-zinc-500 text-sm">{categoryBattles.length} roasts in this category</p>
         </div>
       </div>
 
@@ -340,8 +340,8 @@ export default function BattlesSection({
             size="sm"
             className={
               filter === tab.key
-                ? 'bg-orange-600 text-white hover:bg-orange-700'
-                : 'border-stone-700 text-stone-500 hover:text-stone-300 hover:border-stone-600'
+                ? 'bg-red-600 text-white hover:bg-red-700'
+                : 'border-zinc-800 text-zinc-500 hover:text-zinc-300 hover:border-zinc-700'
             }
             onClick={() => setFilter(tab.key)}
           >
@@ -350,10 +350,10 @@ export default function BattlesSection({
         ))}
       </div>
 
-      {/* Battle Cards Grid */}
+      {/* Roast Cards Grid */}
       {filteredBattles.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-stone-400 text-sm">No battles found with this filter.</p>
+          <p className="text-zinc-400 text-sm">No roasts found with this filter.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -371,22 +371,22 @@ export default function BattlesSection({
       <div className="mt-8">
         <Button
           variant="outline"
-          className="border-dashed border-stone-600 text-stone-500 hover:text-orange-600 hover:border-orange-500 w-full py-8 flex flex-col items-center gap-2"
+          className="border-dashed border-zinc-700 text-zinc-500 hover:text-red-500 hover:border-red-500 w-full py-8 flex flex-col items-center gap-2"
           onClick={() => setShowSubmitForm(!showSubmitForm)}
         >
           <Plus className="size-5" />
-          <span>Submit a Case for {selectedCategory}</span>
+          <span>Start a Roast for {selectedCategory}</span>
         </Button>
 
         {showSubmitForm && (
-          <Card className="mt-4 bg-stone-900 border border-stone-700">
+          <Card className="mt-4 bg-zinc-900 border border-zinc-800">
             <CardContent className="p-6 space-y-4">
-              <h3 className="font-semibold text-stone-100">Submit a Case for Voting</h3>
-              <p className="text-stone-500 text-sm">Community will upvote — if popular, it becomes an official battle!</p>
+              <h3 className="font-semibold text-zinc-100">Start a New Roast</h3>
+              <p className="text-zinc-500 text-sm">Community will upvote — if popular, it becomes an official roast!</p>
 
               <div className="space-y-3">
                 <div>
-                  <Label className="text-sm text-stone-400">Side A</Label>
+                  <Label className="text-sm text-zinc-400">Side A</Label>
                   <Input
                     placeholder={`e.g. Enter ${selectedCategory} option`}
                     value={submitSideA}
@@ -396,7 +396,7 @@ export default function BattlesSection({
                 </div>
 
                 <div>
-                  <Label className="text-sm text-stone-400">Side B</Label>
+                  <Label className="text-sm text-zinc-400">Side B</Label>
                   <Input
                     placeholder="e.g. Enter opponent"
                     value={submitSideB}
@@ -405,9 +405,9 @@ export default function BattlesSection({
                   />
                 </div>
 
-                <Button className="bg-orange-600 hover:bg-orange-700 text-white w-full">
+                <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
                   <Send className="size-4" />
-                  Submit for Voting
+                  Submit Roast
                 </Button>
               </div>
             </CardContent>

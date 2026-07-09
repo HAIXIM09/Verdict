@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Verdict — The Internet's Court",
-  description: "Join live battles, argue your case, and let AI decide the verdict. Build your Aura, climb the ranks, and prove your point.",
+  title: "Roast Arena — Where Opinions Get Burned",
+  description: "Drop your hottest takes on anime, movies, games & more. Roast your opponents, get scored on creativity and savagery, and climb the leaderboard as the ultimate roaster.",
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },

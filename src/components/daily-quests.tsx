@@ -19,13 +19,13 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stone-100">Daily Quests</h2>
-          <p className="text-sm text-stone-400 mt-1">Resets in 14h 23m</p>
+          <h2 className="text-2xl font-bold text-zinc-100">Daily Quests</h2>
+          <p className="text-sm text-zinc-400 mt-1">Resets in 14h 23m</p>
         </div>
         <Button
           variant="ghost"
           size="sm"
-          className="text-stone-500 hover:text-stone-300"
+          className="text-zinc-500 hover:text-zinc-300"
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />
@@ -42,14 +42,14 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
           return (
             <div
               key={quest.id}
-              className={`rounded-xl border bg-stone-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
-                isComplete ? 'border-l-4 border-l-orange-500' : 'border-l-4 border-l-stone-600'
-              } border-stone-700`}
+              className={`rounded-xl border bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
+                isComplete ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-stone-600'
+              } border-zinc-800`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-stone-100">{quest.title}</h4>
+                    <h4 className="text-sm font-semibold text-zinc-100">{quest.title}</h4>
                     {isComplete && (
                       <Badge className="bg-green-900/30 text-green-400 border-green-800/50">
                         <Check className="size-3" />
@@ -57,18 +57,18 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                       </Badge>
                     )}
                     {!isComplete && !quest.claimed && (
-                      <span className="text-xs text-stone-400 font-medium">In Progress</span>
+                      <span className="text-xs text-zinc-400 font-medium">In Progress</span>
                     )}
                   </div>
-                  <p className="text-sm text-stone-500 mt-0.5">{quest.description}</p>
+                  <p className="text-sm text-zinc-500 mt-0.5">{quest.description}</p>
 
                   {/* Progress */}
                   <div className="mt-3 flex items-center gap-3">
                     <Progress
                       value={progressPercent}
-                      className="h-2 flex-1 [&>div]:bg-orange-600"
+                      className="h-2 flex-1 [&>div]:bg-red-600"
                     />
-                    <span className="text-xs font-medium text-stone-500 shrink-0">
+                    <span className="text-xs font-medium text-zinc-500 shrink-0">
                       {quest.progress}/{quest.target}
                     </span>
                   </div>
@@ -76,13 +76,13 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                   {/* Reward */}
                   <div className="mt-2 flex items-center gap-3 text-xs">
                     {quest.reward.coins > 0 && (
-                      <span className="flex items-center gap-1 text-[#4D7C0F]">
+                      <span className="flex items-center gap-1 text-emerald-400">
                         <Coins className="size-3" />
                         +{quest.reward.coins} Coins
                       </span>
                     )}
                     {quest.reward.aura > 0 && (
-                      <span className="text-orange-600 font-medium">
+                      <span className="text-red-500 font-medium">
                         +{quest.reward.aura} Aura
                       </span>
                     )}
@@ -95,14 +95,14 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       </div>
 
       {/* Total Rewards Preview */}
-      <div className="rounded-xl border border-stone-700 bg-orange-950/20 p-4">
-        <p className="text-sm font-semibold text-stone-300">Today&apos;s potential</p>
+      <div className="rounded-xl border border-zinc-800 bg-red-950/20 p-4">
+        <p className="text-sm font-semibold text-zinc-300">Today&apos;s potential</p>
         <div className="flex items-center gap-4 mt-2">
-          <span className="flex items-center gap-1.5 text-sm text-[#4D7C0F] font-medium">
+          <span className="flex items-center gap-1.5 text-sm text-emerald-400 font-medium">
             <Coins className="size-4" />
             +{totalCoins} Coins
           </span>
-          <span className="text-sm text-orange-600 font-medium">
+          <span className="text-sm text-red-500 font-medium">
             +{totalAura} Aura
           </span>
         </div>

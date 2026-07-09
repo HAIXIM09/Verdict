@@ -16,7 +16,7 @@ interface Particle {
   maxLife: number;
 }
 
-const WORDS = ["VERDICT", "The Internet's", "Court", "ARGUE", "WIN"];
+const WORDS = ["ROAST", "ARENA", "BURN", "SAVAGE", "FLAME"];
 const PARTICLE_GAP = 3;
 const MOUSE_RADIUS = 80;
 
@@ -203,16 +203,15 @@ export default function ParticleTextEffect() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-64 sm:h-80 md:h-96 bg-stone-950 border border-stone-800 rounded-xl overflow-hidden cursor-crosshair"
+      className="relative w-full h-64 sm:h-80 md:h-96 bg-[#09090b] border border-zinc-800 rounded-xl overflow-hidden cursor-crosshair"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
       <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
-        <p className="text-lg font-bold text-white tracking-wide">Verdict</p>
-        <p className="text-xs text-stone-500 mt-0.5">Words change automatically</p>
+        <p className="text-lg font-black text-white tracking-widest">ROAST ARENA</p>
+        <p className="text-xs text-zinc-600 mt-0.5 uppercase tracking-widest">Where Opinions Get Burned</p>
       </div>
     </div>
   );
 }
 
-// Named export alias for flexible importing
 export { ParticleTextEffect };

@@ -18,7 +18,7 @@ import AdGate from '@/components/ad-gate';
 import { mockCurrentUser } from '@/lib/mock-data';
 import {
   Home,
-  Swords,
+  Flame,
   Trophy,
   Users,
   User,
@@ -39,33 +39,31 @@ type Page =
 type AppView = 'login' | 'app';
 
 const MOBILE_NAV_ITEMS: { page: Page; label: string; icon: React.ElementType }[] = [
-  { page: 'home', label: 'Home', icon: Home },
-  { page: 'battles', label: 'Battles', icon: Swords },
+  { page: 'home', label: 'Feed', icon: Home },
+  { page: 'battles', label: 'Arena', icon: Flame },
   { page: 'leaderboard', label: 'Ranks', icon: Trophy },
-  { page: 'groups', label: 'Groups', icon: Users },
-  { page: 'profile', label: 'Profile', icon: User },
+  { page: 'groups', label: 'Crews', icon: Users },
+  { page: 'profile', label: 'Me', icon: User },
 ];
 
-export default function VerdictApp() {
+export default function RoastArenaApp() {
   const [view, setView] = useState<AppView>('login');
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [activeBattleId, setActiveBattleId] = useState<string | null>(null);
+  const [activeRoastId, setActiveRoastId] = useState<string | null>(null);
   const [showVerdict, setShowVerdict] = useState(false);
   const [showAdGate, setShowAdGate] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // ─── Login ─────────────────────────────────────────────────
   const handleLogin = useCallback(() => {
     setView('app');
     setCurrentPage('home');
   }, []);
 
-  // ─── Navigation ────────────────────────────────────────────
   const navigateTo = useCallback((page: Page) => {
     setCurrentPage(page);
     setSelectedCategory(null);
-    setActiveBattleId(null);
+    setActiveRoastId(null);
     setShowVerdict(false);
     setShowAdGate(false);
     setMobileMenuOpen(false);
@@ -75,14 +73,13 @@ export default function VerdictApp() {
     setView('login');
     setCurrentPage('home');
     setSelectedCategory(null);
-    setActiveBattleId(null);
+    setActiveRoastId(null);
     setShowVerdict(false);
     setShowAdGate(false);
   }, []);
 
-  // ─── Battle Navigation ─────────────────────────────────────
-  const handleSelectBattle = useCallback((battleId: string) => {
-    setActiveBattleId(battleId);
+  const handleSelectRoast = useCallback((roastId: string) => {
+    setActiveRoastId(roastId);
     setCurrentPage('battle-room');
     setShowVerdict(false);
     setShowAdGate(false);
@@ -97,7 +94,7 @@ export default function VerdictApp() {
     setSelectedCategory(null);
   }, []);
 
-  const handleLeaveBattle = useCallback(() => {
+  const handleLeaveRoast = useCallback(() => {
     setShowAdGate(true);
   }, []);
 
@@ -108,13 +105,13 @@ export default function VerdictApp() {
 
   const handleAdSkip = useCallback(() => {
     setShowAdGate(false);
-    setActiveBattleId(null);
+    setActiveRoastId(null);
     setCurrentPage('battles');
   }, []);
 
   const handleVerdictContinue = useCallback(() => {
     setShowVerdict(false);
-    setActiveBattleId(null);
+    setActiveRoastId(null);
     setCurrentPage('home');
   }, []);
 
@@ -130,8 +127,8 @@ export default function VerdictApp() {
           <ParticleTextEffect />
           <LoginPage.LoginForm onSubmit={handleLogin} />
         </div>
-        <footer className="absolute bottom-4 left-0 right-0 text-center text-stone-500 text-sm z-20">
-          © 2025 Verdict. All rights reserved.
+        <footer className="absolute bottom-4 left-0 right-0 text-center text-zinc-600 text-sm z-20">
+          © 2025 Roast Arena. All rights reserved.
         </footer>
       </LoginPage.VideoBackground>
     );
@@ -148,7 +145,7 @@ export default function VerdictApp() {
   };
 
   return (
-    <div className="flex min-h-screen bg-stone-950">
+    <div className="flex min-h-screen bg-[#09090b]">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <AppSidebar
@@ -163,10 +160,10 @@ export default function VerdictApp() {
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-50">
           <div
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative z-10 w-64 h-full animate-in slide-in-from-left duration-200">
+          <div className="relative z-10 w-56 h-full animate-in slide-in-from-left duration-200">
             <AppSidebar
               currentPage={currentPage}
               onNavigate={navigateTo}
@@ -180,24 +177,29 @@ export default function VerdictApp() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto pb-20 md:pb-6">
         {/* Mobile Top Bar */}
-        <div className="md:hidden sticky top-0 z-30 bg-stone-950 border-b border-stone-800 px-4 py-3 flex items-center justify-between">
+        <div className="md:hidden sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="p-1.5 -ml-1.5 text-stone-400 hover:text-stone-100"
+            className="p-1.5 -ml-1.5 text-zinc-500 hover:text-zinc-200"
           >
             <Menu className="size-5" />
           </button>
-          <span className="font-bold text-stone-100">Verdict</span>
-          <div className="size-7 rounded-full bg-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="flex items-center gap-1.5">
+            <Flame className="size-4 text-red-500" />
+            <span className="font-black text-sm tracking-tight text-white">
+              ROAST<span className="text-red-500">ARENA</span>
+            </span>
+          </div>
+          <div className="size-7 rounded-full bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-[10px] font-bold text-white">
             {sidebarUser.username.substring(0, 2)}
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto p-6">
+        <div className="max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
           {currentPage === 'home' && (
             <HomeSection
-              onNavigateToBattle={handleSelectBattle}
+              onNavigateToRoast={handleSelectRoast}
               onNavigateToCategory={handleSelectCategory}
               onNavigateToQuests={() => navigateTo('quests')}
             />
@@ -205,7 +207,7 @@ export default function VerdictApp() {
 
           {currentPage === 'battles' && (
             <BattlesSection
-              onSelectBattle={handleSelectBattle}
+              onSelectBattle={handleSelectRoast}
               onBack={() => navigateTo('home')}
               selectedCategory={selectedCategory}
               onBackToCategories={handleBackToCategories}
@@ -213,10 +215,10 @@ export default function VerdictApp() {
             />
           )}
 
-          {currentPage === 'battle-room' && activeBattleId && !showVerdict && !showAdGate && (
+          {currentPage === 'battle-room' && activeRoastId && !showVerdict && !showAdGate && (
             <BattleRoom
-              battleId={activeBattleId}
-              onLeave={handleLeaveBattle}
+              battleId={activeRoastId}
+              onLeave={handleLeaveRoast}
               currentUser={{
                 id: mockCurrentUser.id,
                 username: mockCurrentUser.username,
@@ -241,9 +243,7 @@ export default function VerdictApp() {
 
           {currentPage === 'groups' && (
             <GroupsSection
-              onChallengeFriend={(groupId) => {
-                // In a real app, open challenge dialog
-              }}
+              onChallengeFriend={(groupId) => {}}
             />
           )}
 
@@ -262,7 +262,7 @@ export default function VerdictApp() {
           {currentPage === 'replays' && (
             <CaseReplays
               onBack={() => navigateTo('profile')}
-              onWatchReplay={(battleId) => handleSelectBattle(battleId)}
+              onWatchReplay={(roastId) => handleSelectRoast(roastId)}
             />
           )}
         </div>
@@ -280,8 +280,8 @@ export default function VerdictApp() {
         )}
       </main>
 
-      {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-stone-900 border-t border-stone-700 safe-area-inset-bottom">
+      {/* Mobile Bottom Nav — glass morphism */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800/50 bg-[#09090b]/80 backdrop-blur-xl safe-area-inset-bottom">
         <div className="flex items-center justify-around h-14">
           {MOBILE_NAV_ITEMS.map((item) => {
             const isActive = currentPage === item.page || (item.page === 'battles' && currentPage === 'battle-room');
@@ -291,11 +291,13 @@ export default function VerdictApp() {
                 key={item.page}
                 type="button"
                 onClick={() => navigateTo(item.page)}
-                className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors ${
-                  isActive ? 'text-orange-600' : 'text-stone-400 hover:text-stone-400'
+                className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all ${
+                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-400'
                 }`}
               >
-                <Icon className="size-5" />
+                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/10' : ''}`}>
+                  <Icon className="size-4.5" />
+                </div>
                 <span className="text-[10px] font-medium">{item.label}</span>
               </button>
             );

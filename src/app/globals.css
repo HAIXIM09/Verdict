@@ -42,38 +42,48 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.12 0.005 50);
-  --foreground: oklch(0.93 0.005 50);
-  --card: oklch(0.16 0.005 50);
-  --card-foreground: oklch(0.93 0.005 50);
-  --popover: oklch(0.16 0.005 50);
-  --popover-foreground: oklch(0.93 0.005 50);
-  --primary: oklch(0.65 0.22 45);
+  --radius: 0.75rem;
+  /* Deep black base with slight red warmth */
+  --background: oklch(0.08 0.005 20);
+  --foreground: oklch(0.95 0.005 50);
+  /* Cards slightly lighter than bg */
+  --card: oklch(0.12 0.005 20);
+  --card-foreground: oklch(0.95 0.005 50);
+  --popover: oklch(0.12 0.005 20);
+  --popover-foreground: oklch(0.95 0.005 50);
+  /* RED primary — aggressive, fire-like */
+  --primary: oklch(0.58 0.25 25);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.22 0.005 50);
-  --secondary-foreground: oklch(0.85 0.01 90);
-  --muted: oklch(0.2 0.005 50);
-  --muted-foreground: oklch(0.6 0.01 50);
-  --accent: oklch(0.22 0.01 45);
-  --accent-foreground: oklch(0.85 0.01 90);
+  /* Secondary: warm charcoal */
+  --secondary: oklch(0.17 0.005 20);
+  --secondary-foreground: oklch(0.82 0.01 80);
+  /* Muted */
+  --muted: oklch(0.15 0.005 20);
+  --muted-foreground: oklch(0.55 0.01 30);
+  /* Accent: amber/gold for highlights */
+  --accent: oklch(0.18 0.02 80);
+  --accent-foreground: oklch(0.85 0.02 80);
+  /* Destructive */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.28 0.005 50);
-  --input: oklch(0.22 0.005 50);
-  --ring: oklch(0.65 0.22 45);
-  --chart-1: oklch(0.65 0.22 45);
-  --chart-2: oklch(0.55 0.15 145);
-  --chart-3: oklch(0.75 0.15 80);
-  --chart-4: oklch(0.6 0.1 30);
-  --chart-5: oklch(0.5 0.12 145);
-  --sidebar: oklch(0.11 0.005 45);
+  /* Borders — dark warm gray */
+  --border: oklch(0.2 0.005 20);
+  --input: oklch(0.17 0.005 20);
+  --ring: oklch(0.58 0.25 25);
+  /* Chart colors: red, amber, emerald, orange, rose */
+  --chart-1: oklch(0.58 0.25 25);
+  --chart-2: oklch(0.75 0.18 75);
+  --chart-3: oklch(0.65 0.17 160);
+  --chart-4: oklch(0.65 0.22 40);
+  --chart-5: oklch(0.55 0.22 10);
+  /* Sidebar: darkest layer */
+  --sidebar: oklch(0.07 0.005 20);
   --sidebar-foreground: oklch(0.9 0.005 50);
-  --sidebar-primary: oklch(0.65 0.22 45);
+  --sidebar-primary: oklch(0.58 0.25 25);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.2 0.015 45);
+  --sidebar-accent: oklch(0.15 0.015 25);
   --sidebar-accent-foreground: oklch(0.9 0.005 50);
-  --sidebar-border: oklch(0.25 0.005 45);
-  --sidebar-ring: oklch(0.65 0.22 45);
+  --sidebar-border: oklch(0.18 0.005 25);
+  --sidebar-ring: oklch(0.58 0.25 25);
 }
 
 @layer base {
@@ -83,6 +93,22 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.1 0.005 20);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.25 0.005 20);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.35 0.005 20);
 }
 
 @keyframes spotlight {
@@ -98,4 +124,44 @@
 
 .animate-spotlight {
   animation: spotlight 2s ease 0.75s 1 forwards;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px oklch(0.58 0.25 25 / 0.3); }
+  50% { box-shadow: 0 0 20px oklch(0.58 0.25 25 / 0.6); }
+}
+
+@keyframes burn-bar {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.animate-flicker {
+  animation: flicker 2s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.burn-gradient {
+  background: linear-gradient(90deg, #DC2626, #F59E0B, #EF4444, #F97316);
+  background-size: 200% 100%;
+  animation: burn-bar 3s linear infinite;
+}
+
+.fire-border {
+  border-image: linear-gradient(135deg, #DC2626, #F59E0B) 1;
+}
+
+/* Glass morphism utility */
+.glass {
+  background: oklch(0.12 0.005 20 / 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
