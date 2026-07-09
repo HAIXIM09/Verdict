@@ -1,11 +1,13 @@
 'use client';
 
-import { Eye, Play, Flame, Target, ChevronRight } from 'lucide-react';
+import { Eye, Play, Flame, Target, ChevronRight, Swords } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { SplineScene } from '@/components/ui/splite';
+import { Spotlight } from '@/components/ui/spotlight';
 import {
   mockBattles,
   mockQuests,
@@ -55,16 +57,53 @@ export default function HomeSection({ onNavigateToBattle, onNavigateToCategory, 
 
   return (
     <div className="space-y-8">
-      {/* Welcome Banner */}
-      <section className="bg-[#4D7C0F]/10 border border-[#4D7C0F]/20 rounded-2xl p-6 md:p-8">
-        <div className="flex items-center gap-2 mb-1">
-          <Target className="size-5 text-[#4D7C0F]" />
-          <span className="text-sm font-medium text-[#4D7C0F]">Welcome back,</span>
+      {/* Hero Banner with 3D Spline */}
+      <section className="relative w-full h-[420px] md:h-[500px] rounded-2xl overflow-hidden bg-stone-900">
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20"
+          fill="#EA580C"
+        />
+
+        <div className="flex h-full">
+          {/* Left content */}
+          <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="size-5 text-[#4D7C0F]" />
+              <span className="text-sm font-medium text-[#4D7C0F]">Welcome back,</span>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-stone-400">
+              {mockCurrentUser.username}
+            </h1>
+            <p className="mt-4 text-stone-400 max-w-lg text-sm md:text-base leading-relaxed">
+              Your next verdict awaits. Join live battles, argue your case, and
+              climb the leaderboard with strategic brilliance.
+            </p>
+            <div className="flex items-center gap-3 mt-6">
+              <Button
+                className="bg-orange-600 hover:bg-orange-700 text-white"
+                onClick={() => onNavigateToCategory('Movies')}
+              >
+                <Swords className="size-4 mr-2" />
+                Find a Battle
+              </Button>
+              <Button
+                variant="outline"
+                className="border-stone-600 text-stone-300 hover:bg-stone-800 hover:text-white"
+                onClick={onNavigateToQuests}
+              >
+                Daily Quests
+              </Button>
+            </div>
+          </div>
+
+          {/* Right 3D scene */}
+          <div className="flex-1 relative hidden md:block">
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+            />
+          </div>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-stone-900">
-          {mockCurrentUser.username}
-        </h1>
-        <p className="text-stone-500 mt-1">Your next verdict awaits</p>
       </section>
 
       {/* Verdict of the Day */}
