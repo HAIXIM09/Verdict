@@ -24,6 +24,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { mockBattles, mockCurrentUser, type BattleCase, type ChatMessage, type User } from '@/lib/mock-data';
 import { GuideTip } from '@/components/newbie-guide';
 
@@ -180,195 +182,212 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
       {/* Left Column — Roast Area */}
       <div className="flex-1 lg:w-[60%] space-y-4">
         {/* Header */}
-        <Card className="stagger-1 bg-zinc-900 border border-zinc-800">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <div>
-                <h1 className="text-xl font-bold text-zinc-100">
-                  {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1" /> {battle.sideB}
-                </h1>
-                <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
-                    {battle.category}
-                  </Badge>
-                  <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
-                    {battle.difficulty}
-                  </Badge>
-                  {battle.status === 'live' && (
-                    <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>
-                  )}
-                  {battle.status === 'waiting' && (
-                    <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20 text-xs">WAITING</Badge>
-                  )}
+        <ScrollReveal delay={0}>
+          <Card className="card-premium bg-zinc-900 border border-zinc-800/60">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div>
+                  <h1 className="text-xl font-bold text-zinc-100">
+                    {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1" /> {battle.sideB}
+                  </h1>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
+                      {battle.category}
+                    </Badge>
+                    <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
+                      {battle.difficulty}
+                    </Badge>
+                    {battle.status === 'live' && (
+                      <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>
+                    )}
+                    {battle.status === 'waiting' && (
+                      <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20 text-xs">WAITING</Badge>
+                    )}
+                  </div>
                 </div>
+                <Button variant="outline" size="sm" className="text-zinc-500 border-zinc-700 btn-press" onClick={onLeave}>
+                  Retreat
+                </Button>
               </div>
-              <Button variant="outline" size="sm" className="text-zinc-500 border-zinc-700 btn-press" onClick={onLeave}>
-                Retreat
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
 
         {/* Timer */}
+        <ScrollReveal delay={0.05}>
+          {/* Newbie Guide — Battle Room */}
+          <GuideTip id="battle_room_basics" title="Your First Roast" variant="inline">
+            The timer counts down to the verdict. Type your roasts in the chat on the right — the AI Roastmaster scores each argument. Be creative, funny, and savage for max points!
+          </GuideTip>
 
-        {/* Newbie Guide — Battle Room */}
-        <GuideTip id="battle_room_basics" title="Your First Roast" variant="inline">
-          The timer counts down to the verdict. Type your roasts in the chat on the right — the AI Roastmaster scores each argument. Be creative, funny, and savage for max points!
-        </GuideTip>
-
-        <div className="flex justify-center py-4">
-          <div className="relative flex items-center justify-center">
-            <svg className="size-32 -rotate-90" viewBox="0 0 120 120">
-              <defs>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-              <circle
-                cx="60"
-                cy="60"
-                r="54"
-                fill="none"
-                stroke="#292524"
-                strokeWidth="6"
-              />
-              <g filter="url(#glow)">
+          <div className="flex justify-center py-4">
+            <div className={`relative flex items-center justify-center ${isLowTime ? 'animate-glow-pulse rounded-full' : ''}`}>
+              <svg className="size-32 -rotate-90" viewBox="0 0 120 120">
+                <defs>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feGaussianBlur stdDeviation="8" result="wideBlur" />
+                    <feMerge>
+                      <feMergeNode in="wideBlur" />
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
                 <circle
                   cx="60"
                   cy="60"
                   r="54"
                   fill="none"
-                  stroke={isLowTime ? '#DC2626' : '#EA580C'}
+                  stroke="#292524"
                   strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={strokeDashoffset}
-                  className="transition-all duration-1000"
                 />
-              </g>
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <Clock className={`size-4 mb-1 ${isLowTime ? 'text-red-500' : 'text-zinc-400'}`} />
-              <span className={`text-3xl font-bold tabular-nums font-mono-stat ${isLowTime ? 'text-red-500' : 'text-zinc-100'}`}>
-                {formatTime(timer)}
-              </span>
+                <g filter="url(#glow)">
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="54"
+                    fill="none"
+                    stroke={isLowTime ? '#DC2626' : '#EA580C'}
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={strokeDashoffset}
+                    className="transition-all duration-1000"
+                  />
+                </g>
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <Clock className={`size-4 mb-1 ${isLowTime ? 'text-red-500' : 'text-zinc-400'}`} />
+                <span className={`text-3xl font-bold font-mono-stat ${isLowTime ? 'text-red-500' : 'text-zinc-100'}`}>
+                  {formatTime(timer)}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Teams Section */}
-        <div className="stagger-2 grid grid-cols-2 gap-4">
-          {/* Team A */}
-          <Card className="bg-red-950/20 border border-red-900/40">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-bold text-red-500 mb-2 text-center">
-                Team {battle.sideA}
-              </h3>
-              <div className="space-y-0.5">
-                {battle.teamA.map((player, i) => (
-                  <PlayerSlot
-                    key={`a-${i}`}
-                    player={player}
-                    isCurrentUser={player?.id === currentUser.id}
-                    team="A"
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <ScrollReveal delay={0.1}>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Team A */}
+            <TiltCard glowColor="rgba(220, 38, 38, 0.4)" className="rounded-xl">
+              <Card className="bg-red-950/20 border border-red-900/40">
+                <CardContent className="p-4">
+                  <h3 className="text-sm font-bold text-red-500 mb-2 text-center uppercase tracking-widest">
+                    Team {battle.sideA}
+                  </h3>
+                  <div className="space-y-0.5">
+                    {battle.teamA.map((player, i) => (
+                      <PlayerSlot
+                        key={`a-${i}`}
+                        player={player}
+                        isCurrentUser={player?.id === currentUser.id}
+                        team="A"
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TiltCard>
 
-          {/* Team B */}
-          <Card className="bg-[#4D7C0F]/10 border border-[#4D7C0F]/30">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-bold text-[#4D7C0F] mb-2 text-center">
-                Team {battle.sideB}
-              </h3>
-              <div className="space-y-0.5">
-                {battle.teamB.map((player, i) => (
-                  <PlayerSlot
-                    key={`b-${i}`}
-                    player={player}
-                    isCurrentUser={player?.id === currentUser.id}
-                    team="B"
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            {/* Team B */}
+            <TiltCard glowColor="rgba(77, 124, 15, 0.4)" className="rounded-xl">
+              <Card className="bg-[#4D7C0F]/10 border border-[#4D7C0F]/30">
+                <CardContent className="p-4">
+                  <h3 className="text-sm font-bold text-[#4D7C0F] mb-2 text-center uppercase tracking-widest">
+                    Team {battle.sideB}
+                  </h3>
+                  <div className="space-y-0.5">
+                    {battle.teamB.map((player, i) => (
+                      <PlayerSlot
+                        key={`b-${i}`}
+                        player={player}
+                        isCurrentUser={player?.id === currentUser.id}
+                        team="B"
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TiltCard>
+          </div>
+        </ScrollReveal>
 
         {/* AI Moderation Bar */}
-        <Card className="stagger-3 bg-zinc-800/80 border border-zinc-800">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 mb-2">
-              <Scale className="size-4 text-red-500" />
-              <Badge className="bg-red-600 text-white border-none text-xs">AI Roastmaster Active</Badge>
-            </div>
-            <ScrollArea className="max-h-24">
-              <div className="space-y-1">
-                {battle.chatMessages
-                  .filter(m => m.type === 'ai_kick' || m.type === 'ai_warning')
-                  .slice(-3)
-                  .map(msg => (
-                    <div key={msg.id} className="text-xs text-zinc-500">
-                      <span className="text-red-500 font-medium">[AI]</span> {msg.text}
-                    </div>
-                  ))}
+        <ScrollReveal delay={0.15}>
+          <Card className="premium-glow bg-zinc-800/80 border border-zinc-800">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Scale className="size-4 text-red-500" />
+                <Badge className="bg-red-600 text-white border-none text-xs">AI Roastmaster Active</Badge>
               </div>
-            </ScrollArea>
-          </CardContent>
-        </Card>
+              <ScrollArea className="max-h-24">
+                <div className="space-y-1">
+                  {battle.chatMessages
+                    .filter(m => m.type === 'ai_kick' || m.type === 'ai_warning')
+                    .slice(-3)
+                    .map(msg => (
+                      <div key={msg.id} className="text-xs text-zinc-500">
+                        <span className="text-red-500 font-medium">[AI]</span> {msg.text}
+                      </div>
+                    ))}
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
 
         {/* Spectator Reactions Bar */}
-        <GuideTip id="battle_reactions" title="Reactions & Power-Ups" variant="inline" className="mb-1">
-          Spectators can react with emojis — high reactions boost visibility! If you&apos;re a player, use <strong className="text-zinc-200">Power-Ups</strong> (bottom of chat) to shield yourself, double your Aura, or buy extra time. Each costs coins.
-        </GuideTip>
-        <Card className="stagger-4 bg-zinc-900 border border-zinc-800">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 flex-wrap">
-              {REACTIONS.map((r, i) => (
-                <button
-                  key={r.label}
-                  className="bg-zinc-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-zinc-800 transition-colors"
-                  onClick={() => {
-                    const next = [...reactionCounts];
-                    next[i] += 1;
-                    setReactionCounts(next);
-                  }}
-                >
-                  <r.icon className="size-4" />
-                  <span className="text-xs text-zinc-500">{reactionCounts[i]}</span>
-                </button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <ScrollReveal delay={0}>
+          <GuideTip id="battle_reactions" title="Reactions & Power-Ups" variant="inline" className="mb-1">
+            Spectators can react with emojis — high reactions boost visibility! If you&apos;re a player, use <strong className="text-zinc-200">Power-Ups</strong> (bottom of chat) to shield yourself, double your Aura, or buy extra time. Each costs coins.
+          </GuideTip>
+          <Card className="bg-zinc-900 border border-zinc-800">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                {REACTIONS.map((r, i) => (
+                  <button
+                    key={r.label}
+                    className="bg-zinc-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:bg-zinc-700"
+                    onClick={() => {
+                      const next = [...reactionCounts];
+                      next[i] += 1;
+                      setReactionCounts(next);
+                    }}
+                  >
+                    <r.icon className="size-4" />
+                    <span className="text-xs text-zinc-500">{reactionCounts[i]}</span>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </ScrollReveal>
 
         {/* Spectator Count */}
-        <div className="flex items-center gap-2 px-1">
-          <Eye className="size-4 text-zinc-400" />
-          <span className="text-sm text-zinc-500">{battle.spectators.length} Inferno Audience</span>
-          <div className="flex -space-x-2 ml-2">
-            {battle.spectators.slice(0, 5).map(spectator => (
-              <div
-                key={spectator.id}
-                className="size-7 rounded-full border-2 border-zinc-800 flex items-center justify-center text-[9px] font-bold text-white"
-                style={{ background: 'linear-gradient(135deg, #EA580C, #DC2626)' }}
-              >
-                {getInitials(spectator.username)}
-              </div>
-            ))}
-            {battle.spectators.length > 5 && (
-              <div className="size-7 rounded-full bg-zinc-800 border-2 border-zinc-800 flex items-center justify-center text-[9px] font-medium text-zinc-400">
-                +{battle.spectators.length - 5}
-              </div>
-            )}
+        <ScrollReveal delay={0.05}>
+          <div className="flex items-center gap-2 px-1">
+            <Eye className="size-4 text-zinc-400" />
+            <span className="text-sm text-zinc-500">{battle.spectators.length} Inferno Audience</span>
+            <div className="flex -space-x-2 ml-2">
+              {battle.spectators.slice(0, 5).map(spectator => (
+                <div
+                  key={spectator.id}
+                  className="size-7 rounded-full border-2 border-zinc-800 flex items-center justify-center text-[9px] font-bold text-white shadow-md"
+                  style={{ background: 'linear-gradient(135deg, #EA580C, #DC2626)' }}
+                >
+                  {getInitials(spectator.username)}
+                </div>
+              ))}
+              {battle.spectators.length > 5 && (
+                <div className="size-7 rounded-full bg-zinc-800 border-2 border-zinc-800 flex items-center justify-center text-[9px] font-medium text-zinc-400 shadow-md">
+                  +{battle.spectators.length - 5}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* Right Column — Chat */}
@@ -377,7 +396,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         <div className="px-4 py-3 border-b border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <MessageSquare className="size-4 text-red-500" />
-            <span className="font-semibold text-zinc-100 text-sm">War Chat</span>
+            <span className="font-semibold text-zinc-100 text-sm uppercase tracking-wider">War Chat</span>
           </div>
           <span className="text-xs text-zinc-400">{battle.chatMessages.length} shots fired</span>
         </div>
@@ -405,7 +424,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
             return (
               <button
                 key={pu.label}
-                className={`bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-400 flex items-center gap-1.5 transition-colors ${
+                className={`bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-400 flex items-center gap-1.5 transition-all duration-300 ${
                   canAfford ? 'hover:bg-red-600/10 hover:border-red-600 hover:text-red-400' : 'opacity-40 cursor-not-allowed'
                 }`}
                 disabled={!canAfford}
@@ -429,11 +448,11 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}
-                className="text-sm"
+                className="text-sm focus:ring-2 focus:ring-red-500/60 focus:border-red-500/40 focus:shadow-[0_0_16px_rgba(220,38,38,0.15)]"
               />
               <Button
                 size="icon"
-                className="bg-red-600 hover:bg-red-700 text-white shrink-0 shadow-lg shadow-red-600/25 btn-press"
+                className="btn-fire text-white shrink-0 btn-press"
                 onClick={handleSend}
               >
                 <Send className="size-4" />

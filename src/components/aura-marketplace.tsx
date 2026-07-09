@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { useToast } from '@/hooks/use-toast';
 import { mockMarketplaceItems, mockCurrentUser, type MarketplaceItem } from '@/lib/mock-data';
 
@@ -134,59 +136,60 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
         const rarity = rarityColors[item.rarity];
 
         return (
-          <Card
-            key={item.id}
-            className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-red-400' : rarity.border} ${isEquipped ? 'ring-2 ring-red-600 ring-offset-1 ring-offset-zinc-900' : ''}`}
-          >
-            <CardContent className="p-0">
-              {/* Rarity + Preview */}
-              <div className="relative p-3">
-                <div className="flex items-center gap-1.5 absolute top-2 left-3 z-10">
-                  <div className={`size-2 rounded-full ${rarity.dot}`} />
-                  <span className="text-[10px] font-medium text-zinc-500">{rarity.label}</span>
+          <TiltCard key={item.id} maxTilt={4}>
+            <Card
+              className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-red-400' : rarity.border} ${isEquipped ? 'ring-2 ring-red-600 ring-offset-1 ring-offset-zinc-900' : ''}`}
+            >
+              <CardContent className="p-0">
+                {/* Rarity + Preview */}
+                <div className="relative p-3">
+                  <div className="flex items-center gap-1.5 absolute top-2 left-3 z-10">
+                    <div className={`size-2 rounded-full ${rarity.dot}`} />
+                    <span className="text-[10px] font-medium text-zinc-500">{rarity.label}</span>
+                  </div>
+                  <ItemPreview item={item} />
                 </div>
-                <ItemPreview item={item} />
-              </div>
 
-              {/* Info */}
-              <div className="px-3 pb-3 pt-1 border-t border-zinc-800">
-                <div className="flex items-center gap-1.5 mb-1">
-                  {typeIcons[item.type]}
-                  <span className="text-[10px] uppercase font-medium text-zinc-400 tracking-wider">{item.type}</span>
-                </div>
-                <h4 className="text-sm font-semibold text-zinc-100 truncate">{item.name}</h4>
+                {/* Info */}
+                <div className="px-3 pb-3 pt-1 border-t border-zinc-800">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    {typeIcons[item.type]}
+                    <span className="text-[10px] uppercase font-medium text-zinc-400 tracking-wider">{item.type}</span>
+                  </div>
+                  <h4 className="text-sm font-semibold text-zinc-100 truncate">{item.name}</h4>
 
-                {/* Action */}
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="text-sm font-bold text-red-500">{item.cost} Aura</span>
-                  {isEquipped ? (
-                    <Badge className="bg-red-950/30 text-red-400 border-red-800/50">
-                      <Check className="size-3" />
-                      Equipped
-                    </Badge>
-                  ) : isOwned ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-7 text-xs border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400"
-                      onClick={() => handleEquip(item)}
-                    >
-                      Equip
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      className="h-7 text-xs bg-red-600 text-white hover:bg-red-700 disabled:bg-zinc-800 disabled:text-zinc-500"
-                      disabled={!canAfford}
-                      onClick={() => handleBuy(item)}
-                    >
-                      {canAfford ? 'Buy' : 'Need More Fire'}
-                    </Button>
-                  )}
+                  {/* Action */}
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-sm font-bold text-red-500 font-mono-stat">{item.cost} Aura</span>
+                    {isEquipped ? (
+                      <Badge className="badge-glow-red bg-red-950/30 text-red-400 border-red-800/50">
+                        <Check className="size-3" />
+                        Equipped
+                      </Badge>
+                    ) : isOwned ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-7 text-xs border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 transition-all duration-300"
+                        onClick={() => handleEquip(item)}
+                      >
+                        Equip
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        className="btn-fire h-7 text-xs disabled:bg-zinc-800 disabled:text-zinc-500"
+                        disabled={!canAfford}
+                        onClick={() => handleBuy(item)}
+                      >
+                        {canAfford ? 'Buy' : 'Need More Fire'}
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </TiltCard>
         );
       })}
     </div>
@@ -195,34 +198,36 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Shop</h2>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-sm text-zinc-500">Your stash:</span>
-            <span className="text-lg font-bold text-red-500">{aura.toLocaleString()}</span>
-            <span className="text-sm text-zinc-500">Aura</span>
+      <ScrollReveal>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Shop</h2>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-sm text-zinc-500">Your stash:</span>
+              <span className="text-lg font-bold text-red-500 font-mono-stat">{aura.toLocaleString()}</span>
+              <span className="text-sm text-zinc-500">Aura</span>
+            </div>
           </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-zinc-500 hover:text-zinc-300 transition-all duration-300"
+            onClick={onBack}
+          >
+            <ArrowLeft className="size-4" />
+            Back
+          </Button>
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-zinc-500 hover:text-zinc-300"
-          onClick={onBack}
-        >
-          <ArrowLeft className="size-4" />
-          Back
-        </Button>
-      </div>
+      </ScrollReveal>
 
       {/* Filter Tabs */}
       <Tabs defaultValue="all">
         <TabsList className="stagger-1">
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="frame">Frames</TabsTrigger>
-          <TabsTrigger value="title">Titles</TabsTrigger>
-          <TabsTrigger value="badge">Badges</TabsTrigger>
-          <TabsTrigger value="effect">Effects</TabsTrigger>
+          <TabsTrigger value="all" className="transition-all duration-300">All</TabsTrigger>
+          <TabsTrigger value="frame" className="transition-all duration-300">Frames</TabsTrigger>
+          <TabsTrigger value="title" className="transition-all duration-300">Titles</TabsTrigger>
+          <TabsTrigger value="badge" className="transition-all duration-300">Badges</TabsTrigger>
+          <TabsTrigger value="effect" className="transition-all duration-300">Effects</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-4">

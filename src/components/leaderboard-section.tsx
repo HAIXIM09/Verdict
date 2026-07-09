@@ -12,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { mockUsers, mockCurrentUser } from '@/lib/mock-data';
 import { GuideTip } from '@/components/newbie-guide';
 
@@ -27,6 +29,7 @@ const medalConfig = [
     badge: '#1 INFERNO',
     badgeClass: 'bg-red-600 text-white border-none',
     borderClass: 'border-orange-400',
+    glowColor: 'rgba(234, 88, 12, 0.5)',
     medalIcon: <Trophy className="size-6 text-red-400" />,
     sizeClass: 'p-5',
   },
@@ -34,6 +37,7 @@ const medalConfig = [
     badge: '#2 BLAZE',
     badgeClass: 'bg-zinc-700 text-zinc-200 border-none',
     borderClass: 'border-zinc-700',
+    glowColor: 'rgba(161, 161, 170, 0.4)',
     medalIcon: <Medal className="size-6 text-zinc-400" />,
     sizeClass: 'p-4',
   },
@@ -41,6 +45,7 @@ const medalConfig = [
     badge: '#3 EMBER',
     badgeClass: 'bg-red-600/15 text-red-400 border-none',
     borderClass: 'border-red-600',
+    glowColor: 'rgba(220, 38, 38, 0.4)',
     medalIcon: <Medal className="size-6 text-red-500" />,
     sizeClass: 'p-4',
   },
@@ -62,123 +67,130 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <div className="flex items-center gap-3">
-          <Trophy className="size-7 text-red-400" />
-          <h1 className="text-2xl md:text-3xl font-bold font-heading text-zinc-100">Roast Kings</h1>
+      <ScrollReveal>
+        <div>
+          <div className="flex items-center gap-3">
+            <Trophy className="size-7 text-red-400" />
+            <h1 className="text-2xl md:text-3xl font-bold font-heading text-zinc-100">Roast Kings</h1>
+          </div>
+          <p className="text-zinc-500 text-sm mt-1 ml-10">
+            Top roast warriors, ranked by Aura earned in roast
+          </p>
         </div>
-        <p className="text-zinc-500 text-sm mt-1 ml-10">
-          Top roast warriors, ranked by Aura earned in roast
-        </p>
-      </div>
+      </ScrollReveal>
 
       <GuideTip id="leaderboard_explain" title="Aura = Your Score" variant="inline">
         The leaderboard ranks every roaster by total <strong className="text-zinc-200">Aura</strong> — the points you earn from winning battles. Win more, roast harder, and climb to the top. Top 3 get special badges!
       </GuideTip>
 
       {/* Top 3 Cards */}
-      <div className="stagger-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {top3.map((user, i) => {
-          const config = medalConfig[i];
-          return (
-            <Card
-              key={user.id}
-              className={`card-premium border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
-            >
-              <CardContent className="p-0 flex flex-col items-center text-center gap-3">
-                <div className="flex items-center gap-2">
-                  {config.medalIcon}
-                  <Badge className={`text-xs ${config.badgeClass}`}>
-                    {config.badge}
-                  </Badge>
-                </div>
-
-                <div
-                  className="size-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
-                  style={{ backgroundColor: avatarBg(i) }}
+      <ScrollReveal delay={0.1}>
+        <div className="stagger-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {top3.map((user, i) => {
+            const config = medalConfig[i];
+            return (
+              <TiltCard key={user.id} maxTilt={6} glowColor={config.glowColor}>
+                <Card
+                  className={`card-premium border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
                 >
-                  {getInitials(user.username)}
-                </div>
+                  <CardContent className="p-0 flex flex-col items-center text-center gap-3">
+                    <div className="flex items-center gap-2">
+                      {config.medalIcon}
+                      <Badge className={`text-xs ${config.badgeClass}`}>
+                        {config.badge}
+                      </Badge>
+                    </div>
 
-                <div>
-                  <h3 className="font-bold text-zinc-100 text-sm">{user.username}</h3>
-                  <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
-                </div>
+                    <div
+                      className="size-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
+                      style={{ backgroundColor: avatarBg(i) }}
+                    >
+                      {getInitials(user.username)}
+                    </div>
 
-                <Badge className="bg-red-600/15 text-red-400 border-none text-xs">
-                  <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
-                </Badge>
+                    <div>
+                      <h3 className="font-bold text-zinc-100 text-sm">{user.username}</h3>
+                      <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
+                    </div>
 
-                <p className="text-xs text-zinc-500">
-                  {user.wins}W · {user.winRate}% WR
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+                    <Badge className="bg-red-600/15 text-red-400 border-none text-xs">
+                      <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
+                    </Badge>
+
+                    <p className="text-xs text-zinc-500 font-mono-stat">
+                      {user.wins}W · {user.winRate}% WR
+                    </p>
+                  </CardContent>
+                </Card>
+              </TiltCard>
+            );
+          })}
+        </div>
+      </ScrollReveal>
 
       {/* Full Rankings Table */}
-      <Card className="stagger-2 bg-zinc-900 border border-zinc-800">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-zinc-800/80 hover:bg-zinc-800/80">
-                <TableHead className="w-12 text-zinc-500 text-xs font-medium">#</TableHead>
-                <TableHead className="text-zinc-500 text-xs font-medium">Roaster</TableHead>
-                <TableHead className="text-zinc-500 text-xs font-medium text-right">Wins</TableHead>
-                <TableHead className="text-zinc-500 text-xs font-medium text-right">Win Rate</TableHead>
-                <TableHead className="text-zinc-500 text-xs font-medium text-right">Aura</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedUsers.map((user, index) => {
-                const rank = index + 1;
-                const isUser = user.id === mockCurrentUser.id;
-                return (
-                  <TableRow
-                    key={user.id}
-                    className={`${isUser ? 'bg-red-950/20' : rank % 2 === 0 ? 'bg-zinc-800/30' : 'bg-zinc-900'} ${
-                      rank === 1 ? 'border-l-4 border-l-red-500' : ''
-                    } cursor-pointer hover:bg-zinc-800`}
-                    onClick={() => onViewProfile(user.id)}
-                  >
-                    <TableCell className="text-sm font-bold text-zinc-100">{rank}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="size-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                          style={{ backgroundColor: avatarBg(index) }}
-                        >
-                          {getInitials(user.username)}
+      <ScrollReveal delay={0.2}>
+        <Card className="stagger-2 bg-zinc-900 border border-zinc-800">
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-zinc-800/80 hover:bg-zinc-800/80">
+                  <TableHead className="w-12 text-zinc-500 text-xs font-medium">#</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium">Roaster</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium text-right">Wins</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium text-right">Win Rate</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium text-right">Aura</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sortedUsers.map((user, index) => {
+                  const rank = index + 1;
+                  const isUser = user.id === mockCurrentUser.id;
+                  return (
+                    <TableRow
+                      key={user.id}
+                      className={`table-row-hover ${isUser ? 'bg-red-950/20' : rank % 2 === 0 ? 'bg-zinc-800/30' : 'bg-zinc-900'} ${
+                        rank === 1 ? 'border-l-4 border-l-red-500 shadow-[inset_0_0_12px_rgba(220,38,38,0.15)]' : ''
+                      } cursor-pointer`}
+                      onClick={() => onViewProfile(user.id)}
+                    >
+                      <TableCell className="text-sm font-bold text-zinc-100 font-mono-stat">{rank}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="size-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+                            style={{ backgroundColor: avatarBg(index) }}
+                          >
+                            {getInitials(user.username)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className={`text-sm font-medium truncate ${isUser ? 'text-red-500' : 'text-zinc-100'}`}>
+                              {user.username}
+                              {isUser && <span className="text-red-400 ml-1">(You)</span>}
+                            </p>
+                            <p className="text-xs text-zinc-400">{user.rank}</p>
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <p className={`text-sm font-medium truncate ${isUser ? 'text-red-500' : 'text-zinc-100'}`}>
-                            {user.username}
-                            {isUser && <span className="text-red-400 ml-1">(You)</span>}
-                          </p>
-                          <p className="text-xs text-zinc-400">{user.rank}</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.wins}</TableCell>
-                    <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.winRate}%</TableCell>
-                    <TableCell className="text-right">
-                      <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold font-mono-stat">
-                        {user.aura.toLocaleString()}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                      </TableCell>
+                      <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.wins}</TableCell>
+                      <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.winRate}%</TableCell>
+                      <TableCell className="text-right">
+                        <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold font-mono-stat">
+                          {user.aura.toLocaleString()}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </ScrollReveal>
 
       {/* Your Rank Sticky Footer */}
       {!isCurrentInTop10 && currentUserRank > 0 && (
-        <Card className="bg-zinc-900 border-2 border-red-400 sticky bottom-4">
+        <Card className="gradient-border bg-zinc-900 border-2 border-red-400 sticky bottom-4">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -187,9 +199,9 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-zinc-100">
-                    Your Position: #{currentUserRank}
+                    Your Position: <span className="font-mono-stat">#{currentUserRank}</span>
                   </p>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-xs text-zinc-500 font-mono-stat">
                     {mockCurrentUser.aura.toLocaleString()} Aura · {mockCurrentUser.winRate}% WR
                   </p>
                 </div>

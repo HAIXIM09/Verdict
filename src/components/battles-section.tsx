@@ -29,6 +29,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
+
 function getInitials(name: string): string {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
@@ -105,89 +108,91 @@ function actionButton(status: string, onClick: () => void) {
 
 function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
   return (
-    <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all cursor-pointer">
-      <CardContent className="p-5">
-        {/* Top Row */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-zinc-100 truncate">
-              {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1.5" /> {battle.sideB}
-            </h3>
+    <TiltCard maxTilt={4}>
+      <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all cursor-pointer">
+        <CardContent className="p-5">
+          {/* Top Row */}
+          <div className="flex items-start justify-between gap-2 mb-3">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-zinc-100 truncate">
+                {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1.5" /> {battle.sideB}
+              </h3>
+            </div>
+            {statusBadge(battle.status)}
           </div>
-          {statusBadge(battle.status)}
-        </div>
 
-        {/* Badges */}
-        <div className="flex items-center gap-2 mb-4">
-          <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
-            {battle.difficulty}
-          </Badge>
-          <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
-            {battle.category}
-          </Badge>
-        </div>
+          {/* Badges */}
+          <div className="flex items-center gap-2 mb-4">
+            <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
+              {battle.difficulty}
+            </Badge>
+            <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
+              {battle.category}
+            </Badge>
+          </div>
 
-        {/* Team Slots */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideA}</span>
-            <div className="flex gap-1">
-              {battle.teamA.map((player, i) => (
-                <div
-                  key={`a-${i}`}
-                  title={player?.username}
-                  className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
-                    player
-                      ? 'bg-[#4D7C0F] border-emerald-500'
-                      : 'bg-transparent border-zinc-700'
-                  }`}
-                >
-                  {player ? getInitials(player.username) : null}
-                </div>
-              ))}
+          {/* Team Slots */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideA}</span>
+              <div className="flex gap-1">
+                {battle.teamA.map((player, i) => (
+                  <div
+                    key={`a-${i}`}
+                    title={player?.username}
+                    className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
+                      player
+                        ? 'bg-[#4D7C0F] border-emerald-500'
+                        : 'bg-transparent border-zinc-700'
+                    }`}
+                  >
+                    {player ? getInitials(player.username) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <span className="text-zinc-400 font-bold text-sm">VS</span>
+
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideB}</span>
+              <div className="flex gap-1">
+                {battle.teamB.map((player, i) => (
+                  <div
+                    key={`b-${i}`}
+                    title={player?.username}
+                    className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
+                      player
+                        ? 'bg-red-950/30 border-orange-500'
+                        : 'bg-transparent border-zinc-700'
+                    }`}
+                  >
+                    {player ? getInitials(player.username) : null}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <span className="text-zinc-400 font-bold text-sm">VS</span>
-
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideB}</span>
-            <div className="flex gap-1">
-              {battle.teamB.map((player, i) => (
-                <div
-                  key={`b-${i}`}
-                  title={player?.username}
-                  className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
-                    player
-                      ? 'bg-red-950/30 border-orange-500'
-                      : 'bg-transparent border-zinc-700'
-                  }`}
-                >
-                  {player ? getInitials(player.username) : null}
-                </div>
-              ))}
-            </div>
+          {/* Stats Row */}
+          <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
+            <span className="flex items-center gap-1">
+              <Eye className="size-3.5" />
+              {battle.spectators.length} spectators
+            </span>
+            {battle.viewers > 0 && (
+              <span>{battle.viewers} watching</span>
+            )}
+            <span><Flame className="size-3 text-red-400 inline" /> {battle.auraStake} Aura at stake</span>
           </div>
-        </div>
 
-        {/* Stats Row */}
-        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
-          <span className="flex items-center gap-1">
-            <Eye className="size-3.5" />
-            {battle.spectators.length} spectators
-          </span>
-          {battle.viewers > 0 && (
-            <span>{battle.viewers} watching</span>
-          )}
-          <span><Flame className="size-3 text-red-400 inline" /> {battle.auraStake} Aura at stake</span>
-        </div>
-
-        {/* Action */}
-        <div className="flex justify-end">
-          {actionButton(battle.status, onSelect)}
-        </div>
-      </CardContent>
-    </Card>
+          {/* Action */}
+          <div className="flex justify-end">
+            {actionButton(battle.status, onSelect)}
+          </div>
+        </CardContent>
+      </Card>
+    </TiltCard>
   );
 }
 
@@ -208,50 +213,55 @@ export default function BattlesSection({
   if (selectedCategory === null) {
     return (
       <div>
-        <div className="flex items-center gap-3 mb-6">
-          <Button variant="ghost" size="icon" onClick={onBack} className="text-zinc-500">
-            <ArrowLeft className="size-5" />
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold font-heading text-zinc-100">Roast Arena</h1>
-            <p className="text-zinc-500 text-sm">Pick your battlefield. Choose wisely.</p>
+        <ScrollReveal>
+          <div className="flex items-center gap-3 mb-6">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-zinc-500">
+              <ArrowLeft className="size-5" />
+            </Button>
+            <div>
+              <h1 className="text-2xl font-bold font-heading text-zinc-100">Roast Arena</h1>
+              <p className="text-zinc-500 text-sm">Pick your battlefield. Choose wisely.</p>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         <GuideTip id="arena_categories" title="Start Here" variant="inline" className="mb-4">
           Each category contains live and upcoming roast battles. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> battles have the highest Aura rewards — but only the sharpest roasters survive. Pick a category to see available battles!
         </GuideTip>
 
-        <div className="stagger-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {mockCategories.map(cat => {
-            const IconComp = iconMap[cat.icon];
-            return (
-              <Card
-                key={cat.id}
-                className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 hover:shadow-md hover:border-red-500 transition-all cursor-pointer"
-                onClick={() => onSelectCategory?.(cat.name)}
-              >
-                <CardContent className="p-0 flex flex-col items-center text-center gap-3">
-                  <div className={`size-12 rounded-full flex items-center justify-center ${cat.color}`}>
-                    {IconComp && <IconComp className="size-6" />}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-zinc-100 text-sm">{cat.name}</h3>
-                    <Badge variant="secondary" className="mt-1.5 text-xs bg-zinc-800 text-zinc-400 border-none">
-                      {cat.battleCount} roasts
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+        <ScrollReveal>
+          <div className="stagger-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mockCategories.map(cat => {
+              const IconComp = iconMap[cat.icon];
+              return (
+                <TiltCard key={cat.id} maxTilt={5}>
+                  <Card
+                    className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 hover:shadow-md hover:border-red-500 transition-all duration-300 cursor-pointer"
+                    onClick={() => onSelectCategory?.(cat.name)}
+                  >
+                    <CardContent className="p-0 flex flex-col items-center text-center gap-3">
+                      <div className={`size-12 rounded-full flex items-center justify-center ${cat.color}`}>
+                        {IconComp && <IconComp className="size-6" />}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-zinc-100 text-sm">{cat.name}</h3>
+                        <Badge variant="secondary" className="mt-1.5 text-xs bg-zinc-800 text-zinc-400 border-none">
+                          {cat.battleCount} roasts
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TiltCard>
+              );
+            })}
+          </div>
+        </ScrollReveal>
 
         {/* Inline submit form */}
         <div className="stagger-2 mt-8">
           <Button
             variant="outline"
-            className="border-dashed border-zinc-700 text-zinc-500 hover:text-red-500 hover:border-red-500 w-full py-8 flex flex-col items-center gap-2"
+            className="btn-fire w-full py-8 flex flex-col items-center gap-2"
             onClick={() => setShowSubmitForm(!showSubmitForm)}
           >
             <Plus className="size-5" />
@@ -299,7 +309,7 @@ export default function BattlesSection({
                     />
                   </div>
 
-                  <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
+                  <Button className="btn-fire w-full">
                     <Send className="size-4" />
                     Light It Up
                   </Button>
@@ -327,15 +337,17 @@ export default function BattlesSection({
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
-        <Button variant="ghost" size="icon" onClick={onBackToCategories} className="text-zinc-500">
-          <ArrowLeft className="size-5" />
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold text-zinc-100">{selectedCategory}</h1>
-          <p className="text-zinc-500 text-sm">{categoryBattles.length} roasts in this category</p>
+      <ScrollReveal>
+        <div className="flex items-center gap-3 mb-6">
+          <Button variant="ghost" size="icon" onClick={onBackToCategories} className="text-zinc-500">
+            <ArrowLeft className="size-5" />
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-zinc-100">{selectedCategory}</h1>
+            <p className="text-zinc-500 text-sm">{categoryBattles.length} roasts in this category</p>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
 
         <GuideTip id="arena_battle_list" title="Choosing a Battle" variant="inline" className="mb-4">
           <strong className="text-zinc-200">LIVE</strong> battles are happening now — jump in! <strong className="text-zinc-200">WAITING</strong> battles need players — great for your first roast. Use the filters above to find your preferred match type.
@@ -350,8 +362,8 @@ export default function BattlesSection({
             size="sm"
             className={
               filter === tab.key
-                ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'border-zinc-800 text-zinc-500 hover:text-zinc-300 hover:border-zinc-700'
+                ? 'bg-red-600 text-white hover:bg-red-700 transition-all duration-300'
+                : 'border-zinc-800 text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-all duration-300'
             }
             onClick={() => setFilter(tab.key)}
           >
@@ -366,22 +378,24 @@ export default function BattlesSection({
           <p className="text-zinc-400 text-sm">The arena is quiet... too quiet.</p>
         </div>
       ) : (
-        <div className="stagger-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredBattles.map(battle => (
-            <BattleCard
-              key={battle.id}
-              battle={battle}
-              onSelect={() => onSelectBattle(battle.id)}
-            />
-          ))}
-        </div>
+        <ScrollReveal delay={0.1}>
+          <div className="stagger-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredBattles.map(battle => (
+              <BattleCard
+                key={battle.id}
+                battle={battle}
+                onSelect={() => onSelectBattle(battle.id)}
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       )}
 
       {/* Submit a Case */}
       <div className="mt-8">
         <Button
           variant="outline"
-          className="border-dashed border-zinc-700 text-zinc-500 hover:text-red-500 hover:border-red-500 w-full py-8 flex flex-col items-center gap-2"
+          className="btn-fire w-full py-8 flex flex-col items-center gap-2"
           onClick={() => setShowSubmitForm(!showSubmitForm)}
         >
           <Plus className="size-5" />
@@ -415,7 +429,7 @@ export default function BattlesSection({
                   />
                 </div>
 
-                <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
+                <Button className="btn-fire w-full">
                   <Send className="size-4" />
                   Light It Up
                 </Button>

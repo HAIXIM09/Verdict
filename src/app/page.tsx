@@ -17,7 +17,8 @@ import VerdictScreen from '@/components/verdict-screen';
 import AdGate from '@/components/ad-gate';
 import { GuideTip, WelcomeOnboarding } from '@/components/newbie-guide';
 import { PageTransition } from '@/components/ui/page-transition';
-import { AnimatedCounter } from '@/components/ui/animated-counter';
+import { CursorGlow } from '@/components/ui/cursor-glow';
+import { EmberField } from '@/components/ui/ember-field';
 import { mockCurrentUser } from '@/lib/mock-data';
 import {
   Home,
@@ -127,15 +128,18 @@ export default function RoastArenaApp() {
   // ─── Login View ────────────────────────────────────────────
   if (view === 'login') {
     return (
-      <LoginPage.VideoBackground videoUrl="https://videos.pexels.com/video-files/8128311/8128311-uhd_2560_1440_25fps.mp4">
-        <div className="w-full max-w-md space-y-6">
-          <ParticleTextEffect />
-          <LoginPage.LoginForm onSubmit={handleLogin} />
-        </div>
-        <footer className="absolute bottom-4 left-0 right-0 text-center text-zinc-600 text-sm z-20">
-          © 2025 Verdict. All rights reserved.
-        </footer>
-      </LoginPage.VideoBackground>
+      <>
+        <CursorGlow />
+        <LoginPage.VideoBackground videoUrl="https://videos.pexels.com/video-files/8128311/8128311-uhd_2560_1440_25fps.mp4">
+          <div className="w-full max-w-md space-y-6">
+            <ParticleTextEffect />
+            <LoginPage.LoginForm onSubmit={handleLogin} />
+          </div>
+          <footer className="absolute bottom-6 left-0 right-0 text-center text-zinc-600 text-xs z-20 tracking-wide">
+            &copy; 2025 Verdict. All rights reserved.
+          </footer>
+        </LoginPage.VideoBackground>
+      </>
     );
   }
 
@@ -150,7 +154,10 @@ export default function RoastArenaApp() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#09090b]">
+    <div className="flex min-h-screen bg-[#070708]">
+      {/* Global cursor glow */}
+      <CursorGlow />
+
       {/* Desktop Sidebar */}
       <div className="hidden md:block relative">
         <AppSidebar
@@ -159,17 +166,18 @@ export default function RoastArenaApp() {
           onLogout={handleLogout}
           user={sidebarUser}
         />
-        <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500/20 to-transparent" />
+        {/* Subtle glow line between sidebar and content */}
+        <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
       </div>
 
       {/* Mobile Sidebar Overlay */}
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-50">
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative z-10 w-56 h-full animate-in slide-in-from-left duration-200">
+          <div className="relative z-10 w-56 h-full animate-in slide-in-from-left duration-300">
             <AppSidebar
               currentPage={currentPage}
               onNavigate={navigateTo}
@@ -181,29 +189,34 @@ export default function RoastArenaApp() {
       )}
 
       {/* Main Content */}
-      <main className="noise-overlay relative flex-1 overflow-y-auto pb-20 md:pb-6 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.03),transparent_50%)]">
+      <main className="relative flex-1 overflow-y-auto pb-20 md:pb-6">
+        {/* Ambient background effects */}
+        <div className="absolute inset-0 pointer-events-none gradient-mesh opacity-60" />
+        <div className="absolute inset-0 pointer-events-none noise-overlay" />
+        <EmberField count={18} height="100vh" className="opacity-40" />
+
         {/* Mobile Top Bar */}
-        <div className="md:hidden sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 flex items-center justify-between relative">
+        <div className="md:hidden sticky top-0 z-30 glass border-b border-zinc-800/40 px-4 py-3 flex items-center justify-between relative">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="p-1.5 -ml-1.5 text-zinc-500 hover:text-zinc-200"
+            className="p-1.5 -ml-1.5 text-zinc-500 hover:text-zinc-200 transition-colors duration-200"
           >
             <Menu className="size-5" />
           </button>
           <div className="flex items-center gap-1.5">
-            <Flame className="size-4 text-red-500" />
-            <span className="font-heading text-sm tracking-widest text-white">
+            <Flame className="size-4 text-red-500 animate-flicker" />
+            <span className="font-heading text-sm tracking-[0.2em] text-white">
               VERDICT<span className="text-red-500">.</span>
             </span>
           </div>
-          <div className="size-7 rounded-full bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="size-7 rounded-full bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_12px_rgba(220,38,38,0.3)]">
             {sidebarUser.username.substring(0, 2)}
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-px burn-gradient" />
         </div>
 
-        <div className="max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
+        <div className="relative z-10 max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
           <PageTransition pageKey={currentPage} className="space-y-8">
           {currentPage === 'home' && (
             <HomeSection
@@ -289,10 +302,10 @@ export default function RoastArenaApp() {
         )}
       </main>
 
-      {/* Mobile Bottom Nav — glass morphism */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800/50 bg-[#09090b]/80 backdrop-blur-xl safe-area-inset-bottom">
+      {/* Mobile Bottom Nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 mobile-nav-bar safe-area-inset-bottom">
         <div className="flex items-center justify-around h-14">
-          {MOBILE_NAV_ITEMS.map((item) => {
+          {MOBILE_NAV_ITEMS.map((item, idx) => {
             const isActive = currentPage === item.page || (item.page === 'battles' && currentPage === 'battle-room');
             const Icon = item.icon;
             return (
@@ -300,15 +313,21 @@ export default function RoastArenaApp() {
                 key={item.page}
                 type="button"
                 onClick={() => navigateTo(item.page)}
-                className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all ${
-                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-300'
+                className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all duration-300 ${
+                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-400'
                 }`}
+                style={{
+                  animation: isActive ? `nav-spring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 0.05}s both` : undefined,
+                }}
               >
-                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/15 shadow-[0_0_12px_rgba(239,68,68,0.2)] nav-spring' : ''}`}>
-                  <Icon className="size-4.5" />
+                <div className={`p-1.5 rounded-xl transition-all duration-300 ${
+                  isActive
+                    ? 'bg-red-600/12 shadow-[0_0_16px_rgba(239,68,68,0.15)]'
+                    : 'hover:bg-white/[0.03]'
+                }`}>
+                  <Icon className={`size-[18px] transition-all duration-300 ${isActive ? 'drop-shadow-[0_0_6px_rgba(239,68,68,0.5)]' : ''}`} />
                 </div>
-                <span className="text-[10px] font-medium">{item.label}</span>
-                {isActive && <div className="w-1 h-1 rounded-full bg-red-500 mt-0.5" />}
+                <span className={`text-[10px] font-medium transition-all duration-300 ${isActive ? 'text-red-400' : ''}`}>{item.label}</span>
               </button>
             );
           })}

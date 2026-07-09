@@ -5,6 +5,8 @@ import { Search, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { mockGroups } from '@/lib/mock-data';
 
 interface GroupsSectionProps {
@@ -36,99 +38,105 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold font-heading text-zinc-100">War Rooms</h2>
-        <p className="text-sm text-zinc-500 mt-1">Assemble your crew. Dominate the arena.</p>
-      </div>
+      <ScrollReveal>
+        <div>
+          <h2 className="text-2xl font-bold font-heading text-zinc-100">War Rooms</h2>
+          <p className="text-sm text-zinc-500 mt-1">Assemble your crew. Dominate the arena.</p>
+        </div>
+      </ScrollReveal>
 
       {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-        <Input
-          placeholder="Search groups..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
-        />
-      </div>
+      <ScrollReveal delay={0.05}>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+          <Input
+            placeholder="Search groups..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 focus:shadow-[0_0_0_2px_rgba(220,38,38,0.3)] transition-shadow duration-300"
+          />
+        </div>
+      </ScrollReveal>
 
       {/* My Crews */}
       {myGroups.length > 0 && (
-        <section className="stagger-1">
-          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">My Crews</h3>
-          <div className="space-y-3">
-            {myGroups.map((group) => (
-              <div
-                key={group.id}
-                className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
-                        {group.category}
-                      </Badge>
-                      <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20">
-                        Joined
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
-                    <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400">
-                      <Users className="size-3.5" />
-                      <span>{group.members.toLocaleString()} members</span>
+        <ScrollReveal delay={0.1}>
+          <section className="stagger-1">
+            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">My Crews</h3>
+            <div className="space-y-3">
+              {myGroups.map((group) => (
+                <TiltCard key={group.id} maxTilt={3} shine={false} glow={false}>
+                  <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
+                          <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
+                            {group.category}
+                          </Badge>
+                          <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20">
+                            Joined
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
+                        <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400 font-mono-stat">
+                          <Users className="size-3.5" />
+                          <span>{group.members.toLocaleString()} members</span>
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="btn-press bg-red-600 text-white hover:bg-red-700 shrink-0 mt-1"
+                        onClick={() => onChallengeFriend(group.id)}
+                      >
+                        Challenge
+                      </Button>
                     </div>
                   </div>
-                  <Button
-                    size="sm"
-                    className="bg-red-600 text-white hover:bg-red-700 shrink-0 mt-1"
-                    onClick={() => onChallengeFriend(group.id)}
-                  >
-                    Challenge
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+                </TiltCard>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
       )}
 
       {/* Find Crews */}
       {discoverGroups.length > 0 && (
-        <section className="stagger-2">
-          <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">Find Crews</h3>
-          <div className="space-y-3">
-            {discoverGroups.map((group) => (
-              <div
-                key={group.id}
-                className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
-                      <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
-                        {group.category}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
-                    <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400">
-                      <Users className="size-3.5" />
-                      <span>{group.members.toLocaleString()} members</span>
+        <ScrollReveal delay={0.2}>
+          <section className="stagger-2">
+            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">Find Crews</h3>
+            <div className="space-y-3">
+              {discoverGroups.map((group) => (
+                <TiltCard key={group.id} maxTilt={3} shine={false} glow={false}>
+                  <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="text-sm font-semibold text-zinc-100">{group.name}</h4>
+                          <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
+                            {group.category}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-zinc-500 mt-1">{group.description}</p>
+                        <div className="flex items-center gap-1 mt-2 text-xs text-zinc-400 font-mono-stat">
+                          <Users className="size-3.5" />
+                          <span>{group.members.toLocaleString()} members</span>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="btn-press border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 shrink-0 mt-1"
+                      >
+                        Join
+                      </Button>
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 shrink-0 mt-1"
-                  >
-                    Join
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+                </TiltCard>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
       )}
 
       {myGroups.length === 0 && discoverGroups.length === 0 && (
