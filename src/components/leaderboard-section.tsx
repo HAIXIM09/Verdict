@@ -31,7 +31,7 @@ const medalConfig = [
   },
   {
     badge: '#2 BLAZE',
-    badgeClass: 'bg-stone-600 text-zinc-200 border-none',
+    badgeClass: 'bg-zinc-700 text-zinc-200 border-none',
     borderClass: 'border-zinc-700',
     medalIcon: <Medal className="size-6 text-zinc-400" />,
     sizeClass: 'p-4',

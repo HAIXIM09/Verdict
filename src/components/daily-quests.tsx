@@ -43,7 +43,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
             <div
               key={quest.id}
               className={`rounded-xl border bg-zinc-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
-                isComplete ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-stone-600'
+                isComplete ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-zinc-700'
               } border-zinc-800`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -51,7 +51,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-semibold text-zinc-100">{quest.title}</h4>
                     {isComplete && (
-                      <Badge className="bg-green-900/30 text-green-400 border-green-800/50">
+                      <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30">
                         <Check className="size-3" />
                         Claimed
                       </Badge>

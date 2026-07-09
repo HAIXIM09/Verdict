@@ -15,6 +15,7 @@ import {
   Eye,
   Plus,
   Send,
+  Swords,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -70,7 +71,7 @@ function statusBadge(s: string) {
       return <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>;
     case 'waiting':
       return <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20 text-xs">WAITING</Badge>;
-    case 'roast':
+    case 'verdict':
       return <Badge className="bg-red-600/15 text-red-400 border-red-700/50 text-xs">VERDICT</Badge>;
     case 'finished':
       return <Badge className="bg-zinc-800 text-zinc-500 border-zinc-800 text-xs">FINISHED</Badge>;
@@ -103,13 +104,13 @@ function actionButton(status: string, onClick: () => void) {
 
 function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
   return (
-    <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all">
+    <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all cursor-pointer">
       <CardContent className="p-5">
         {/* Top Row */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-bold text-zinc-100 truncate">
-              {battle.sideA} ⚔️ {battle.sideB}
+              {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1.5" /> {battle.sideB}
             </h3>
           </div>
           {statusBadge(battle.status)}

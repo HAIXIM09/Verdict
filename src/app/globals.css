@@ -165,3 +165,121 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .scanline-overlay {
+    animation: scanline 8s linear infinite;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  @keyframes fire-border {
+    0%, 100% { border-color: #DC2626; }
+    33% { border-color: #F59E0B; }
+    66% { border-color: #F97316; }
+  }
+
+  .fire-border-animated {
+    animation: fire-border 3s ease-in-out infinite;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 1rem;
+  }
+
+  @keyframes text-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .text-shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-red {
+    0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+  }
+
+  .glow-red {
+    animation: glow-red 2s ease-in-out infinite;
+  }
+
+  @keyframes slide-up-fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up-fade-in 0.4s ease-out both;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .pulse-dot {
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+}
+
+.card-fire-hover {
+  border: 1px solid oklch(0.2 0.005 20);
+  transition: all 0.3s ease;
+}
+.card-fire-hover:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+  scale: 1.01;
+}
+
+.btn-fire {
+  background: linear-gradient(to right, #DC2626, #EF4444);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.25);
+  transition: all 0.3s ease;
+}
+.btn-fire:hover {
+  background: linear-gradient(to right, #EF4444, #F87171);
+  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+}
+
+.badge-glow-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+.stat-fire {
+  background: linear-gradient(to bottom, white, #a1a1aa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

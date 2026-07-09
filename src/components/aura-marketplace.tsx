@@ -14,7 +14,7 @@ interface AuraMarketplaceProps {
 }
 
 const rarityColors: Record<MarketplaceItem['rarity'], { dot: string; border: string; label: string }> = {
-  common: { dot: 'bg-stone-400', border: 'border-zinc-700', label: 'Common' },
+  common: { dot: 'bg-zinc-500', border: 'border-zinc-700', label: 'Common' },
   rare: { dot: 'bg-[#4D7C0F]', border: 'border-emerald-500/40', label: 'Rare' },
   epic: { dot: 'bg-amber-600', border: 'border-amber-400', label: 'Epic' },
   legendary: { dot: 'bg-red-600', border: 'border-orange-400', label: 'Legendary' },

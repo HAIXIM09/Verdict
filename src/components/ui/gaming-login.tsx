@@ -78,7 +78,7 @@ function FormInput({
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full rounded-lg bg-zinc-800/50 border border-zinc-800 py-2.5 pl-10 pr-10 text-sm text-white placeholder-stone-400 transition-colors duration-200 focus:border-red-600/50 focus:outline-none focus:ring-1 focus:ring-red-600/20"
+          className="w-full rounded-lg bg-zinc-800/50 border border-zinc-800 py-2.5 pl-10 pr-10 text-sm text-white placeholder-zinc-500 transition-colors duration-200 focus:border-red-600/50 focus:outline-none focus:ring-1 focus:ring-red-600/20"
         />
         {isPassword && (
           <button

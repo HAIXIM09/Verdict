@@ -147,13 +147,14 @@ export default function RoastArenaApp() {
   return (
     <div className="flex min-h-screen bg-[#09090b]">
       {/* Desktop Sidebar */}
-      <div className="hidden md:block">
+      <div className="hidden md:block relative">
         <AppSidebar
           currentPage={currentPage}
           onNavigate={navigateTo}
           onLogout={handleLogout}
           user={sidebarUser}
         />
+        <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500/20 to-transparent" />
       </div>
 
       {/* Mobile Sidebar Overlay */}
@@ -175,9 +176,9 @@ export default function RoastArenaApp() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-20 md:pb-6">
+      <main className="flex-1 overflow-y-auto pb-20 md:pb-6 bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.03),transparent_50%)]">
         {/* Mobile Top Bar */}
-        <div className="md:hidden sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 flex items-center justify-between">
+        <div className="md:hidden sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 flex items-center justify-between relative">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
@@ -188,12 +189,13 @@ export default function RoastArenaApp() {
           <div className="flex items-center gap-1.5">
             <Flame className="size-4 text-red-500" />
             <span className="font-black text-sm tracking-tight text-white">
-              ROAST<span className="text-red-500">ARENA</span>
+              ROAST<span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-amber-400">ARENA</span>
             </span>
           </div>
-          <div className="size-7 rounded-full bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="size-7 rounded-full bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
             {sidebarUser.username.substring(0, 2)}
           </div>
+          <div className="absolute bottom-0 left-0 right-0 h-px burn-gradient" />
         </div>
 
         <div className="max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
@@ -292,13 +294,14 @@ export default function RoastArenaApp() {
                 type="button"
                 onClick={() => navigateTo(item.page)}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all ${
-                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-400'
+                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-300'
                 }`}
               >
-                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/10' : ''}`}>
+                <div className={`p-1 rounded-lg transition-all ${isActive ? 'bg-red-600/15 shadow-[0_0_12px_rgba(239,68,68,0.2)]' : ''}`}>
                   <Icon className="size-4.5" />
                 </div>
                 <span className="text-[10px] font-medium">{item.label}</span>
+                {isActive && <div className="w-1 h-1 rounded-full bg-red-500 mt-0.5" />}
               </button>
             );
           })}

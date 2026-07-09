@@ -61,26 +61,32 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       <section className="relative w-full h-[400px] md:h-[480px] rounded-2xl overflow-hidden">
         {/* Dark base */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#09090b] via-[#1a0505] to-[#09090b]" />
-        
+
+        {/* Scanline overlay */}
+        <div className="scanline-overlay absolute inset-0 z-[2] pointer-events-none" />
+
         {/* Fire glow effects */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-amber-600/8 rounded-full blur-[80px]" />
-        
+
         <Spotlight
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="#DC2626"
         />
 
+        {/* Burn gradient bar at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 burn-gradient z-10" />
+
         <div className="flex h-full">
           {/* Left content */}
           <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
             <div className="flex items-center gap-2 mb-4">
-              <div className="size-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-widest text-red-400">
+              <div className="size-2 rounded-full bg-red-500 animate-flicker" />
+              <span className="text-xs font-bold uppercase tracking-widest text-red-400 text-shimmer">
                 Live Roasts Happening Now
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-amber-400 to-red-500 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-amber-400 to-red-500 leading-tight drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">
               Drop Your<br />Hottest Takes
             </h1>
             <p className="mt-4 text-zinc-500 max-w-md text-sm md:text-base leading-relaxed">
@@ -88,7 +94,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             </p>
             <div className="flex items-center gap-3 mt-8">
               <Button
-                className="bg-red-600 hover:bg-red-700 text-white font-bold shadow-lg shadow-red-600/20 rounded-xl"
+                className="btn-fire animate-glow-red text-white font-bold shadow-lg shadow-red-600/20 rounded-xl"
                 onClick={() => onNavigateToCategory('Movies')}
               >
                 <Flame className="size-4 mr-2" />
@@ -96,7 +102,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
               </Button>
               <Button
                 variant="outline"
-                className="border-zinc-700 text-zinc-400 hover:bg-zinc-800 hover:text-white rounded-xl"
+                className="border-zinc-700 text-zinc-300 hover:bg-zinc-800/80 hover:text-white hover:border-zinc-600 rounded-xl"
                 onClick={onNavigateToQuests}
               >
                 <Zap className="size-4 mr-2" />
@@ -107,18 +113,18 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             {/* Quick stats */}
             <div className="flex items-center gap-6 mt-10">
               <div>
-                <p className="text-2xl font-black text-white">12.4K</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-600">Active Roasters</p>
+                <p className="text-2xl font-black text-white stat-fire">12.4K</p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Active Roasters</p>
               </div>
               <div className="h-8 w-px bg-zinc-800" />
               <div>
-                <p className="text-2xl font-black text-white">847</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-600">Live Roasts</p>
+                <p className="text-2xl font-black text-white stat-fire">847</p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Live Roasts</p>
               </div>
               <div className="h-8 w-px bg-zinc-800" />
               <div>
-                <p className="text-2xl font-black text-white">2.1M</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-600">Total Burns</p>
+                <p className="text-2xl font-black text-white stat-fire">2.1M</p>
+                <p className="text-[10px] uppercase tracking-widest text-zinc-500">Total Burns</p>
               </div>
             </div>
           </div>
@@ -136,10 +142,11 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       {/* Roast of the Day */}
       <section>
         <div className="flex items-center gap-2 mb-3">
+          <div className="w-1 h-5 bg-red-600 rounded-full" />
           <FlameKindling className="size-5 text-red-500" />
           <h2 className="text-lg font-bold text-zinc-100">Roast of the Day</h2>
         </div>
-        <Card className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+        <Card className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden card-fire-hover relative">
           <div className="absolute inset-0 bg-gradient-to-r from-red-600/5 to-transparent pointer-events-none" />
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
@@ -152,7 +159,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
                 </p>
               </div>
               {topRoast?.aiVerdict && (
-                <Badge className="bg-red-600/15 text-red-400 border-red-600/30 font-bold">
+                <Badge className="badge-glow-red">
                   Team {topRoast.aiVerdict.winner === 'A' ? topRoast.sideA : topRoast.sideB} Destroyed
                 </Badge>
               )}
@@ -165,7 +172,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             </p>
             <Button
               variant="outline"
-              className="mt-4 text-red-400 border-red-800/40 hover:bg-red-950/20 hover:text-red-300 rounded-xl"
+              className="mt-4 border-red-700/50 text-red-400 hover:bg-red-950/30 hover:text-red-300 hover:border-red-600/50 rounded-xl"
               onClick={() => onNavigateToBattle(topRoast?.id || 'b-3')}
             >
               <Eye className="size-4" />
@@ -178,6 +185,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       {/* Live Now */}
       <section>
         <div className="flex items-center gap-2 mb-3">
+          <div className="w-1 h-5 bg-red-600 rounded-full" />
           <h2 className="text-lg font-bold text-zinc-100">On Fire Now</h2>
           <span className="relative flex size-2.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
@@ -188,11 +196,11 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
           {liveRoasts.map(roast => (
             <Card
               key={roast.id}
-              className="bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-xl transition-all cursor-pointer group overflow-hidden"
+              className="bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-xl transition-all cursor-pointer group overflow-hidden card-fire-hover"
               onClick={() => onNavigateToBattle(roast.id)}
             >
               <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-center start justify-between gap-2 mb-2">
                   <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-xs">
                     {roast.category}
                   </Badge>
@@ -209,7 +217,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
                     <Eye className="size-3.5" />
                     {roast.viewers}
                   </span>
-                  <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white text-xs h-7 px-3 rounded-lg">
+                  <Button size="sm" className="btn-fire text-white text-xs h-7 px-3 rounded-lg">
                     Watch
                   </Button>
                 </div>
@@ -222,6 +230,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       {/* Trending */}
       <section>
         <div className="flex items-center gap-2 mb-3">
+          <div className="w-1 h-5 bg-red-600 rounded-full" />
           <TrendingUp className="size-5 text-amber-500" />
           <h2 className="text-lg font-bold text-zinc-100">Trending Topics</h2>
         </div>
@@ -230,7 +239,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
             {trendingRoasts.map(roast => (
               <Card
                 key={roast.id}
-                className="bg-zinc-900 border border-zinc-800 hover:border-amber-600/40 transition-all cursor-pointer min-w-[200px] shrink-0 rounded-xl overflow-hidden group"
+                className="bg-zinc-900 border border-zinc-800 hover:border-amber-600/40 transition-all cursor-pointer min-w-[200px] shrink-0 rounded-xl overflow-hidden group card-fire-hover"
                 onClick={() => onNavigateToBattle(roast.id)}
               >
                 <CardContent className="p-4">
@@ -255,7 +264,10 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
       {/* Daily Quests Preview */}
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-zinc-100">Daily Quests</h2>
+          <div className="flex items-center gap-2">
+            <div className="w-1 h-5 bg-red-600 rounded-full" />
+            <h2 className="text-lg font-bold text-zinc-100">Daily Quests</h2>
+          </div>
           <Button variant="ghost" className="text-red-500 hover:text-red-400 text-sm p-0 h-auto" onClick={onNavigateToQuests}>
             All Quests
             <ChevronRight className="size-4" />
@@ -263,7 +275,7 @@ export default function HomeSection({ onNavigateToRoast: onNavigateToBattle, onN
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {mockQuests.slice(0, 2).map(quest => (
-            <Card key={quest.id} className="bg-zinc-900 border border-zinc-800 rounded-xl">
+            <Card key={quest.id} className="bg-zinc-900 border border-zinc-800 rounded-xl card-fire-hover">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-zinc-100 text-sm">{quest.title}</h3>

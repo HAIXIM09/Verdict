@@ -11,6 +11,13 @@ import {
   Clock,
   MessageSquare,
   Eye,
+  Flame,
+  Laugh,
+  Skull,
+  Brain,
+  Hand,
+  Swords,
+  Timer,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -26,17 +33,17 @@ interface RoastRoomProps {
 }
 
 const REACTIONS = [
-  { emoji: '🔥', count: 47 },
-  { emoji: '😂', count: 23 },
-  { emoji: '💀', count: 18 },
-  { emoji: '🧠', count: 31 },
-  { emoji: '👏', count: 15 },
+  { icon: Flame, label: 'Fire', count: 47 },
+  { icon: Laugh, label: 'LMAO', count: 23 },
+  { icon: Skull, label: 'Dead', count: 18 },
+  { icon: Brain, label: 'Big Brain', count: 31 },
+  { icon: Hand, label: 'Clap', count: 15 },
 ];
 
 const POWER_UPS = [
-  { emoji: '🛡️', label: 'Shield', desc: 'Survive 1 AI kick', cost: 50 },
-  { emoji: '⚡', label: 'Double Aura', desc: '2x aura this roast', cost: 100 },
-  { emoji: '⏱️', label: 'Extra Time', desc: '+2 min', cost: 75 },
+  { icon: Shield, label: 'Shield', desc: 'Survive 1 AI kick', cost: 50 },
+  { icon: Zap, label: 'Double Aura', desc: '2x aura this roast', cost: 100 },
+  { icon: Timer, label: 'Extra Time', desc: '+2 min', cost: 75 },
 ];
 
 function getInitials(name: string): string {
@@ -99,7 +106,7 @@ function ChatMessageItem({ msg, teamColor }: { msg: ChatMessage; teamColor?: str
       <div className="px-3 py-2 bg-red-950/30 border border-red-900/50 rounded-lg mx-1">
         <div className="flex items-start gap-2">
           <AlertTriangle className="size-3.5 text-red-500 mt-0.5 shrink-0" />
-          <p className="text-xs text-red-700">{msg.text}</p>
+          <p className="text-xs text-red-400">{msg.text}</p>
         </div>
       </div>
     );
@@ -127,7 +134,7 @@ function ChatMessageItem({ msg, teamColor }: { msg: ChatMessage; teamColor?: str
   return (
     <div className={`px-3 py-1.5 mx-1 flex items-start gap-2 ${teamColor === 'A' ? 'border-l-2 border-l-orange-400' : teamColor === 'B' ? 'border-l-2 border-l-[#4D7C0F]' : ''}`}>
       <p className="text-xs">
-        <span className="font-bold text-zinc-200">{msg.username}</span>
+        <span className="font-bold text-zinc-100">{msg.username}</span>
         <span className="text-zinc-400 ml-1.5">{msg.text}</span>
       </p>
     </div>
@@ -177,7 +184,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
                 <h1 className="text-xl font-bold text-zinc-100">
-                  {battle.sideA} ⚔️ {battle.sideB}
+                  {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1" /> {battle.sideB}
                 </h1>
                 <div className="flex items-center gap-2 mt-1">
                   <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
@@ -205,6 +212,15 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         <div className="flex justify-center py-4">
           <div className="relative flex items-center justify-center">
             <svg className="size-32 -rotate-90" viewBox="0 0 120 120">
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
               <circle
                 cx="60"
                 cy="60"
@@ -213,22 +229,24 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
                 stroke="#292524"
                 strokeWidth="6"
               />
-              <circle
-                cx="60"
-                cy="60"
-                r="54"
-                fill="none"
-                stroke={isLowTime ? '#DC2626' : '#EA580C'}
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={strokeDashoffset}
-                className="transition-all duration-1000"
-              />
+              <g filter="url(#glow)">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="54"
+                  fill="none"
+                  stroke={isLowTime ? '#DC2626' : '#EA580C'}
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  className="transition-all duration-1000"
+                />
+              </g>
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <Clock className={`size-4 mb-1 ${isLowTime ? 'text-red-500' : 'text-zinc-400'}`} />
-              <span className={`text-3xl font-bold tabular-nums ${isLowTime ? 'text-red-600' : 'text-zinc-100'}`}>
+              <span className={`text-3xl font-bold tabular-nums ${isLowTime ? 'text-red-500' : 'text-zinc-100'}`}>
                 {formatTime(timer)}
               </span>
             </div>
@@ -257,9 +275,9 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
           </Card>
 
           {/* Team B */}
-          <Card className="bg-emerald-500/15 border border-emerald-500/20">
+          <Card className="bg-blue-500/10 border border-blue-500/20">
             <CardContent className="p-4">
-              <h3 className="text-sm font-bold text-emerald-400 mb-2 text-center">
+              <h3 className="text-sm font-bold text-blue-400 mb-2 text-center">
                 Team {battle.sideB}
               </h3>
               <div className="space-y-0.5">
@@ -304,7 +322,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
             <div className="flex items-center gap-2 flex-wrap">
               {REACTIONS.map((r, i) => (
                 <button
-                  key={r.emoji}
+                  key={r.label}
                   className="bg-zinc-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-zinc-800 transition-colors"
                   onClick={() => {
                     const next = [...reactionCounts];
@@ -312,7 +330,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
                     setReactionCounts(next);
                   }}
                 >
-                  <span>{r.emoji}</span>
+                  <r.icon className="size-4" />
                   <span className="text-xs text-zinc-500">{reactionCounts[i]}</span>
                 </button>
               ))}
@@ -328,8 +346,8 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
             {battle.spectators.slice(0, 5).map(spectator => (
               <div
                 key={spectator.id}
-                className="size-7 rounded-full bg-stone-600 border-2 border-zinc-800 flex items-center justify-center text-[9px] font-bold text-white"
-                style={{ backgroundColor: '#78716C' }}
+                className="size-7 rounded-full border-2 border-zinc-800 flex items-center justify-center text-[9px] font-bold text-white"
+                style={{ background: 'linear-gradient(135deg, #EA580C, #DC2626)' }}
               >
                 {getInitials(spectator.username)}
               </div>
@@ -348,7 +366,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
         {/* Chat Header */}
         <div className="px-4 py-3 border-b border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
-            <MessageSquare className="size-4 text-zinc-500" />
+            <MessageSquare className="size-4 text-red-500" />
             <span className="font-semibold text-zinc-100 text-sm">Roast Chat</span>
           </div>
           <span className="text-xs text-zinc-400">{battle.chatMessages.length} messages</span>
@@ -378,11 +396,11 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
               <button
                 key={pu.label}
                 className={`bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-400 flex items-center gap-1.5 transition-colors ${
-                  canAfford ? 'hover:bg-red-950/30 hover:border-red-600 hover:text-red-400' : 'opacity-40 cursor-not-allowed'
+                  canAfford ? 'hover:bg-red-600/10 hover:border-red-600 hover:text-red-400' : 'opacity-40 cursor-not-allowed'
                 }`}
                 disabled={!canAfford}
               >
-                <span>{pu.emoji}</span>
+                <pu.icon className="size-3.5" />
                 <div className="flex flex-col items-start leading-tight">
                   <span className="font-medium">{pu.label}</span>
                   <span className="text-zinc-400">{pu.cost} coins</span>
@@ -405,7 +423,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
               />
               <Button
                 size="icon"
-                className="bg-red-600 hover:bg-red-700 text-white shrink-0"
+                className="bg-red-600 hover:bg-red-700 text-white shrink-0 shadow-lg shadow-red-600/25"
                 onClick={handleSend}
               >
                 <Send className="size-4" />
@@ -416,7 +434,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: RoastRoom
               <Badge variant="secondary" className="text-xs bg-zinc-800 text-zinc-500 border-none">
                 Spectating
               </Badge>
-              <Button variant="outline" size="sm" className="text-red-400 border-red-700/50 hover:bg-red-950/30 text-xs">
+              <Button variant="outline" size="sm" className="btn-fire text-xs">
                 Request to Join
               </Button>
             </div>
