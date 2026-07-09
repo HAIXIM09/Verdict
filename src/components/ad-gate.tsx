@@ -51,18 +51,18 @@ export default function AdGate({ onAdComplete, onSkip }: AdGateProps) {
 
       {/* Card */}
       <div
-        className="relative w-full max-w-sm rounded-2xl border border-zinc-800/50 bg-zinc-900/90 backdrop-blur-xl p-6 space-y-6 shadow-[0_0_80px_rgba(220,38,38,0.08)]"
+        className="relative w-full max-w-sm rounded-2xl border border-zinc-800/50 bg-zinc-900/90 backdrop-blur-xl p-6 space-y-6 shadow-[0_0_80px_rgba(236,72,153,0.08)]"
         style={{
           transform: visible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(10px)',
           transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         {/* Top accent */}
-        <div className="absolute top-0 left-0 right-0 h-px burn-gradient rounded-t-2xl" />
+        <div className="absolute top-0 left-0 right-0 h-px bar-gradient rounded-t-2xl" />
 
         <div className="text-center">
-          <div className="inline-flex items-center justify-center size-10 rounded-xl bg-red-600/10 border border-red-600/20 mb-3">
-            <Flame className="size-5 text-red-400" />
+          <div className="inline-flex items-center justify-center size-10 rounded-xl bg-pink-600/10 border border-pink-600/20 mb-3">
+            <Flame className="size-5 text-pink-400" />
           </div>
           <h2 className="text-lg font-bold text-white font-heading tracking-wider">WAIT FOR IT</h2>
           <p className="text-zinc-500 text-sm mt-1">The verdict is being prepared...</p>
@@ -73,7 +73,7 @@ export default function AdGate({ onAdComplete, onSkip }: AdGateProps) {
           <div className="text-zinc-600 text-xs font-heading uppercase tracking-widest mb-4">Sponsored</div>
           <div className="w-full bg-zinc-800/80 rounded-full h-1.5 overflow-hidden">
             <div
-              className="h-full rounded-full burn-gradient transition-all duration-100 ease-linear"
+              className="h-full rounded-full bar-gradient transition-all duration-100 ease-linear"
               style={{ width: `${adProgress}%` }}
             />
           </div>
@@ -85,9 +85,9 @@ export default function AdGate({ onAdComplete, onSkip }: AdGateProps) {
         {/* Timer */}
         {!canSkip && (
           <div className="flex items-center justify-center gap-2">
-            <div className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+            <div className="size-1.5 rounded-full bg-pink-500 animate-pulse" />
             <p className="text-center text-zinc-500 text-sm">
-              Skip available in <span className="text-red-400 font-mono-stat font-bold">{countdown}s</span>
+              Skip available in <span className="text-pink-400 font-mono-stat font-bold">{countdown}s</span>
             </p>
           </div>
         )}
@@ -97,7 +97,7 @@ export default function AdGate({ onAdComplete, onSkip }: AdGateProps) {
           <Button
             className={`w-full h-11 text-sm font-bold rounded-xl transition-all duration-300 ${
               canSkip
-                ? 'btn-fire'
+                ? 'btn-primary'
                 : 'bg-zinc-800/50 text-zinc-600 cursor-not-allowed border border-zinc-800/30'
             }`}
             disabled={!canSkip}

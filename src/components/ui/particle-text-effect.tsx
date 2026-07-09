@@ -16,7 +16,7 @@ interface Particle {
   maxLife: number;
 }
 
-const WORDS = ["ROAST", "ARENA", "BURN", "SAVAGE", "FLAME"];
+const WORDS = ["VERDICT", "DEBATE", "AURA", "WIT", "RANKS"];
 const PARTICLE_GAP = 3;
 const MOUSE_RADIUS = 80;
 
@@ -207,8 +207,8 @@ export default function ParticleTextEffect() {
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
       <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
-        <p className="text-lg font-black text-white tracking-widest">ROAST ARENA</p>
-        <p className="text-xs text-zinc-600 mt-0.5 uppercase tracking-widest">Where Opinions Get Burned</p>
+        <p className="text-lg font-black text-white tracking-widest">VERDICT</p>
+        <p className="text-xs text-zinc-600 mt-0.5 uppercase tracking-widest">Pick a Side. Make Your Case.</p>
       </div>
     </div>
   );

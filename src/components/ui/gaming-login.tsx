@@ -29,16 +29,15 @@ export function VideoBackground({ children, videoUrl }: { children: React.ReactN
         />
       )}
       {/* Animated mesh gradient overlay — replaces flat dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0505] via-[#050505] to-[#050505]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0d080d] via-[#050505] to-[#09090B]" />
       <div className="absolute inset-0 gradient-mesh opacity-80" />
       <div className="absolute inset-0 noise-overlay" />
 
       {/* Animated accent orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-600/8 rounded-full blur-[120px] orb-1" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-amber-500/6 rounded-full blur-[100px] orb-2" />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-pink-600/8 rounded-full blur-[120px] orb-1" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/6 rounded-full blur-[100px] orb-2" />
 
-      {/* Scanline for cinematic feel */}
-      <div className="scanline-overlay absolute inset-0 z-[2]" />
+
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen items-center justify-center p-4">
@@ -92,7 +91,7 @@ function FormInput({
       </label>
       <div className="relative group">
         <Icon className={`absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 transition-colors duration-300 ${
-          focused ? 'text-red-500' : 'text-zinc-500'
+          focused ? 'text-pink-500' : 'text-zinc-500'
         }`} />
         <input
           id={id}
@@ -105,8 +104,8 @@ function FormInput({
           onBlur={() => setFocused(false)}
           className="w-full rounded-xl bg-white/[0.03] border transition-all duration-300 py-3 pl-11 pr-11 text-sm text-white placeholder-zinc-600 focus:bg-white/[0.05] focus:outline-none focus:ring-0"
           style={{
-            borderColor: focused ? 'rgba(220, 38, 38, 0.4)' : 'rgba(63, 63, 70, 0.3)',
-            boxShadow: focused ? '0 0 0 3px rgba(220, 38, 38, 0.08), 0 0 20px rgba(220, 38, 38, 0.05)' : 'none',
+            borderColor: focused ? 'rgba(236, 72, 153, 0.4)' : 'rgba(63, 63, 70, 0.3)',
+            boxShadow: focused ? '0 0 0 3px rgba(236, 72, 153, 0.08), 0 0 20px rgba(236, 72, 153, 0.05)' : 'none',
           }}
         />
         {isPassword && (
@@ -145,7 +144,7 @@ function SocialButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex items-center justify-center gap-2 rounded-xl bg-white/[0.03] border border-zinc-800/60 px-4 py-2.5 text-sm text-zinc-400 transition-all duration-300 hover:bg-white/[0.06] hover:text-white hover:border-zinc-700 hover:shadow-[0_0_20px_rgba(220,38,38,0.06)]"
+      className="flex items-center justify-center gap-2 rounded-xl bg-white/[0.03] border border-zinc-800/60 px-4 py-2.5 text-sm text-zinc-400 transition-all duration-300 hover:bg-white/[0.06] hover:text-white hover:border-zinc-700 hover:shadow-[0_0_20px_rgba(236,72,153,0.06)]"
       style={{
         opacity: 0,
         transform: 'translateY(12px)',
@@ -199,14 +198,14 @@ export function LoginForm({
             transform: 'translateY(16px) scale(0.95)',
             animation: 'slide-up-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both',
           }}>
-            <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-gradient-to-br from-red-600 to-orange-600 mb-5 shadow-[0_8px_32px_rgba(220,38,38,0.3)]">
+            <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-gradient-to-br from-pink-600 to-violet-600 mb-5 shadow-[0_8px_32px_rgba(236,72,153,0.3)]">
               <Flame className="size-7 text-white" />
             </div>
             <h1 className="text-3xl font-black tracking-tight text-white font-heading">
-              VERDICT<span className="text-red-500">.</span>
+              VERDICT<span className="text-pink-500">.</span>
             </h1>
             <p className="mt-2 text-sm text-zinc-500 tracking-wide">
-              Where opinions get burned
+              Where opinions get settled
             </p>
           </div>
 
@@ -245,7 +244,7 @@ export function LoginForm({
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full rounded-xl btn-fire px-4 py-3 text-sm font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="relative w-full rounded-xl btn-primary px-4 py-3 text-sm font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -291,7 +290,7 @@ export function LoginForm({
             <button
               type="button"
               onClick={onCreateAccount}
-              className="font-medium text-zinc-300 hover:text-red-400 transition-colors duration-200"
+              className="font-medium text-zinc-300 hover:text-pink-400 transition-colors duration-200"
             >
               Create one
             </button>

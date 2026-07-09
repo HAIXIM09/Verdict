@@ -17,9 +17,9 @@ interface AuraMarketplaceProps {
 
 const rarityColors: Record<MarketplaceItem['rarity'], { dot: string; border: string; label: string }> = {
   common: { dot: 'bg-zinc-500', border: 'border-zinc-700', label: 'Common' },
-  rare: { dot: 'bg-[#4D7C0F]', border: 'border-emerald-500/40', label: 'Rare' },
-  epic: { dot: 'bg-amber-600', border: 'border-amber-400', label: 'Epic' },
-  legendary: { dot: 'bg-red-600', border: 'border-orange-400', label: 'Legendary' },
+  rare: { dot: 'bg-violet-500', border: 'border-violet-500/40', label: 'Rare' },
+  epic: { dot: 'bg-violet-600', border: 'border-violet-400', label: 'Epic' },
+  legendary: { dot: 'bg-pink-600', border: 'border-pink-400', label: 'Legendary' },
 };
 
 const typeIcons: Record<MarketplaceItem['type'], React.ReactNode> = {
@@ -30,8 +30,8 @@ const typeIcons: Record<MarketplaceItem['type'], React.ReactNode> = {
 };
 
 const previewIconMap: Record<string, React.ReactNode> = {
-  Flame: <Flame className="size-8 text-red-400" />,
-  Crown: <Crown className="size-8 text-yellow-500" />,
+  Flame: <Flame className="size-8 text-pink-400" />,
+  Crown: <Crown className="size-8 text-violet-400" />,
   default: <Shield className="size-8 text-zinc-400" />,
 };
 
@@ -40,7 +40,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
     case 'border':
       return (
         <div
-          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-amber-500' : item.rarity === 'rare' ? 'border-emerald-500' : 'border-zinc-700'} bg-zinc-900 flex items-center justify-center`}
+          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-pink-400' : item.rarity === 'epic' ? 'border-violet-400' : item.rarity === 'rare' ? 'border-violet-400' : 'border-zinc-700'} bg-zinc-900 flex items-center justify-center`}
         >
           <div className="w-3/4 h-3/4 rounded-md border-2 border-dashed border-zinc-800 flex items-center justify-center">
             <Shield className="size-5 text-zinc-500" />
@@ -51,7 +51,7 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       return (
         <div className="w-full aspect-square rounded-lg bg-zinc-800 flex items-center justify-center px-3">
           <span className={`text-sm font-bold text-center ${
-            item.rarity === 'legendary' ? 'text-red-500' : item.rarity === 'epic' ? 'text-amber-400' : 'text-zinc-500'
+            item.rarity === 'legendary' ? 'text-pink-500' : item.rarity === 'epic' ? 'text-violet-400' : 'text-zinc-500'
           }`}>
             {item.name}
           </span>
@@ -61,11 +61,11 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       return (
         <div className="w-full aspect-square rounded-lg bg-zinc-800 flex items-center justify-center">
           <div className={`size-12 rounded-full flex items-center justify-center ${
-            item.rarity === 'legendary' ? 'bg-red-950/30' : item.rarity === 'epic' ? 'bg-amber-950/30' : item.rarity === 'rare' ? 'bg-emerald-500/15' : 'bg-zinc-800'
+            item.rarity === 'legendary' ? 'bg-pink-950/30' : item.rarity === 'epic' ? 'bg-violet-950/30' : item.rarity === 'rare' ? 'bg-violet-500/15' : 'bg-zinc-800'
           }`}>
             {item.name.includes('Flame') ? previewIconMap.Flame :
              item.name.includes('Crown') ? previewIconMap.Crown :
-             item.name.includes('Zap') ? <Zap className="size-8 text-yellow-500" /> :
+             item.name.includes('Zap') ? <Zap className="size-8 text-cyan-400" /> :
              item.name.includes('Target') ? <Target className="size-8 text-zinc-500" /> :
              <Shield className="size-8 text-zinc-500" />}
           </div>
@@ -138,7 +138,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
         return (
           <TiltCard key={item.id} maxTilt={4}>
             <Card
-              className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-red-400' : rarity.border} ${isEquipped ? 'ring-2 ring-red-600 ring-offset-1 ring-offset-zinc-900' : ''}`}
+              className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-pink-400' : rarity.border} ${isEquipped ? 'ring-2 ring-pink-600 ring-offset-1 ring-offset-zinc-900' : ''}`}
             >
               <CardContent className="p-0">
                 {/* Rarity + Preview */}
@@ -160,9 +160,9 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
 
                   {/* Action */}
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm font-bold text-red-500 font-mono-stat">{item.cost} Aura</span>
+                    <span className="text-sm font-bold text-pink-500 font-mono-stat">{item.cost} Aura</span>
                     {isEquipped ? (
-                      <Badge className="badge-glow-red bg-red-950/30 text-red-400 border-red-800/50">
+                      <Badge className="badge-glow bg-pink-950/30 text-pink-400 border-pink-800/50">
                         <Check className="size-3" />
                         Equipped
                       </Badge>
@@ -170,7 +170,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 text-xs border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 transition-all duration-300"
+                        className="h-7 text-xs border-violet-500 text-violet-400 hover:bg-violet-500/15 hover:text-violet-400 transition-all duration-300"
                         onClick={() => handleEquip(item)}
                       >
                         Equip
@@ -178,11 +178,11 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                     ) : (
                       <Button
                         size="sm"
-                        className="btn-fire h-7 text-xs disabled:bg-zinc-800 disabled:text-zinc-500"
+                        className="btn-primary h-7 text-xs disabled:bg-zinc-800 disabled:text-zinc-500"
                         disabled={!canAfford}
                         onClick={() => handleBuy(item)}
                       >
-                        {canAfford ? 'Buy' : 'Need More Fire'}
+                        {canAfford ? 'Buy' : 'Need More Aura'}
                       </Button>
                     )}
                   </div>
@@ -201,10 +201,10 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
       <ScrollReveal>
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Shop</h2>
+            <h2 className="text-2xl font-bold font-heading text-zinc-100">Shop</h2>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-sm text-zinc-500">Your stash:</span>
-              <span className="text-lg font-bold text-red-500 font-mono-stat">{aura.toLocaleString()}</span>
+              <span className="text-lg font-bold text-pink-500 font-mono-stat">{aura.toLocaleString()}</span>
               <span className="text-sm text-zinc-500">Aura</span>
             </div>
           </div>

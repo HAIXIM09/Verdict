@@ -56,17 +56,17 @@ export function GuideTip({
   if (variant === 'inline') {
     return (
       <div
-        className={`group relative flex items-start gap-2.5 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-500/8 via-red-500/5 to-transparent border border-amber-600/20 transition-all duration-300 ${className}`}
+        className={`group relative flex items-start gap-2.5 px-4 py-3 rounded-xl bg-gradient-to-r from-violet-500/8 via-pink-500/5 to-transparent border border-violet-600/20 transition-all duration-300 ${className}`}
       >
-        <Sparkles className="size-4 text-amber-400 mt-0.5 shrink-0" />
+        <Sparkles className="size-4 text-violet-400 mt-0.5 shrink-0" />
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-bold text-amber-300 uppercase tracking-wider">{title}</p>
+          <p className="text-xs font-bold text-violet-300 uppercase tracking-wider">{title}</p>
           <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">{children}</p>
           {ctaText && onCtaClick && (
             <button
               type="button"
               onClick={onCtaClick}
-              className="flex items-center gap-1 mt-1.5 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+              className="flex items-center gap-1 mt-1.5 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
             >
               {ctaText}
               <ChevronRight className="size-3" />
@@ -87,24 +87,24 @@ export function GuideTip({
   // Card variant
   return (
     <div
-      className={`group relative rounded-2xl overflow-hidden border border-amber-600/20 bg-gradient-to-br from-zinc-900 via-zinc-900 to-amber-950/10 ${className}`}
+      className={`group relative rounded-2xl overflow-hidden border border-violet-600/20 bg-gradient-to-br from-zinc-900 via-zinc-900 to-violet-950/10 ${className}`}
     >
       {/* Shimmer accent line */}
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+      <div className="h-0.5 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
 
       <div className="p-5 flex gap-4">
         {/* Icon */}
         <div className="shrink-0">
-          <div className="size-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-red-500/10 border border-amber-600/20 flex items-center justify-center">
-            <Lightbulb className="size-5 text-amber-400" />
+          <div className="size-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-pink-500/10 border border-violet-600/20 flex items-center justify-center">
+            <Lightbulb className="size-5 text-violet-400" />
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <h3 className="text-sm font-bold text-amber-300">{title}</h3>
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-500/60 bg-amber-500/10 px-2 py-0.5 rounded-full">
+            <h3 className="text-sm font-bold text-violet-300">{title}</h3>
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-violet-500/60 bg-violet-500/10 px-2 py-0.5 rounded-full">
               Newbie Tip
             </span>
           </div>
@@ -115,7 +115,7 @@ export function GuideTip({
             <button
               type="button"
               onClick={onCtaClick}
-              className="inline-flex items-center gap-1.5 mt-3 px-4 py-1.5 rounded-lg bg-amber-500/10 border border-amber-600/30 text-xs font-bold text-amber-400 hover:bg-amber-500/20 hover:border-amber-500/50 transition-all"
+              className="inline-flex items-center gap-1.5 mt-3 px-4 py-1.5 rounded-lg bg-violet-500/10 border border-violet-600/30 text-xs font-bold text-violet-400 hover:bg-violet-500/20 hover:border-violet-500/50 transition-all"
             >
               {ctaText}
               <ChevronRight className="size-3.5" />
@@ -159,26 +159,26 @@ export function WelcomeOnboarding({ onDismiss }: { onDismiss: () => void }) {
     {
       icon: Flame,
       title: 'Welcome to Verdict',
-      body: 'The ultimate arena for roasting anime, movies, cartoons, and games. Pick a side, drop your hottest takes, and let the AI Roastmaster decide who gets destroyed.',
-      accent: 'from-red-500 to-amber-500',
+      body: 'The ultimate arena for debating anime, movies, cartoons, and games. Pick a side, drop your hottest takes, and let the AI Judge decide who wins.',
+      accent: 'from-pink-500 to-violet-500',
     },
     {
       icon: Swords,
-      title: 'Join Roast Battles',
+      title: 'Join Debates',
       body: 'Browse categories like Anime, Movies, or Games. Pick a battle, choose your side (Team A or Team B), and argue why your side wins. The chat is live — bring your A-game.',
-      accent: 'from-orange-500 to-red-500',
+      accent: 'from-cyan-500 to-pink-500',
     },
     {
       icon: Scale,
       title: 'Get Scored by AI',
-      body: 'An AI Roastmaster judges every battle on Creativity, Humor, and Savagery. Win to earn Aura and climb the ranks. Lose and watch your Aura burn.',
-      accent: 'from-amber-500 to-yellow-500',
+      body: 'An AI Judge evaluates every debate on Creativity, Humor, and Wit. Win to earn Aura and climb the ranks. Lose and watch your Aura slip.',
+      accent: 'from-violet-500 to-cyan-500',
     },
     {
       icon: Trophy,
       title: 'Climb the Ranks',
       body: 'Complete Daily Quests, unlock Aura from the Marketplace, form Crews with friends, and fight your way to the top of the Leaderboard. Are you legendary material?',
-      accent: 'from-emerald-500 to-amber-500',
+      accent: 'from-violet-500 to-pink-500',
     },
   ];
 
@@ -247,9 +247,9 @@ export function WelcomeOnboarding({ onDismiss }: { onDismiss: () => void }) {
             <button
               type="button"
               onClick={handleFinish}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-amber-500 text-white text-sm font-bold hover:opacity-90 transition-opacity shadow-lg shadow-red-600/25"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-violet-500 text-white text-sm font-bold hover:opacity-90 transition-opacity shadow-lg shadow-pink-600/25"
             >
-              Let&apos;s Roast!
+              Let&apos;s Debate!
             </button>
           )}
         </div>

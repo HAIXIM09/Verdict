@@ -14,15 +14,15 @@ interface GroupsSectionProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Movies: 'bg-red-600/15 text-red-400 border-red-700/50',
-  Games: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Movies: 'bg-pink-500/15 text-pink-400 border-pink-500/20',
+  Games: 'bg-violet-500/15 text-violet-400 border-violet-500/20',
   Anime: 'bg-zinc-800 text-zinc-400 border-zinc-700',
-  Sports: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
-  Food: 'bg-red-600/15 text-red-400 border-red-700/50',
+  Sports: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/20',
+  Food: 'bg-pink-500/15 text-pink-400 border-pink-500/20',
   Music: 'bg-zinc-800 text-zinc-400 border-zinc-700',
-  Tech: 'bg-red-600/15 text-red-400 border-red-700/50',
-  Viral: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
-  Cartoons: 'bg-yellow-600/15 text-yellow-400 border-yellow-600/30',
+  Tech: 'bg-violet-500/15 text-violet-400 border-violet-500/20',
+  Viral: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/20',
+  Cartoons: 'bg-pink-500/15 text-pink-400 border-pink-500/20',
 };
 
 export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps) {
@@ -40,8 +40,8 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
       {/* Header */}
       <ScrollReveal>
         <div>
-          <h2 className="text-2xl font-bold font-heading text-zinc-100">War Rooms</h2>
-          <p className="text-sm text-zinc-500 mt-1">Assemble your crew. Dominate the arena.</p>
+          <h2 className="text-2xl font-bold font-heading text-zinc-100">Crews</h2>
+          <p className="text-sm text-zinc-500 mt-1">Find your people. Debate together.</p>
         </div>
       </ScrollReveal>
 
@@ -53,7 +53,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
             placeholder="Search groups..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 focus:shadow-[0_0_0_2px_rgba(220,38,38,0.3)] transition-shadow duration-300"
+            className="pl-9 focus:shadow-[0_0_0_2px_rgba(236,72,153,0.3)] transition-shadow duration-300"
           />
         </div>
       </ScrollReveal>
@@ -74,7 +74,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                           <Badge className={categoryColors[group.category] ?? 'bg-zinc-800 text-zinc-400 border-zinc-800'}>
                             {group.category}
                           </Badge>
-                          <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20">
+                          <Badge className="bg-violet-500/15 text-violet-400 border-violet-500/20">
                             Joined
                           </Badge>
                         </div>
@@ -86,7 +86,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                       </div>
                       <Button
                         size="sm"
-                        className="btn-press bg-red-600 text-white hover:bg-red-700 shrink-0 mt-1"
+                        className="btn-press bg-pink-600 text-white hover:bg-pink-700 shrink-0 mt-1"
                         onClick={() => onChallengeFriend(group.id)}
                       >
                         Challenge
@@ -104,7 +104,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
       {discoverGroups.length > 0 && (
         <ScrollReveal delay={0.2}>
           <section className="stagger-2">
-            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">Find Crews</h3>
+            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-3">Discover Crews</h3>
             <div className="space-y-3">
               {discoverGroups.map((group) => (
                 <TiltCard key={group.id} maxTilt={3} shine={false} glow={false}>
@@ -126,7 +126,7 @@ export default function GroupsSection({ onChallengeFriend }: GroupsSectionProps)
                       <Button
                         variant="outline"
                         size="sm"
-                        className="btn-press border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 shrink-0 mt-1"
+                        className="btn-press border-violet-500 text-violet-400 hover:bg-violet-500/15 hover:text-violet-400 shrink-0 mt-1"
                       >
                         Join
                       </Button>

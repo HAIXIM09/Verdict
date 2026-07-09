@@ -23,7 +23,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       <ScrollReveal>
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold font-heading text-zinc-100">Burn Orders</h2>
+            <h2 className="text-2xl font-bold font-heading text-zinc-100">Daily Missions</h2>
             <p className="text-sm text-zinc-400 mt-1">Resets in 14h 23m</p>
           </div>
           <Button
@@ -40,7 +40,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
 
       <ScrollReveal delay={0.1}>
         <GuideTip id="quests_how" title="Free Rewards Every Day" variant="inline">
-          Quests reset every 24 hours. Complete them to earn <strong className="text-zinc-200">Coins</strong> (spend in the Aura Marketplace) and <strong className="text-zinc-200">Aura</strong> (your ranking score). Newbies should focus on &quot;Win 1 Battle&quot; first — it&apos;s the easiest quest!
+          Quests reset every 24 hours. Complete them for Coins and Aura. Start with &quot;Win 1 Battle&quot; — it&apos;s the easiest!
         </GuideTip>
       </ScrollReveal>
 
@@ -55,7 +55,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
               <TiltCard key={quest.id} maxTilt={3} shine={false} glow={false}>
                 <div
                   className={`rounded-xl border p-4 bg-zinc-900 ${
-                    isComplete ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-zinc-700'
+                    isComplete ? 'border-l-4 border-l-pink-500' : 'border-l-4 border-l-zinc-700'
                   } border-zinc-800 hover:shadow-lg hover:shadow-black/20 transition-shadow`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -78,7 +78,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                       <div className="mt-3 flex items-center gap-3">
                         <Progress
                           value={progressPercent}
-                          className="progress-fire h-2 flex-1 [&>div]:bg-red-600"
+                          className="progress-glow h-2 flex-1 [&>div]:bg-pink-600"
                         />
                         <span className="text-xs font-medium font-mono-stat text-zinc-500 shrink-0">
                           {quest.progress}/{quest.target}
@@ -94,7 +94,7 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                           </span>
                         )}
                         {quest.reward.aura > 0 && (
-                          <span className="text-red-500 font-medium font-mono-stat">
+                          <span className="text-pink-500 font-medium font-mono-stat">
                             +{quest.reward.aura} Aura
                           </span>
                         )}
@@ -110,14 +110,14 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
 
       {/* Total Rewards Preview */}
       <ScrollReveal delay={0.2}>
-        <div className="premium-glow rounded-xl border border-zinc-800 bg-red-950/20 p-4">
+        <div className="premium-glow rounded-xl border border-zinc-800 bg-pink-950/20 p-4">
           <p className="text-sm font-semibold text-zinc-300">Today&apos;s potential</p>
           <div className="flex items-center gap-4 mt-2">
             <span className="flex items-center gap-1.5 text-sm text-emerald-400 font-medium font-mono-stat">
               <Coins className="size-4" />
               +{totalCoins} Coins
             </span>
-            <span className="text-sm text-red-500 font-medium font-mono-stat">
+            <span className="text-sm text-pink-500 font-medium font-mono-stat">
               +{totalAura} Aura
             </span>
           </div>

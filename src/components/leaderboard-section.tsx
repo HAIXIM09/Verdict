@@ -26,15 +26,15 @@ const top3 = sortedUsers.slice(0, 3);
 
 const medalConfig = [
   {
-    badge: '#1 INFERNO',
-    badgeClass: 'bg-red-600 text-white border-none',
-    borderClass: 'border-orange-400',
-    glowColor: 'rgba(234, 88, 12, 0.5)',
-    medalIcon: <Trophy className="size-6 text-red-400" />,
+    badge: '#1 GOAT',
+    badgeClass: 'bg-pink-600 text-white border-none',
+    borderClass: 'border-violet-400',
+    glowColor: 'rgba(236, 72, 153, 0.5)',
+    medalIcon: <Trophy className="size-6 text-pink-400" />,
     sizeClass: 'p-5',
   },
   {
-    badge: '#2 BLAZE',
+    badge: '#2 ELITE',
     badgeClass: 'bg-zinc-700 text-zinc-200 border-none',
     borderClass: 'border-zinc-700',
     glowColor: 'rgba(161, 161, 170, 0.4)',
@@ -42,17 +42,17 @@ const medalConfig = [
     sizeClass: 'p-4',
   },
   {
-    badge: '#3 EMBER',
-    badgeClass: 'bg-red-600/15 text-red-400 border-none',
-    borderClass: 'border-red-600',
-    glowColor: 'rgba(220, 38, 38, 0.4)',
-    medalIcon: <Medal className="size-6 text-red-500" />,
+    badge: '#3 RISING',
+    badgeClass: 'bg-pink-600/15 text-pink-400 border-none',
+    borderClass: 'border-pink-600',
+    glowColor: 'rgba(236, 72, 153, 0.4)',
+    medalIcon: <Medal className="size-6 text-pink-500" />,
     sizeClass: 'p-4',
   },
 ];
 
 function avatarBg(index: number): string {
-  const colors = ['#EA580C', '#4D7C0F', '#B45309', '#166534', '#9A3412', '#DC2626', '#15803D', '#A16207', '#0F766E', '#C2410C', '#3F6212', '#78716C'];
+  const colors = ['#EC4899', '#8B5CF6', '#06B6D4', '#A78BFA', '#F472B6', '#22D3EE', '#C084FC', '#818CF8', '#06B6D4', '#F9A8D4', '#A78BFA', '#94A3B8'];
   return colors[index % colors.length];
 }
 
@@ -70,17 +70,17 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
       <ScrollReveal>
         <div>
           <div className="flex items-center gap-3">
-            <Trophy className="size-7 text-red-400" />
-            <h1 className="text-2xl md:text-3xl font-bold font-heading text-zinc-100">Roast Kings</h1>
+            <Trophy className="size-7 text-pink-400" />
+            <h1 className="text-2xl md:text-3xl font-bold font-heading text-zinc-100">Leaderboard</h1>
           </div>
           <p className="text-zinc-500 text-sm mt-1 ml-10">
-            Top roast warriors, ranked by Aura earned in roast
+            Ranked by total Aura earned
           </p>
         </div>
       </ScrollReveal>
 
       <GuideTip id="leaderboard_explain" title="Aura = Your Score" variant="inline">
-        The leaderboard ranks every roaster by total <strong className="text-zinc-200">Aura</strong> — the points you earn from winning battles. Win more, roast harder, and climb to the top. Top 3 get special badges!
+        The leaderboard ranks everyone by total <strong className="text-zinc-200">Aura</strong> — points earned from winning debates. The more you win, the higher you climb. Top 3 get special badges!
       </GuideTip>
 
       {/* Top 3 Cards */}
@@ -113,7 +113,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                       <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
                     </div>
 
-                    <Badge className="bg-red-600/15 text-red-400 border-none text-xs">
+                    <Badge className="bg-pink-600/15 text-pink-400 border-none text-xs">
                       <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
                     </Badge>
 
@@ -136,7 +136,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
               <TableHeader>
                 <TableRow className="bg-zinc-800/80 hover:bg-zinc-800/80">
                   <TableHead className="w-12 text-zinc-500 text-xs font-medium">#</TableHead>
-                  <TableHead className="text-zinc-500 text-xs font-medium">Roaster</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium">Debater</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium text-right">Wins</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium text-right">Win Rate</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium text-right">Aura</TableHead>
@@ -149,8 +149,8 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                   return (
                     <TableRow
                       key={user.id}
-                      className={`table-row-hover ${isUser ? 'bg-red-950/20' : rank % 2 === 0 ? 'bg-zinc-800/30' : 'bg-zinc-900'} ${
-                        rank === 1 ? 'border-l-4 border-l-red-500 shadow-[inset_0_0_12px_rgba(220,38,38,0.15)]' : ''
+                      className={`table-row-hover ${isUser ? 'bg-pink-950/20' : rank % 2 === 0 ? 'bg-zinc-800/30' : 'bg-zinc-900'} ${
+                        rank === 1 ? 'border-l-4 border-l-pink-500 shadow-[inset_0_0_12px_rgba(236,72,153,0.15)]' : ''
                       } cursor-pointer`}
                       onClick={() => onViewProfile(user.id)}
                     >
@@ -164,9 +164,9 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                             {getInitials(user.username)}
                           </div>
                           <div className="min-w-0">
-                            <p className={`text-sm font-medium truncate ${isUser ? 'text-red-500' : 'text-zinc-100'}`}>
+                            <p className={`text-sm font-medium truncate ${isUser ? 'text-pink-500' : 'text-zinc-100'}`}>
                               {user.username}
-                              {isUser && <span className="text-red-400 ml-1">(You)</span>}
+                              {isUser && <span className="text-pink-400 ml-1">(You)</span>}
                             </p>
                             <p className="text-xs text-zinc-400">{user.rank}</p>
                           </div>
@@ -175,7 +175,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                       <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.wins}</TableCell>
                       <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.winRate}%</TableCell>
                       <TableCell className="text-right">
-                        <Badge variant="secondary" className="bg-red-600/15 text-red-400 border-none text-xs font-semibold font-mono-stat">
+                        <Badge variant="secondary" className="bg-pink-600/15 text-pink-400 border-none text-xs font-semibold font-mono-stat">
                           {user.aura.toLocaleString()}
                         </Badge>
                       </TableCell>
@@ -190,11 +190,11 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
 
       {/* Your Rank Sticky Footer */}
       {!isCurrentInTop10 && currentUserRank > 0 && (
-        <Card className="gradient-border bg-zinc-900 border-2 border-red-400 sticky bottom-4">
+        <Card className="gradient-border bg-zinc-900 border-2 border-pink-400 sticky bottom-4">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-red-950/20 flex items-center justify-center text-xs font-bold text-white">
+                <div className="size-8 rounded-full bg-pink-950/20 flex items-center justify-center text-xs font-bold text-white">
                   {getInitials(mockCurrentUser.username)}
                 </div>
                 <div>
@@ -209,10 +209,10 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
               <Button
                 variant="outline"
                 size="sm"
-                className="text-red-400 border-red-700/50 hover:bg-red-950/20 text-xs"
+                className="text-pink-400 border-pink-700/50 hover:bg-pink-950/20 text-xs"
                 onClick={() => onViewProfile(mockCurrentUser.id)}
               >
-                View Burner
+                View Profile
               </Button>
             </div>
           </CardContent>

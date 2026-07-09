@@ -46,11 +46,11 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { page: 'home', label: 'The Pit', icon: Home },
-  { page: 'battles', label: 'Battle Zone', icon: Flame, badge: '3 Live' },
-  { page: 'leaderboard', label: 'Hall of Flame', icon: Trophy },
-  { page: 'groups', label: 'War Rooms', icon: Users },
-  { page: 'profile', label: 'My Burner', icon: User },
+  { page: 'home', label: 'Feed', icon: Home },
+  { page: 'battles', label: 'Arenas', icon: Flame, badge: 'New' },
+  { page: 'leaderboard', label: 'Ranks', icon: Trophy },
+  { page: 'groups', label: 'Crews', icon: Users },
+  { page: 'profile', label: 'Profile', icon: User },
 ];
 
 function getInitials(username: string): string {
@@ -81,7 +81,7 @@ export default function AppSidebar({
     >
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-4 py-5 h-16 shrink-0">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red-600 to-orange-600 shadow-[0_4px_16px_rgba(220,38,38,0.3)]">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-pink-600 to-violet-600 shadow-[0_4px_16px_rgba(236,72,153,0.3)]">
           <Flame className="h-4 w-4 text-white" />
         </div>
         {expanded && (
@@ -90,7 +90,7 @@ export default function AppSidebar({
             transform: 'translateX(-8px)',
             animation: 'slide-up-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
           }}>
-            VERDICT<span className="text-red-500">.</span>
+            VERDICT<span className="text-pink-500">.</span>
           </span>
         )}
       </div>
@@ -114,23 +114,23 @@ export default function AppSidebar({
                   title={!expanded ? item.label : undefined}
                   className={`relative flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-sm font-medium transition-all duration-300 ${
                     isActive
-                      ? 'text-red-400 bg-red-600/[0.08]'
+                      ? 'text-pink-400 bg-pink-600/[0.08]'
                       : 'text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-200'
                   }`}
                   style={{
                     ...(isActive && {
-                      boxShadow: 'inset 0 0 0 1px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.05)',
+                      boxShadow: 'inset 0 0 0 1px rgba(236, 72, 153, 0.2), 0 0 20px rgba(236, 72, 153, 0.05)',
                     }),
                   }}
                 >
                   {/* Active glow indicator */}
                   {isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[55%] rounded-r-full bg-gradient-to-b from-red-500 to-amber-500 shadow-[0_0_12px_rgba(220,38,38,0.6)]" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[55%] rounded-r-full bg-gradient-to-b from-pink-500 to-violet-500 shadow-[0_0_12px_rgba(236,72,153,0.6)]" />
                   )}
 
                   <Icon
                     className={`h-[18px] w-[18px] shrink-0 transition-all duration-300 ${
-                      isActive ? 'text-red-500 drop-shadow-[0_0_6px_rgba(239,68,68,0.4)]' : ''
+                      isActive ? 'text-pink-500 drop-shadow-[0_0_6px_rgba(236,72,153,0.4)]' : ''
                     }`}
                   />
                   {expanded && (
@@ -146,7 +146,7 @@ export default function AppSidebar({
                         <span
                           className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold transition-all duration-300 ${
                             isActive
-                              ? 'bg-red-600/15 text-red-400 shadow-[0_0_8px_rgba(239,68,68,0.15)]'
+                              ? 'bg-pink-600/15 text-pink-400 shadow-[0_0_8px_rgba(236,72,153,0.15)]'
                               : isHovered
                                 ? 'bg-zinc-800 text-zinc-400'
                                 : 'bg-zinc-800/50 text-zinc-600'
@@ -174,7 +174,7 @@ export default function AppSidebar({
           }}>
             {/* User Card */}
             <div className="flex items-center gap-3 rounded-xl px-2.5 py-2">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-amber-600 shadow-[0_4px_12px_rgba(220,38,38,0.25)]">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-600 to-violet-600 shadow-[0_4px_12px_rgba(236,72,153,0.25)]">
                 <span className="text-xs font-bold text-white">
                   {getInitials(user.username)}
                 </span>
@@ -183,7 +183,7 @@ export default function AppSidebar({
                 <p className="truncate text-sm font-semibold text-zinc-100">
                   {user.username}
                 </p>
-                <span className="inline-flex items-center gap-1 rounded-md bg-zinc-800/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-400 font-heading">
+                <span className="inline-flex items-center gap-1 rounded-md bg-zinc-800/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-400 font-heading">
                   <FlameKindling className="size-2.5" />
                   {user.rank}
                 </span>
@@ -193,13 +193,13 @@ export default function AppSidebar({
             {/* Stats Row */}
             <div className="mt-2.5 flex items-center justify-around rounded-xl bg-white/[0.02] border border-zinc-800/30 px-2 py-2.5">
               <div className="text-center">
-                <p className="text-xs font-bold text-red-500 font-mono-stat">{user.aura.toLocaleString()}</p>
+                <p className="text-xs font-bold text-pink-500 font-mono-stat">{user.aura.toLocaleString()}</p>
                 <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Aura</p>
               </div>
               <div className="h-5 w-px bg-zinc-800/50" />
               <div className="text-center">
                 <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
-                  <Zap className="size-3 text-amber-500" />
+                  <Zap className="size-3 text-violet-500" />
                   <span className="font-mono-stat">{user.streak}</span>
                 </p>
                 <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Streak</p>
@@ -207,7 +207,7 @@ export default function AppSidebar({
               <div className="h-5 w-px bg-zinc-800/50" />
               <div className="text-center">
                 <p className="flex items-center justify-center gap-0.5 text-xs font-bold text-zinc-200">
-                  <Coins className="size-3 text-amber-500" />
+                  <Coins className="size-3 text-violet-500" />
                   <span className="font-mono-stat">{user.coins}</span>
                 </p>
                 <p className="text-[9px] text-zinc-600 uppercase tracking-wider font-heading">Coins</p>
@@ -218,7 +218,7 @@ export default function AppSidebar({
             <button
               type="button"
               onClick={onLogout}
-              className="mt-2.5 flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm text-zinc-600 transition-all duration-300 hover:bg-red-600/[0.06] hover:text-red-500 btn-press"
+              className="mt-2.5 flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm text-zinc-600 transition-all duration-300 hover:bg-pink-600/[0.06] hover:text-pink-500 btn-press"
             >
               <LogOut className="h-4 w-4" />
               <span>Bail Out</span>
@@ -226,7 +226,7 @@ export default function AppSidebar({
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2.5">
-            <div className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-amber-600 shadow-[0_4px_12px_rgba(220,38,38,0.25)]">
+            <div className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-pink-600 to-violet-600 shadow-[0_4px_12px_rgba(236,72,153,0.25)]">
               <span className="text-[10px] font-bold text-white">
                 {getInitials(user.username)}
               </span>
@@ -234,7 +234,7 @@ export default function AppSidebar({
             <button
               type="button"
               onClick={onLogout}
-              className="text-zinc-600 hover:text-red-500 transition-colors duration-300"
+              className="text-zinc-600 hover:text-pink-500 transition-colors duration-300"
               title="Log Out"
             >
               <LogOut className="size-4" />

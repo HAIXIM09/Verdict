@@ -19,10 +19,10 @@ interface ProfileSectionProps {
 }
 
 const badgeConfig: Record<string, { icon: React.ReactNode; description: string }> = {
-  'Flame Streak': { icon: <Flame className="size-5" />, description: 'Win 3+ roast roasts in a row. Opponents left in ashes.' },
-  'Roast Master': { icon: <Star className="size-5" />, description: 'Win 50+ roasts. Your roasts are legendary.' },
-  'Top 10': { icon: <Trophy className="size-5" />, description: 'Reach top 10 on the leaderboard. Elite roaster territory.' },
-  'Unstoppable': { icon: <Shield className="size-5" />, description: 'Win 10+ roasts in a row. Absolute savage.' },
+  'Streak King': { icon: <Flame className="size-5" />, description: 'Win 3+ in a row. They can\'t stop you.' },
+  'Wordsmith': { icon: <Star className="size-5" />, description: 'Win 50+ debates. Your words hit different.' },
+  'Top 10': { icon: <Trophy className="size-5" />, description: 'Top 10 on the leaderboard. Elite territory.' },
+  'Unstoppable': { icon: <Shield className="size-5" />, description: 'Win 10+ in a row. Absolutely unstoppable.' },
 };
 
 const rankIconMap: Record<string, React.ReactNode> = {
@@ -35,11 +35,11 @@ const rankIconMap: Record<string, React.ReactNode> = {
 
 // Inline mock data for features not in the data model
 const auraHistory = [80, -30, 120, 50, -15, 200, 90];
-const lastRoastAuraChange = 120;
+const lastDebateAuraChange = 120;
 const weekAuraChange = -30;
 
-const allBadges = ['Flame Streak', 'Roast Master', 'Top 10', 'Unstoppable', 'Crowd Legend', 'Perfect Burn'];
-const recentRoastResults = [
+const allBadges = ['Streak King', 'Wordsmith', 'Top 10', 'Unstoppable', 'Crowd Favorite', 'Perfect Game'];
+const recentDebateResults = [
   { caseName: 'Pushpa vs KGF', result: 'won' as const, auraChange: 120, date: '2 hours ago' },
   { caseName: 'Naruto vs Goku', result: 'lost' as const, auraChange: -80, date: '5 hours ago' },
   { caseName: 'Messi vs Ronaldo', result: 'won' as const, auraChange: 150, date: '1 day ago' },
@@ -49,8 +49,8 @@ const recentRoastResults = [
 
 export default function ProfileSection({ userId, onNavigateToReplays, onNavigateToMarketplace }: ProfileSectionProps) {
   const user = mockCurrentUser;
-  const totalRoasts = user.wins + user.losses;
-  const winRate = totalRoasts > 0 ? Math.round((user.wins / totalRoasts) * 100) : 0;
+  const totalDebates = user.wins + user.losses;
+  const winRate = totalDebates > 0 ? Math.round((user.wins / totalDebates) * 100) : 0;
   const maxAura = Math.max(...auraHistory.map(Math.abs), 1);
 
   const joinDate = new Date(user.joinDate);
@@ -58,22 +58,22 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
   return (
     <div className="space-y-6">
-      <GuideTip id="profile_overview" title="Your Roast Identity" variant="inline">
-        This is your profile — your <strong className="text-zinc-200">Rank</strong> goes up as you win battles, <strong className="text-zinc-200">Aura</strong> is your total score, and <strong className="text-zinc-200">Badges</strong> are earned through milestones. Visit the <strong className="text-zinc-200">Marketplace</strong> to buy Aura skins!
+      <GuideTip id="profile_overview" title="Your Profile" variant="inline">
+        This is your profile — your <strong className="text-zinc-200">Rank</strong> goes up as you win debates, <strong className="text-zinc-200">Aura</strong> is your total score, and <strong className="text-zinc-200">Badges</strong> are earned through milestones. Visit the <strong className="text-zinc-200">Shop</strong> to customize your look.
       </GuideTip>
 
       {/* Profile Header Card */}
       <Card className="gradient-border rounded-2xl py-5">
         <CardContent className="px-6">
           <div className="flex items-center gap-4">
-            <div className="flex size-16 items-center justify-center rounded-full bg-[#4D7C0F] text-xl font-bold text-white shrink-0">
+            <div className="flex size-16 items-center justify-center rounded-full bg-[#8B5CF6] text-xl font-bold text-white shrink-0">
               {getInitials(user.username)}
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h2 className="text-xl font-bold text-zinc-100 truncate">{user.username}</h2>
                 <Badge
-                  className={`${user.rankColor} bg-red-950/30 border-red-800/50 shrink-0`}
+                  className={`${user.rankColor} bg-pink-950/30 border-pink-800/50 shrink-0`}
                 >
                   {rankIconMap[user.rank] ?? <Shield className="size-4" />}
                   <span className="ml-1">{user.rank}</span>
@@ -91,19 +91,19 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <CardContent className="px-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-shrink-0">
-                <p className="text-4xl font-bold font-mono-stat text-red-500">{user.aura.toLocaleString()}</p>
+                <p className="text-4xl font-bold font-mono-stat text-pink-500">{user.aura.toLocaleString()}</p>
                 <p className="text-sm font-medium text-zinc-500 mt-0.5">AURA</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 flex-1 min-w-0">
-                <div className="flex items-center gap-2 rounded-lg bg-red-950/20 border border-red-800/40 px-3 py-2">
+                <div className="flex items-center gap-2 rounded-lg bg-pink-950/20 border border-pink-800/40 px-3 py-2">
                   <TrendingUp className="size-4 text-emerald-400" />
-                  <span className="text-sm text-zinc-400">Last Roast:</span>
-                  <span className="text-sm font-semibold text-emerald-400 font-mono-stat">+{lastRoastAuraChange} Aura</span>
+                  <span className="text-sm text-zinc-400">Last Debate:</span>
+                  <span className="text-sm font-semibold text-emerald-400 font-mono-stat">+{lastDebateAuraChange} Aura</span>
                 </div>
-                <div className="flex items-center gap-2 rounded-lg bg-red-950/30 border border-red-800/50 px-3 py-2">
-                  <TrendingDown className="size-4 text-red-500" />
+                <div className="flex items-center gap-2 rounded-lg bg-pink-950/30 border border-pink-800/50 px-3 py-2">
+                  <TrendingDown className="size-4 text-pink-500" />
                   <span className="text-sm text-zinc-400">This Week:</span>
-                  <span className="text-sm font-semibold text-red-500 font-mono-stat">{weekAuraChange} Aura</span>
+                  <span className="text-sm font-semibold text-pink-500 font-mono-stat">{weekAuraChange} Aura</span>
                 </div>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
                       <div className="w-full flex justify-center">
                         <div
-                          className={`w-full max-w-[32px] rounded-sm progress-fire ${isPositive ? 'bg-red-600' : 'bg-red-400'}`}
+                          className={`w-full max-w-[32px] rounded-sm progress-glow ${isPositive ? 'bg-pink-600' : 'bg-pink-400'}`}
                           style={{ height: `${height}%`, minHeight: '4px' }}
                         />
                       </div>
@@ -141,8 +141,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <TiltCard maxTilt={3}>
             <Card className="rounded-xl py-4">
               <CardContent className="px-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-red-950/30">
-                  <Trophy className="size-5 text-red-500" />
+                <div className="flex size-10 items-center justify-center rounded-lg bg-pink-950/30">
+                  <Trophy className="size-5 text-pink-500" />
                 </div>
                 <div>
                   <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.wins}</p>
@@ -155,8 +155,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <TiltCard maxTilt={3}>
             <Card className="rounded-xl py-4">
               <CardContent className="px-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-red-950/30">
-                  <History className="size-5 text-red-500" />
+                <div className="flex size-10 items-center justify-center rounded-lg bg-pink-950/30">
+                  <History className="size-5 text-pink-500" />
                 </div>
                 <div>
                   <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.losses}</p>
@@ -169,8 +169,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <TiltCard maxTilt={3}>
             <Card className="rounded-xl py-4">
               <CardContent className="px-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-emerald-500/15">
-                  <Star className="size-5 text-emerald-400" />
+                <div className="flex size-10 items-center justify-center rounded-lg bg-violet-500/15">
+                  <Star className="size-5 text-violet-400" />
                 </div>
                 <div>
                   <p className="text-lg font-bold font-mono-stat text-zinc-100">{winRate}%</p>
@@ -183,8 +183,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <TiltCard maxTilt={3}>
             <Card className="rounded-xl py-4">
               <CardContent className="px-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-red-950/30">
-                  <Flame className="size-5 text-red-500" />
+                <div className="flex size-10 items-center justify-center rounded-lg bg-pink-950/30">
+                  <Flame className="size-5 text-pink-500" />
                 </div>
                 <div>
                   <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.streak}</p>
@@ -200,8 +200,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
           <TiltCard maxTilt={3}>
             <Card className="rounded-xl py-4">
               <CardContent className="px-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-yellow-950/30">
-                  <Coins className="size-5 text-yellow-600" />
+                <div className="flex size-10 items-center justify-center rounded-lg bg-violet-500/15">
+                  <Coins className="size-5 text-violet-400" />
                 </div>
                 <div>
                   <p className="text-lg font-bold font-mono-stat text-zinc-100">{user.coins}</p>
@@ -218,8 +218,8 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
                   <Shield className="size-5 text-zinc-400" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold font-mono-stat text-zinc-100">{totalRoasts}</p>
-                  <p className="text-xs text-zinc-500">Total Roasts</p>
+                  <p className="text-lg font-bold font-mono-stat text-zinc-100">{totalDebates}</p>
+                  <p className="text-xs text-zinc-500">Total Debates</p>
                 </div>
               </CardContent>
             </Card>
@@ -241,7 +241,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
                     <div
                       className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-800 p-3"
                     >
-                      <div className="flex size-10 items-center justify-center rounded-full bg-red-950/30 text-red-500">
+                      <div className="flex size-10 items-center justify-center rounded-full bg-pink-950/30 text-pink-500">
                         {config.icon}
                       </div>
                       <div className="min-w-0">
@@ -269,31 +269,31 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       <ScrollReveal delay={0.3}>
         <Card className="rounded-2xl py-5">
           <CardContent className="px-6">
-            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-4">Recent Roasts</h3>
+            <h3 className="text-base font-semibold font-heading text-zinc-100 mb-4">Recent Debates</h3>
             <div className="space-y-3">
-              {recentRoastResults.map((roast, i) => (
+              {recentDebateResults.map((debate, i) => (
                 <div
                   key={i}
                   className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-800/50 px-4 py-3"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-zinc-100 truncate">{roast.caseName}</p>
-                    <p className="text-xs text-zinc-400">{roast.date}</p>
+                    <p className="text-sm font-semibold text-zinc-100 truncate">{debate.caseName}</p>
+                    <p className="text-xs text-zinc-400">{debate.date}</p>
                   </div>
                   <div className="flex items-center gap-3 ml-3 shrink-0">
                     <span
                       className={`text-sm font-semibold ${
-                        roast.result === 'won' ? 'text-emerald-400' : 'text-red-500'
+                        debate.result === 'won' ? 'text-emerald-400' : 'text-pink-500'
                       }`}
                     >
-                      {roast.result === 'won' ? 'Won' : 'Lost'}
+                      {debate.result === 'won' ? 'Won' : 'Lost'}
                     </span>
                     <span
                       className={`text-sm font-medium font-mono-stat ${
-                        roast.auraChange >= 0 ? 'text-emerald-400' : 'text-red-500'
+                        debate.auraChange >= 0 ? 'text-emerald-400' : 'text-pink-500'
                       }`}
                     >
-                      {roast.auraChange >= 0 ? '+' : ''}{roast.auraChange} Aura
+                      {debate.auraChange >= 0 ? '+' : ''}{debate.auraChange} Aura
                     </span>
                   </div>
                 </div>
@@ -301,7 +301,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
             </div>
             <button
               onClick={onNavigateToReplays}
-              className="mt-4 text-sm font-medium text-red-500 hover:text-red-500 transition-colors"
+              className="mt-4 text-sm font-medium text-pink-500 hover:text-pink-500 transition-colors"
             >
               View All Roasts →
             </button>
@@ -312,18 +312,18 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3">
         <MagneticButton
-          className="flex-1 flex items-center justify-center gap-2 rounded-md border border-red-600 bg-transparent text-red-500 hover:bg-red-950/30 hover:text-red-500 px-4 py-2 text-sm font-medium transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 rounded-md border border-pink-600 bg-transparent text-pink-500 hover:bg-pink-950/30 hover:text-pink-500 px-4 py-2 text-sm font-medium transition-colors"
           onClick={onNavigateToMarketplace}
         >
           <Coins className="size-4" />
-          Burn Shop
+          Shop
         </MagneticButton>
         <MagneticButton
-          className="flex-1 flex items-center justify-center gap-2 rounded-md border border-emerald-500 bg-transparent text-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-400 px-4 py-2 text-sm font-medium transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 rounded-md border border-violet-500 bg-transparent text-violet-400 hover:bg-violet-500/15 hover:text-violet-400 px-4 py-2 text-sm font-medium transition-colors"
           onClick={onNavigateToReplays}
         >
           <History className="size-4" />
-          Roast Replays
+          Replays
         </MagneticButton>
       </div>
     </div>

@@ -43,11 +43,11 @@ type Page =
 type AppView = 'login' | 'app';
 
 const MOBILE_NAV_ITEMS: { page: Page; label: string; icon: React.ElementType }[] = [
-  { page: 'home', label: 'The Pit', icon: Home },
-  { page: 'battles', label: 'Battle Zone', icon: Flame },
-  { page: 'leaderboard', label: 'Flame', icon: Trophy },
-  { page: 'groups', label: 'War Rooms', icon: Users },
-  { page: 'profile', label: 'Burner', icon: User },
+  { page: 'home', label: 'Feed', icon: Home },
+  { page: 'battles', label: 'Arenas', icon: Flame },
+  { page: 'leaderboard', label: 'Ranks', icon: Trophy },
+  { page: 'groups', label: 'Crews', icon: Users },
+  { page: 'profile', label: 'Profile', icon: User },
 ];
 
 export default function RoastArenaApp() {
@@ -167,7 +167,7 @@ export default function RoastArenaApp() {
           user={sidebarUser}
         />
         {/* Subtle glow line between sidebar and content */}
-        <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
+        <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-pink-500/15 to-transparent" />
       </div>
 
       {/* Mobile Sidebar Overlay */}
@@ -205,15 +205,15 @@ export default function RoastArenaApp() {
             <Menu className="size-5" />
           </button>
           <div className="flex items-center gap-1.5">
-            <Flame className="size-4 text-red-500 animate-flicker" />
+            <Flame className="size-4 text-pink-500" />
             <span className="font-heading text-sm tracking-[0.2em] text-white">
-              VERDICT<span className="text-red-500">.</span>
+              VERDICT<span className="text-pink-500">.</span>
             </span>
           </div>
-          <div className="size-7 rounded-full bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_12px_rgba(220,38,38,0.3)]">
+          <div className="size-7 rounded-full bg-gradient-to-br from-pink-600 to-violet-600 flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_12px_rgba(236,72,153,0.3)]">
             {sidebarUser.username.substring(0, 2)}
           </div>
-          <div className="absolute bottom-0 left-0 right-0 h-px burn-gradient" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bar-gradient" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto p-4 md:p-6 lg:pl-8">
@@ -314,7 +314,7 @@ export default function RoastArenaApp() {
                 type="button"
                 onClick={() => navigateTo(item.page)}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-all duration-300 ${
-                  isActive ? 'text-red-500' : 'text-zinc-600 hover:text-zinc-400'
+                  isActive ? 'text-pink-500' : 'text-zinc-600 hover:text-zinc-400'
                 }`}
                 style={{
                   animation: isActive ? `nav-spring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 0.05}s both` : undefined,
@@ -322,12 +322,12 @@ export default function RoastArenaApp() {
               >
                 <div className={`p-1.5 rounded-xl transition-all duration-300 ${
                   isActive
-                    ? 'bg-red-600/12 shadow-[0_0_16px_rgba(239,68,68,0.15)]'
+                    ? 'bg-pink-600/12 shadow-[0_0_16px_rgba(236,72,153,0.15)]'
                     : 'hover:bg-white/[0.03]'
                 }`}>
-                  <Icon className={`size-[18px] transition-all duration-300 ${isActive ? 'drop-shadow-[0_0_6px_rgba(239,68,68,0.5)]' : ''}`} />
+                  <Icon className={`size-[18px] transition-all duration-300 ${isActive ? 'drop-shadow-[0_0_6px_rgba(236,72,153,0.5)]' : ''}`} />
                 </div>
-                <span className={`text-[10px] font-medium transition-all duration-300 ${isActive ? 'text-red-400' : ''}`}>{item.label}</span>
+                <span className={`text-[10px] font-medium transition-all duration-300 ${isActive ? 'text-pink-400' : ''}`}>{item.label}</span>
               </button>
             );
           })}

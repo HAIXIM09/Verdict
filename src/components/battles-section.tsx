@@ -63,8 +63,8 @@ function difficultyBadgeStyle(d: string): string {
   switch (d) {
     case 'Bronze': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
     case 'Silver': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
-    case 'Gold': return 'text-red-500 border-red-400 bg-red-950/30';
-    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-950/30';
+    case 'Gold': return 'text-pink-500 border-pink-400 bg-pink-950/30';
+    case 'Platinum': return 'text-violet-300 border-violet-500/30 bg-violet-950/30';
     default: return 'text-zinc-500 border-zinc-700 bg-zinc-800';
   }
 }
@@ -72,11 +72,11 @@ function difficultyBadgeStyle(d: string): string {
 function statusBadge(s: string) {
   switch (s) {
     case 'live':
-      return <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>;
+      return <Badge className="bg-pink-500/15 text-pink-500 border-pink-800/50 text-xs">LIVE</Badge>;
     case 'waiting':
-      return <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/20 text-xs">WAITING</Badge>;
+      return <Badge className="bg-violet-500/15 text-violet-400 border-violet-500/20 text-xs">WAITING</Badge>;
     case 'verdict':
-      return <Badge className="bg-red-600/15 text-red-400 border-red-700/50 text-xs">VERDICT</Badge>;
+      return <Badge className="bg-cyan-500/15 text-cyan-400 border-cyan-700/50 text-xs">SCORING</Badge>;
     case 'finished':
       return <Badge className="bg-zinc-800 text-zinc-500 border-zinc-800 text-xs">FINISHED</Badge>;
     default:
@@ -87,21 +87,21 @@ function statusBadge(s: string) {
 function actionButton(status: string, onClick: () => void) {
   if (status === 'live') {
     return (
-      <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white text-xs h-8" onClick={onClick}>
+      <Button size="sm" className="bg-pink-600 hover:bg-pink-700 text-white text-xs h-8" onClick={onClick}>
         JOIN
       </Button>
     );
   }
   if (status === 'waiting') {
     return (
-      <Button size="sm" variant="outline" className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/15 text-xs h-8" onClick={onClick}>
+      <Button size="sm" variant="outline" className="border-violet-500 text-violet-400 hover:bg-violet-500/15 text-xs h-8" onClick={onClick}>
         SPECTATE
       </Button>
     );
   }
   return (
     <Button size="sm" variant="outline" className="border-zinc-700 text-zinc-500 text-xs h-8" onClick={onClick}>
-      See Who Burned
+      View Results
     </Button>
   );
 }
@@ -115,7 +115,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <div className="flex items-start justify-between gap-2 mb-3">
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-bold text-zinc-100 truncate">
-                {battle.sideA} <Swords className="size-4 inline text-red-500 mx-1.5" /> {battle.sideB}
+                {battle.sideA} <Swords className="size-4 inline text-pink-500 mx-1.5" /> {battle.sideB}
               </h3>
             </div>
             {statusBadge(battle.status)}
@@ -126,7 +126,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
             <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
               {battle.difficulty}
             </Badge>
-            <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-400 border-none">
+            <Badge variant="secondary" className="text-xs bg-cyan-500/10 text-cyan-400 border-none">
               {battle.category}
             </Badge>
           </div>
@@ -142,7 +142,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                     title={player?.username}
                     className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                       player
-                        ? 'bg-[#4D7C0F] border-emerald-500'
+                        ? 'bg-[#8B5CF6]/10 border-violet-500 text-violet-400'
                         : 'bg-transparent border-zinc-700'
                     }`}
                   >
@@ -163,7 +163,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                     title={player?.username}
                     className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                       player
-                        ? 'bg-red-950/30 border-orange-500'
+                        ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400'
                         : 'bg-transparent border-zinc-700'
                     }`}
                   >
@@ -183,7 +183,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
             {battle.viewers > 0 && (
               <span>{battle.viewers} watching</span>
             )}
-            <span><Flame className="size-3 text-red-400 inline" /> {battle.auraStake} Aura at stake</span>
+            <span><Flame className="size-3 text-pink-400 inline" /> {battle.auraStake} Aura at stake</span>
           </div>
 
           {/* Action */}
@@ -219,14 +219,14 @@ export default function BattlesSection({
               <ArrowLeft className="size-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold font-heading text-zinc-100">Roast Arena</h1>
-              <p className="text-zinc-500 text-sm">Pick your battlefield. Choose wisely.</p>
+              <h1 className="text-2xl font-bold font-heading text-zinc-100">Arenas</h1>
+              <p className="text-zinc-500 text-sm">Pick a category. Start a debate.</p>
             </div>
           </div>
         </ScrollReveal>
 
         <GuideTip id="arena_categories" title="Start Here" variant="inline" className="mb-4">
-          Each category contains live and upcoming roast battles. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> battles have the highest Aura rewards — but only the sharpest roasters survive. Pick a category to see available battles!
+          Each category contains live and upcoming debates. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> arenas have the highest Aura rewards — but only the sharpest debaters survive. Pick a category to see available arenas!
         </GuideTip>
 
         <ScrollReveal>
@@ -236,7 +236,7 @@ export default function BattlesSection({
               return (
                 <TiltCard key={cat.id} maxTilt={5}>
                   <Card
-                    className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 hover:shadow-md hover:border-red-500 transition-all duration-300 cursor-pointer"
+                    className="bg-zinc-900 rounded-xl border border-zinc-800 p-6 hover:shadow-md hover:border-pink-500 transition-all duration-300 cursor-pointer"
                     onClick={() => onSelectCategory?.(cat.name)}
                   >
                     <CardContent className="p-0 flex flex-col items-center text-center gap-3">
@@ -246,7 +246,7 @@ export default function BattlesSection({
                       <div>
                         <h3 className="font-semibold text-zinc-100 text-sm">{cat.name}</h3>
                         <Badge variant="secondary" className="mt-1.5 text-xs bg-zinc-800 text-zinc-400 border-none">
-                          {cat.battleCount} roasts
+                          {cat.battleCount} arenas
                         </Badge>
                       </div>
                     </CardContent>
@@ -261,18 +261,18 @@ export default function BattlesSection({
         <div className="stagger-2 mt-8">
           <Button
             variant="outline"
-            className="btn-fire w-full py-8 flex flex-col items-center gap-2"
+            className="btn-primary w-full py-8 flex flex-col items-center gap-2"
             onClick={() => setShowSubmitForm(!showSubmitForm)}
           >
             <Plus className="size-5" />
-            <span>Ignite a New Roast</span>
+            <span>Start a Debate</span>
           </Button>
 
           {showSubmitForm && (
             <Card className="mt-4 bg-zinc-900 border border-zinc-800">
               <CardContent className="p-6 space-y-4">
-                <h3 className="font-semibold text-zinc-100">Ignite a New Roast</h3>
-                <p className="text-zinc-500 text-sm">The community votes — if it catches fire, it becomes an official roast.</p>
+                <h3 className="font-semibold text-zinc-100">Start a Debate</h3>
+                <p className="text-zinc-500 text-sm">Create a new arena — if it gets traction, it goes live.</p>
 
                 <div className="space-y-3">
                   <div>
@@ -309,9 +309,9 @@ export default function BattlesSection({
                     />
                   </div>
 
-                  <Button className="btn-fire w-full">
+                  <Button className="btn-primary w-full">
                     <Send className="size-4" />
-                    Light It Up
+                    Post It
                   </Button>
                 </div>
               </CardContent>
@@ -322,7 +322,7 @@ export default function BattlesSection({
     );
   }
 
-  // Category Roasts View
+  // Category Arenas View
   const categoryBattles = mockBattles.filter(b => b.category === selectedCategory);
   const filteredBattles = filter === 'all'
     ? categoryBattles
@@ -332,7 +332,6 @@ export default function BattlesSection({
     { key: 'all', label: 'All' },
     { key: 'live', label: 'Live' },
     { key: 'waiting', label: 'Waiting' },
-    { key: 'finished', label: 'Finished' },
   ];
 
   return (
@@ -344,13 +343,13 @@ export default function BattlesSection({
           </Button>
           <div>
             <h1 className="text-2xl font-bold text-zinc-100">{selectedCategory}</h1>
-            <p className="text-zinc-500 text-sm">{categoryBattles.length} roasts in this category</p>
+            <p className="text-zinc-500 text-sm">{categoryBattles.length} arenas in this category</p>
           </div>
         </div>
       </ScrollReveal>
 
-        <GuideTip id="arena_battle_list" title="Choosing a Battle" variant="inline" className="mb-4">
-          <strong className="text-zinc-200">LIVE</strong> battles are happening now — jump in! <strong className="text-zinc-200">WAITING</strong> battles need players — great for your first roast. Use the filters above to find your preferred match type.
+        <GuideTip id="arena_battle_list" title="Choosing an Arena" variant="inline" className="mb-4">
+          <strong className="text-zinc-200">LIVE</strong> arenas are happening now — jump in! <strong className="text-zinc-200">WAITING</strong> arenas need players — great for your first debate. Use the filters above to find your preferred match type.
         </GuideTip>
 
       {/* Filter Tabs */}
@@ -362,7 +361,7 @@ export default function BattlesSection({
             size="sm"
             className={
               filter === tab.key
-                ? 'bg-red-600 text-white hover:bg-red-700 transition-all duration-300'
+                ? 'bg-pink-600 text-white hover:bg-pink-700 transition-all duration-300'
                 : 'border-zinc-800 text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-all duration-300'
             }
             onClick={() => setFilter(tab.key)}
@@ -372,11 +371,24 @@ export default function BattlesSection({
         ))}
       </div>
 
-      {/* Roast Cards Grid */}
+      {/* Arena Cards Grid */}
       {filteredBattles.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-zinc-400 text-sm">The arena is quiet... too quiet.</p>
-        </div>
+        <ScrollReveal delay={0.05}>
+          <div className="text-center py-16">
+            <div className="size-16 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-5">
+              <Swords className="size-7 text-violet-400" />
+            </div>
+            <p className="text-zinc-300 text-base font-semibold mb-1">No arenas here yet</p>
+            <p className="text-zinc-500 text-sm mb-6">Be the first to start one.</p>
+            <Button
+              className="btn-primary"
+              onClick={() => setShowSubmitForm(true)}
+            >
+              <Plus className="size-4 mr-2" />
+              Start a Debate
+            </Button>
+          </div>
+        </ScrollReveal>
       ) : (
         <ScrollReveal delay={0.1}>
           <div className="stagger-1 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -395,18 +407,18 @@ export default function BattlesSection({
       <div className="mt-8">
         <Button
           variant="outline"
-          className="btn-fire w-full py-8 flex flex-col items-center gap-2"
+          className="btn-primary w-full py-8 flex flex-col items-center gap-2"
           onClick={() => setShowSubmitForm(!showSubmitForm)}
         >
           <Plus className="size-5" />
-          <span>Start a Roast for {selectedCategory}</span>
+          <span>Start a Debate for {selectedCategory}</span>
         </Button>
 
         {showSubmitForm && (
           <Card className="mt-4 bg-zinc-900 border border-zinc-800">
             <CardContent className="p-6 space-y-4">
-              <h3 className="font-semibold text-zinc-100">Ignite a New Roast</h3>
-              <p className="text-zinc-500 text-sm">The community votes — if it catches fire, it becomes an official roast.</p>
+              <h3 className="font-semibold text-zinc-100">Start a Debate</h3>
+              <p className="text-zinc-500 text-sm">Create a new arena — if it gets traction, it goes live.</p>
 
               <div className="space-y-3">
                 <div>
@@ -429,9 +441,9 @@ export default function BattlesSection({
                   />
                 </div>
 
-                <Button className="btn-fire w-full">
+                <Button className="btn-primary w-full">
                   <Send className="size-4" />
-                  Light It Up
+                  Post It
                 </Button>
               </div>
             </CardContent>

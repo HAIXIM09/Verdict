@@ -24,8 +24,8 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Verdict — Where Opinions Get Burned",
-  description: "Drop your hottest takes on anime, movies, games & more. Roast your opponents, get scored on creativity and savagery, and climb the leaderboard as the ultimate roaster.",
+  title: "Verdict — Pick a Side. Make Your Case.",
+  description: "The debate platform for anime, movies, games & more. Pick sides, make your case, get scored by AI, and climb the ranks.",
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
