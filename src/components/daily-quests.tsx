@@ -19,13 +19,13 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stone-900">Daily Quests</h2>
+          <h2 className="text-2xl font-bold text-stone-100">Daily Quests</h2>
           <p className="text-sm text-stone-400 mt-1">Resets in 14h 23m</p>
         </div>
         <Button
           variant="ghost"
           size="sm"
-          className="text-stone-500 hover:text-stone-700"
+          className="text-stone-500 hover:text-stone-300"
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />
@@ -42,16 +42,16 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
           return (
             <div
               key={quest.id}
-              className={`rounded-xl border bg-white p-4 transition-shadow hover:shadow-sm ${
+              className={`rounded-xl border bg-stone-900 p-4 transition-shadow hover:shadow-lg hover:shadow-black/20 ${
                 isComplete ? 'border-l-4 border-l-orange-500' : 'border-l-4 border-l-stone-300'
-              } border-stone-200`}
+              } border-stone-700`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-stone-900">{quest.title}</h4>
+                    <h4 className="text-sm font-semibold text-stone-100">{quest.title}</h4>
                     {isComplete && (
-                      <Badge className="bg-green-100 text-green-700 border-green-200">
+                      <Badge className="bg-green-900/30 text-green-400 border-green-800/50">
                         <Check className="size-3" />
                         Claimed
                       </Badge>
@@ -95,8 +95,8 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
       </div>
 
       {/* Total Rewards Preview */}
-      <div className="rounded-xl border border-stone-200 bg-orange-50/50 p-4">
-        <p className="text-sm font-semibold text-stone-700">Today&apos;s potential</p>
+      <div className="rounded-xl border border-stone-700 bg-orange-950/20 p-4">
+        <p className="text-sm font-semibold text-stone-600">Today&apos;s potential</p>
         <div className="flex items-center gap-4 mt-2">
           <span className="flex items-center gap-1.5 text-sm text-[#4D7C0F] font-medium">
             <Coins className="size-4" />

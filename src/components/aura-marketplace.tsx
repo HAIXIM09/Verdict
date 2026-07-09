@@ -14,10 +14,10 @@ interface AuraMarketplaceProps {
 }
 
 const rarityColors: Record<MarketplaceItem['rarity'], { dot: string; border: string; label: string }> = {
-  common: { dot: 'bg-stone-400', border: 'border-stone-300', label: 'Common' },
+  common: { dot: 'bg-stone-400', border: 'border-stone-600', label: 'Common' },
   rare: { dot: 'bg-[#4D7C0F]', border: 'border-[#4D7C0F]/40', label: 'Rare' },
   epic: { dot: 'bg-amber-600', border: 'border-amber-400', label: 'Epic' },
-  legendary: { dot: 'bg-orange-500', border: 'border-orange-400', label: 'Legendary' },
+  legendary: { dot: 'bg-orange-950/300', border: 'border-orange-400', label: 'Legendary' },
 };
 
 const typeIcons: Record<MarketplaceItem['type'], React.ReactNode> = {
@@ -38,18 +38,18 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
     case 'border':
       return (
         <div
-          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-amber-500' : item.rarity === 'rare' ? 'border-[#4D7C0F]' : 'border-stone-400'} bg-white flex items-center justify-center`}
+          className={`w-full aspect-square rounded-lg border-4 ${item.rarity === 'legendary' ? 'border-orange-500' : item.rarity === 'epic' ? 'border-amber-500' : item.rarity === 'rare' ? 'border-[#4D7C0F]' : 'border-stone-500'} bg-stone-900 flex items-center justify-center`}
         >
-          <div className="w-3/4 h-3/4 rounded-md border-2 border-dashed border-stone-200 flex items-center justify-center">
-            <Shield className="size-5 text-stone-300" />
+          <div className="w-3/4 h-3/4 rounded-md border-2 border-dashed border-stone-700 flex items-center justify-center">
+            <Shield className="size-5 text-stone-600" />
           </div>
         </div>
       );
     case 'text':
       return (
-        <div className="w-full aspect-square rounded-lg bg-stone-50 flex items-center justify-center px-3">
+        <div className="w-full aspect-square rounded-lg bg-stone-800 flex items-center justify-center px-3">
           <span className={`text-sm font-bold text-center ${
-            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-amber-700' : 'text-stone-700'
+            item.rarity === 'legendary' ? 'text-orange-600' : item.rarity === 'epic' ? 'text-amber-700' : 'text-stone-600'
           }`}>
             {item.name}
           </span>
@@ -57,21 +57,21 @@ function ItemPreview({ item }: { item: MarketplaceItem }) {
       );
     case 'icon':
       return (
-        <div className="w-full aspect-square rounded-lg bg-stone-50 flex items-center justify-center">
+        <div className="w-full aspect-square rounded-lg bg-stone-800 flex items-center justify-center">
           <div className={`size-12 rounded-full flex items-center justify-center ${
-            item.rarity === 'legendary' ? 'bg-orange-100' : item.rarity === 'epic' ? 'bg-amber-100' : item.rarity === 'rare' ? 'bg-[#4D7C0F]/10' : 'bg-stone-100'
+            item.rarity === 'legendary' ? 'bg-orange-950/30' : item.rarity === 'epic' ? 'bg-amber-950/30' : item.rarity === 'rare' ? 'bg-[#4D7C0F]/20' : 'bg-stone-800'
           }`}>
             {item.name.includes('Flame') ? previewIconMap.Flame :
              item.name.includes('Crown') ? previewIconMap.Crown :
              item.name.includes('Zap') ? <Zap className="size-8 text-yellow-500" /> :
              item.name.includes('Target') ? <Target className="size-8 text-stone-500" /> :
-             <Shield className="size-8 text-blue-400" />}
+             <Shield className="size-8 text-stone-500" />}
           </div>
         </div>
       );
     case 'description':
       return (
-        <div className="w-full aspect-square rounded-lg bg-stone-50 flex items-center justify-center px-3">
+        <div className="w-full aspect-square rounded-lg bg-stone-800 flex items-center justify-center px-3">
           <p className="text-xs text-stone-500 text-center leading-relaxed">{item.description}</p>
         </div>
       );
@@ -136,7 +136,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
         return (
           <Card
             key={item.id}
-            className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-orange-300' : rarity.border} ${isEquipped ? 'ring-2 ring-orange-600 ring-offset-1' : ''}`}
+            className={`rounded-xl overflow-hidden py-0 gap-0 ${isOwned ? 'border-orange-300' : rarity.border} ${isEquipped ? 'ring-2 ring-orange-600 ring-offset-1 ring-offset-stone-900' : ''}`}
           >
             <CardContent className="p-0">
               {/* Rarity + Preview */}
@@ -149,18 +149,18 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
               </div>
 
               {/* Info */}
-              <div className="px-3 pb-3 pt-1 border-t border-stone-100">
+              <div className="px-3 pb-3 pt-1 border-t border-stone-700">
                 <div className="flex items-center gap-1.5 mb-1">
                   {typeIcons[item.type]}
                   <span className="text-[10px] uppercase font-medium text-stone-400 tracking-wider">{item.type}</span>
                 </div>
-                <h4 className="text-sm font-semibold text-stone-900 truncate">{item.name}</h4>
+                <h4 className="text-sm font-semibold text-stone-100 truncate">{item.name}</h4>
 
                 {/* Action */}
                 <div className="mt-2 flex items-center justify-between">
                   <span className="text-sm font-bold text-orange-600">{item.cost} Aura</span>
                   {isEquipped ? (
-                    <Badge className="bg-green-100 text-green-700 border-green-200">
+                    <Badge className="bg-green-900/30 text-green-400 border-green-800/50">
                       <Check className="size-3" />
                       Equipped
                     </Badge>
@@ -168,7 +168,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-7 text-xs border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/10 hover:text-[#4D7C0F]"
+                      className="h-7 text-xs border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/20 hover:text-[#4D7C0F]"
                       onClick={() => handleEquip(item)}
                     >
                       Equip
@@ -176,7 +176,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
                   ) : (
                     <Button
                       size="sm"
-                      className="h-7 text-xs bg-orange-600 text-white hover:bg-orange-700 disabled:bg-stone-200 disabled:text-stone-400"
+                      className="h-7 text-xs bg-orange-600 text-white hover:bg-orange-700 disabled:bg-stone-700 disabled:text-stone-500"
                       disabled={!canAfford}
                       onClick={() => handleBuy(item)}
                     >
@@ -197,7 +197,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stone-900">Aura Marketplace</h2>
+          <h2 className="text-2xl font-bold text-stone-100">Aura Marketplace</h2>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-sm text-stone-500">Your balance:</span>
             <span className="text-lg font-bold text-orange-600">{aura.toLocaleString()}</span>
@@ -207,7 +207,7 @@ export default function AuraMarketplace({ onBack }: AuraMarketplaceProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-stone-500 hover:text-stone-700"
+          className="text-stone-500 hover:text-stone-300"
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />

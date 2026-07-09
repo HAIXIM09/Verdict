@@ -61,9 +61,9 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h2 className="text-xl font-bold text-stone-900 truncate">{user.username}</h2>
+                <h2 className="text-xl font-bold text-stone-100 truncate">{user.username}</h2>
                 <Badge
-                  className={`${user.rankColor} bg-orange-50 border-orange-200 shrink-0`}
+                  className={`${user.rankColor} bg-orange-950/30 border-orange-800/50 shrink-0`}
                 >
                   {rankIconMap[user.rank] ?? <Shield className="size-4" />}
                   <span className="ml-1">{user.rank}</span>
@@ -84,21 +84,21 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               <p className="text-sm font-medium text-stone-500 mt-0.5">AURA</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 flex-1 min-w-0">
-              <div className="flex items-center gap-2 rounded-lg bg-green-50 border border-green-200 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-lg bg-green-950/30 border border-green-800/50 px-3 py-2">
                 <TrendingUp className="size-4 text-[#4D7C0F]" />
-                <span className="text-sm text-stone-600">Last Battle:</span>
+                <span className="text-sm text-stone-400">Last Battle:</span>
                 <span className="text-sm font-semibold text-[#4D7C0F]">+{lastBattleAuraChange} Aura</span>
               </div>
-              <div className="flex items-center gap-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-lg bg-red-950/30 border border-red-800/50 px-3 py-2">
                 <TrendingDown className="size-4 text-red-500" />
-                <span className="text-sm text-stone-600">This Week:</span>
+                <span className="text-sm text-stone-400">This Week:</span>
                 <span className="text-sm font-semibold text-red-500">{weekAuraChange} Aura</span>
               </div>
             </div>
           </div>
 
           {/* CSS Bar Chart — Last 7 Days */}
-          <div className="mt-5 pt-5 border-t border-stone-100">
+          <div className="mt-5 pt-5 border-t border-stone-700">
             <p className="text-xs font-medium text-stone-400 mb-3">Last 7 Days</p>
             <div className="flex items-end gap-2 h-16">
               {auraHistory.map((val, i) => {
@@ -127,11 +127,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-orange-50">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-orange-950/30">
               <Trophy className="size-5 text-orange-600" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{user.wins}</p>
+              <p className="text-lg font-bold text-stone-100">{user.wins}</p>
               <p className="text-xs text-stone-500">Wins</p>
             </div>
           </CardContent>
@@ -139,11 +139,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-red-50">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-red-950/30">
               <History className="size-5 text-red-500" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{user.losses}</p>
+              <p className="text-lg font-bold text-stone-100">{user.losses}</p>
               <p className="text-xs text-stone-500">Losses</p>
             </div>
           </CardContent>
@@ -151,11 +151,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-[#4D7C0F]/10">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-[#4D7C0F]/20">
               <Star className="size-5 text-[#4D7C0F]" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{winRate}%</p>
+              <p className="text-lg font-bold text-stone-100">{winRate}%</p>
               <p className="text-xs text-stone-500">Win Rate</p>
             </div>
           </CardContent>
@@ -163,11 +163,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-orange-50">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-orange-950/30">
               <Flame className="size-5 text-orange-600" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{user.streak} 🔥</p>
+              <p className="text-lg font-bold text-stone-100">{user.streak} 🔥</p>
               <p className="text-xs text-stone-500">Current Streak</p>
               {user.streak >= 3 && (
                 <p className="text-[10px] font-medium text-[#4D7C0F] mt-0.5">1.5x Aura Multiplier</p>
@@ -178,11 +178,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-yellow-50">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-yellow-950/30">
               <Coins className="size-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{user.coins}</p>
+              <p className="text-lg font-bold text-stone-100">{user.coins}</p>
               <p className="text-xs text-stone-500">Coins</p>
             </div>
           </CardContent>
@@ -190,11 +190,11 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
 
         <Card className="rounded-xl py-4">
           <CardContent className="px-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-stone-100">
-              <Shield className="size-5 text-stone-600" />
+            <div className="flex size-10 items-center justify-center rounded-lg bg-stone-800">
+              <Shield className="size-5 text-stone-400" />
             </div>
             <div>
-              <p className="text-lg font-bold text-stone-900">{totalBattles}</p>
+              <p className="text-lg font-bold text-stone-100">{totalBattles}</p>
               <p className="text-xs text-stone-500">Total Battles</p>
             </div>
           </CardContent>
@@ -204,7 +204,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       {/* Badges Section */}
       <Card className="rounded-2xl py-5">
         <CardContent className="px-6">
-          <h3 className="text-base font-semibold text-stone-900 mb-4">Badges</h3>
+          <h3 className="text-base font-semibold text-stone-100 mb-4">Badges</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {allBadges.map((badgeName) => {
               const isUnlocked = user.badges.includes(badgeName);
@@ -212,22 +212,22 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
               return isUnlocked && config ? (
                 <div
                   key={badgeName}
-                  className="flex items-center gap-3 rounded-xl border border-stone-200 bg-white p-3"
+                  className="flex items-center gap-3 rounded-xl border border-stone-700 bg-stone-800 p-3"
                 >
-                  <div className="flex size-10 items-center justify-center rounded-full bg-orange-50 text-orange-600">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-orange-950/30 text-orange-600">
                     {config.icon}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-stone-900 truncate">{badgeName}</p>
+                    <p className="text-sm font-semibold text-stone-100 truncate">{badgeName}</p>
                     <p className="text-xs text-stone-500 truncate">{config.description}</p>
                   </div>
                 </div>
               ) : (
                 <div
                   key={badgeName}
-                  className="flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-stone-200 bg-stone-50 p-3 min-h-[72px]"
+                  className="flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-stone-700 bg-stone-800 p-3 min-h-[72px]"
                 >
-                  <Shield className="size-5 text-stone-300" />
+                  <Shield className="size-5 text-stone-600" />
                   <p className="text-xs font-medium text-stone-400">Locked</p>
                 </div>
               );
@@ -239,15 +239,15 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       {/* Battle History */}
       <Card className="rounded-2xl py-5">
         <CardContent className="px-6">
-          <h3 className="text-base font-semibold text-stone-900 mb-4">Recent Battles</h3>
+          <h3 className="text-base font-semibold text-stone-100 mb-4">Recent Battles</h3>
           <div className="space-y-3">
             {recentBattleResults.map((battle, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between rounded-lg border border-stone-100 bg-stone-50/50 px-4 py-3"
+                className="flex items-center justify-between rounded-lg border border-stone-700 bg-stone-800/50 px-4 py-3"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-stone-900 truncate">{battle.caseName}</p>
+                  <p className="text-sm font-semibold text-stone-100 truncate">{battle.caseName}</p>
                   <p className="text-xs text-stone-400">{battle.date}</p>
                 </div>
                 <div className="flex items-center gap-3 ml-3 shrink-0">
@@ -282,7 +282,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
       <div className="flex flex-col sm:flex-row gap-3">
         <Button
           variant="outline"
-          className="flex-1 border-orange-600 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
+          className="flex-1 border-orange-600 text-orange-600 hover:bg-orange-950/30 hover:text-orange-700"
           onClick={onNavigateToMarketplace}
         >
           <Coins className="size-4" />
@@ -290,7 +290,7 @@ export default function ProfileSection({ userId, onNavigateToReplays, onNavigate
         </Button>
         <Button
           variant="outline"
-          className="flex-1 border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/10 hover:text-[#4D7C0F]"
+          className="flex-1 border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/20 hover:text-[#4D7C0F]"
           onClick={onNavigateToReplays}
         >
           <History className="size-4" />

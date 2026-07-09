@@ -40,16 +40,16 @@ function ReplayCard({ battle, onWatch }: { battle: BattleCase; onWatch: (id: str
         <div className="p-4 space-y-3">
           {/* Header row */}
           <div className="flex items-start justify-between gap-2">
-            <h4 className="text-sm font-semibold text-stone-900 leading-snug">{caseName}</h4>
+            <h4 className="text-sm font-semibold text-stone-100 leading-snug">{caseName}</h4>
             {isVOD && (
-              <Badge className="bg-orange-100 text-orange-700 border-orange-200 shrink-0 text-[10px]">
+              <Badge className="bg-orange-600/15 text-orange-400 border-orange-700/50 shrink-0 text-[10px]">
                 Verdict of the Day
               </Badge>
             )}
           </div>
 
           {/* Verdict */}
-          <p className="text-sm text-stone-600 font-medium">{verdictText}</p>
+          <p className="text-sm text-stone-400 font-medium">{verdictText}</p>
 
           {/* Best argument preview */}
           <p className="text-xs text-stone-500 leading-relaxed line-clamp-2">
@@ -66,7 +66,7 @@ function ReplayCard({ battle, onWatch }: { battle: BattleCase; onWatch: (id: str
               <Eye className="size-3" />
               {formatViewers(battle.viewers)} views
             </span>
-            <Badge variant="secondary" className="text-[10px] bg-stone-100 text-stone-500 border-none">
+            <Badge variant="secondary" className="text-[10px] bg-stone-800 text-stone-500 border-none">
               {battle.category}
             </Badge>
           </div>
@@ -110,11 +110,11 @@ export default function CaseReplays({ onBack, onWatchReplay }: CaseReplaysProps)
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-stone-900">Case Replays</h2>
+        <h2 className="text-2xl font-bold text-stone-100">Case Replays</h2>
         <Button
           variant="ghost"
           size="sm"
-          className="text-stone-500 hover:text-stone-700"
+          className="text-stone-500 hover:text-stone-300"
           onClick={onBack}
         >
           <ArrowLeft className="size-4" />
@@ -143,7 +143,7 @@ export default function CaseReplays({ onBack, onWatchReplay }: CaseReplaysProps)
             </div>
           ) : (
             <div className="text-center py-12">
-              <Trophy className="size-10 text-stone-300 mx-auto mb-3" />
+              <Trophy className="size-10 text-stone-600 mx-auto mb-3" />
               <p className="text-stone-500 text-sm">No replays found in this category.</p>
             </div>
           )}

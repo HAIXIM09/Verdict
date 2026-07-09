@@ -148,7 +148,7 @@ export default function VerdictApp() {
   };
 
   return (
-    <div className="flex min-h-screen bg-stone-50">
+    <div className="flex min-h-screen bg-stone-950">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <AppSidebar
@@ -163,7 +163,7 @@ export default function VerdictApp() {
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-50">
           <div
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-black/60"
             onClick={() => setMobileMenuOpen(false)}
           />
           <div className="relative z-10 w-64 h-full animate-in slide-in-from-left duration-200">
@@ -180,15 +180,15 @@ export default function VerdictApp() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto pb-20 md:pb-6">
         {/* Mobile Top Bar */}
-        <div className="md:hidden sticky top-0 z-30 bg-white border-b border-stone-200 px-4 py-3 flex items-center justify-between">
+        <div className="md:hidden sticky top-0 z-30 bg-stone-950 border-b border-stone-800 px-4 py-3 flex items-center justify-between">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="p-1.5 -ml-1.5 text-stone-600 hover:text-stone-900"
+            className="p-1.5 -ml-1.5 text-stone-400 hover:text-stone-100"
           >
             <Menu className="size-5" />
           </button>
-          <span className="font-bold text-stone-900">Verdict</span>
+          <span className="font-bold text-stone-100">Verdict</span>
           <div className="size-7 rounded-full bg-orange-600 flex items-center justify-center text-[10px] font-bold text-white">
             {sidebarUser.username.substring(0, 2)}
           </div>
@@ -281,7 +281,7 @@ export default function VerdictApp() {
       </main>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 safe-area-inset-bottom">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-stone-900 border-t border-stone-700 safe-area-inset-bottom">
         <div className="flex items-center justify-around h-14">
           {MOBILE_NAV_ITEMS.map((item) => {
             const isActive = currentPage === item.page || (item.page === 'battles' && currentPage === 'battle-room');
@@ -292,7 +292,7 @@ export default function VerdictApp() {
                 type="button"
                 onClick={() => navigateTo(item.page)}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors ${
-                  isActive ? 'text-orange-600' : 'text-stone-400 hover:text-stone-600'
+                  isActive ? 'text-orange-600' : 'text-stone-400 hover:text-stone-400'
                 }`}
               >
                 <Icon className="size-5" />

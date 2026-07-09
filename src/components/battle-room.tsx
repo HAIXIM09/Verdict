@@ -41,11 +41,11 @@ const POWER_UPS = [
 
 function difficultyBadgeStyle(d: string): string {
   switch (d) {
-    case 'Bronze': return 'text-stone-500 border-stone-300 bg-stone-50';
-    case 'Silver': return 'text-stone-500 border-stone-400 bg-stone-50';
-    case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-50';
-    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-50';
-    default: return 'text-stone-500 border-stone-300 bg-stone-50';
+    case 'Bronze': return 'text-stone-500 border-stone-600 bg-stone-800';
+    case 'Silver': return 'text-stone-500 border-stone-500 bg-stone-800';
+    case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-950/30';
+    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-950/30';
+    default: return 'text-stone-500 border-stone-600 bg-stone-800';
   }
 }
 
@@ -59,8 +59,8 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
   if (!player) {
     return (
       <div className="flex items-center gap-2 py-1.5 px-2">
-        <div className="size-8 rounded-full border-2 border-dashed border-stone-300 flex items-center justify-center shrink-0">
-          <Plus className="size-3.5 text-stone-300" />
+        <div className="size-8 rounded-full border-2 border-dashed border-stone-600 flex items-center justify-center shrink-0">
+          <Plus className="size-3.5 text-stone-600" />
         </div>
         <span className="text-xs text-stone-400">Open</span>
       </div>
@@ -73,14 +73,14 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
     <div className="flex items-center gap-2 py-1.5 px-2">
       <div
         className={`size-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold text-white ${
-          isCurrent ? 'ring-2 ring-orange-500 ring-offset-1' : ''
+          isCurrent ? 'ring-2 ring-orange-500 ring-offset-1 ring-offset-stone-900' : ''
         }`}
         style={{ backgroundColor: '#EA580C' }}
       >
         {player.avatar.substring(0, 2)}
       </div>
       <div className="min-w-0">
-        <p className={`text-xs font-medium truncate ${isCurrent ? 'text-orange-600' : 'text-stone-800'}`}>
+        <p className={`text-xs font-medium truncate ${isCurrent ? 'text-orange-600' : 'text-stone-200'}`}>
           {player.username}
         </p>
         <p className="text-[10px] text-stone-400">Aura: {player.aura.toLocaleString()}</p>
@@ -92,7 +92,7 @@ function PlayerSlot({ player, isCurrentUser, team }: { player: User | null; isCu
 function ChatMessageItem({ msg, teamColor }: { msg: ChatMessage; teamColor?: string }) {
   if (msg.type === 'ai_kick') {
     return (
-      <div className="px-3 py-2 bg-red-50 border border-red-100 rounded-lg mx-1">
+      <div className="px-3 py-2 bg-red-950/30 border border-red-900/50 rounded-lg mx-1">
         <div className="flex items-start gap-2">
           <AlertTriangle className="size-3.5 text-red-500 mt-0.5 shrink-0" />
           <p className="text-xs text-red-700">{msg.text}</p>
@@ -123,7 +123,7 @@ function ChatMessageItem({ msg, teamColor }: { msg: ChatMessage; teamColor?: str
   return (
     <div className={`px-3 py-1.5 mx-1 flex items-start gap-2 ${teamColor === 'A' ? 'border-l-2 border-l-orange-400' : teamColor === 'B' ? 'border-l-2 border-l-[#4D7C0F]' : ''}`}>
       <p className="text-xs">
-        <span className="font-bold text-stone-800">{msg.username}</span>
+        <span className="font-bold text-stone-200">{msg.username}</span>
         <span className="text-stone-400 ml-1.5">{msg.text}</span>
       </p>
     </div>
@@ -168,29 +168,29 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
       {/* Left Column — Battle Area */}
       <div className="flex-1 lg:w-[60%] space-y-4">
         {/* Header */}
-        <Card className="bg-white border border-stone-200">
+        <Card className="bg-stone-900 border border-stone-700">
           <CardContent className="p-4">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
-                <h1 className="text-xl font-bold text-stone-900">
+                <h1 className="text-xl font-bold text-stone-100">
                   {battle.sideA} ⚔️ {battle.sideB}
                 </h1>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" className="text-xs bg-[#4D7C0F]/10 text-[#4D7C0F] border-none">
+                  <Badge variant="secondary" className="text-xs bg-[#4D7C0F]/20 text-[#4D7C0F] border-none">
                     {battle.category}
                   </Badge>
                   <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
                     {battle.difficulty}
                   </Badge>
                   {battle.status === 'live' && (
-                    <Badge className="bg-red-500/10 text-red-600 border-red-200 text-xs">LIVE</Badge>
+                    <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>
                   )}
                   {battle.status === 'waiting' && (
-                    <Badge className="bg-[#4D7C0F]/10 text-[#4D7C0F] border-[#4D7C0F]/20 text-xs">WAITING</Badge>
+                    <Badge className="bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/20 text-xs">WAITING</Badge>
                   )}
                 </div>
               </div>
-              <Button variant="outline" size="sm" className="text-stone-500 border-stone-300" onClick={onLeave}>
+              <Button variant="outline" size="sm" className="text-stone-500 border-stone-600" onClick={onLeave}>
                 Leave
               </Button>
             </div>
@@ -206,7 +206,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
                 cy="60"
                 r="54"
                 fill="none"
-                stroke="#f5f5f4"
+                stroke="#292524"
                 strokeWidth="6"
               />
               <circle
@@ -224,7 +224,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <Clock className={`size-4 mb-1 ${isLowTime ? 'text-red-500' : 'text-stone-400'}`} />
-              <span className={`text-3xl font-bold tabular-nums ${isLowTime ? 'text-red-600' : 'text-stone-900'}`}>
+              <span className={`text-3xl font-bold tabular-nums ${isLowTime ? 'text-red-600' : 'text-stone-100'}`}>
                 {formatTime(timer)}
               </span>
             </div>
@@ -234,7 +234,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         {/* Teams Section */}
         <div className="grid grid-cols-2 gap-4">
           {/* Team A */}
-          <Card className="bg-orange-50/50 border border-orange-100">
+          <Card className="bg-orange-950/20 border border-orange-900/40">
             <CardContent className="p-4">
               <h3 className="text-sm font-bold text-orange-700 mb-2 text-center">
                 Team {battle.sideA}
@@ -253,7 +253,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
           </Card>
 
           {/* Team B */}
-          <Card className="bg-[#4D7C0F]/5 border border-[#4D7C0F]/20">
+          <Card className="bg-[#4D7C0F]/20 border border-[#4D7C0F]/20">
             <CardContent className="p-4">
               <h3 className="text-sm font-bold text-[#4D7C0F] mb-2 text-center">
                 Team {battle.sideB}
@@ -273,7 +273,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         </div>
 
         {/* AI Moderation Bar */}
-        <Card className="bg-stone-50 border border-stone-200">
+        <Card className="bg-stone-800/80 border border-stone-700">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-2">
               <Scale className="size-4 text-orange-600" />
@@ -295,13 +295,13 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         </Card>
 
         {/* Spectator Reactions Bar */}
-        <Card className="bg-white border border-stone-200">
+        <Card className="bg-stone-900 border border-stone-700">
           <CardContent className="p-3">
             <div className="flex items-center gap-2 flex-wrap">
               {REACTIONS.map((r, i) => (
                 <button
                   key={r.emoji}
-                  className="bg-stone-100 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-stone-200 transition-colors"
+                  className="bg-stone-800 rounded-full px-3 py-1.5 text-sm flex items-center gap-1.5 hover:bg-stone-200 transition-colors"
                   onClick={() => {
                     const next = [...reactionCounts];
                     next[i] += 1;
@@ -324,14 +324,14 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             {battle.spectators.slice(0, 5).map(spectator => (
               <div
                 key={spectator.id}
-                className="size-7 rounded-full bg-stone-300 border-2 border-white flex items-center justify-center text-[9px] font-bold text-white"
+                className="size-7 rounded-full bg-stone-300 border-2 border-stone-800 flex items-center justify-center text-[9px] font-bold text-white"
                 style={{ backgroundColor: '#78716C' }}
               >
                 {spectator.avatar.substring(0, 2)}
               </div>
             ))}
             {battle.spectators.length > 5 && (
-              <div className="size-7 rounded-full bg-stone-200 border-2 border-white flex items-center justify-center text-[9px] font-medium text-stone-500">
+              <div className="size-7 rounded-full bg-stone-200 border-2 border-stone-800 flex items-center justify-center text-[9px] font-medium text-stone-500">
                 +{battle.spectators.length - 5}
               </div>
             )}
@@ -340,12 +340,12 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
       </div>
 
       {/* Right Column — Chat */}
-      <div className="lg:w-[40%] flex flex-col bg-white border border-stone-200 rounded-xl overflow-hidden min-h-[400px] lg:min-h-0">
+      <div className="lg:w-[40%] flex flex-col bg-stone-900 border border-stone-700 rounded-xl overflow-hidden min-h-[400px] lg:min-h-0">
         {/* Chat Header */}
-        <div className="px-4 py-3 border-b border-stone-200 flex items-center justify-between shrink-0">
+        <div className="px-4 py-3 border-b border-stone-700 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <MessageSquare className="size-4 text-stone-500" />
-            <span className="font-semibold text-stone-900 text-sm">Battle Chat</span>
+            <span className="font-semibold text-stone-100 text-sm">Battle Chat</span>
           </div>
           <span className="text-xs text-stone-400">{battle.chatMessages.length} messages</span>
         </div>
@@ -367,14 +367,14 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         </ScrollArea>
 
         {/* Power-Ups Bar */}
-        <div className="px-3 py-2 border-t border-stone-100 flex items-center gap-2 shrink-0">
+        <div className="px-3 py-2 border-t border-stone-700 flex items-center gap-2 shrink-0">
           {POWER_UPS.map(pu => {
             const canAfford = mockCurrentUser.coins >= pu.cost;
             return (
               <button
                 key={pu.label}
-                className={`bg-white border border-stone-200 rounded-lg px-3 py-2 text-xs text-stone-700 flex items-center gap-1.5 transition-colors ${
-                  canAfford ? 'hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700' : 'opacity-40 cursor-not-allowed'
+                className={`bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-stone-600 flex items-center gap-1.5 transition-colors ${
+                  canAfford ? 'hover:bg-orange-950/30 hover:border-orange-600 hover:text-orange-400' : 'opacity-40 cursor-not-allowed'
                 }`}
                 disabled={!canAfford}
               >
@@ -389,7 +389,7 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
         </div>
 
         {/* Chat Input or Spectator View */}
-        <div className="px-3 py-3 border-t border-stone-200 shrink-0">
+        <div className="px-3 py-3 border-t border-stone-700 shrink-0">
           {isPlayer ? (
             <div className="flex items-center gap-2">
               <Input
@@ -409,10 +409,10 @@ export default function BattleRoom({ battleId, onLeave, currentUser }: BattleRoo
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <Badge variant="secondary" className="text-xs bg-stone-100 text-stone-500 border-none">
+              <Badge variant="secondary" className="text-xs bg-stone-800 text-stone-500 border-none">
                 Spectating
               </Badge>
-              <Button variant="outline" size="sm" className="text-orange-600 border-orange-200 hover:bg-orange-50 text-xs">
+              <Button variant="outline" size="sm" className="text-orange-500 border-orange-700/50 hover:bg-orange-950/30 text-xs">
                 Request to Join
               </Button>
             </div>

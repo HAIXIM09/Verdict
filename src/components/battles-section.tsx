@@ -50,24 +50,24 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 function difficultyBadgeStyle(d: string): string {
   switch (d) {
-    case 'Bronze': return 'text-stone-500 border-stone-300 bg-stone-50';
-    case 'Silver': return 'text-stone-500 border-stone-400 bg-stone-50';
-    case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-50';
-    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-50';
-    default: return 'text-stone-500 border-stone-300 bg-stone-50';
+    case 'Bronze': return 'text-stone-500 border-stone-600 bg-stone-800';
+    case 'Silver': return 'text-stone-500 border-stone-500 bg-stone-800';
+    case 'Gold': return 'text-orange-600 border-orange-300 bg-orange-950/30';
+    case 'Platinum': return 'text-amber-700 border-amber-300 bg-amber-950/30';
+    default: return 'text-stone-500 border-stone-600 bg-stone-800';
   }
 }
 
 function statusBadge(s: string) {
   switch (s) {
     case 'live':
-      return <Badge className="bg-red-500/10 text-red-600 border-red-200 text-xs">LIVE</Badge>;
+      return <Badge className="bg-red-500/15 text-red-500 border-red-800/50 text-xs">LIVE</Badge>;
     case 'waiting':
-      return <Badge className="bg-[#4D7C0F]/10 text-[#4D7C0F] border-[#4D7C0F]/20 text-xs">WAITING</Badge>;
+      return <Badge className="bg-[#4D7C0F]/20 text-[#4D7C0F] border-[#4D7C0F]/20 text-xs">WAITING</Badge>;
     case 'verdict':
-      return <Badge className="bg-orange-100 text-orange-600 border-orange-200 text-xs">VERDICT</Badge>;
+      return <Badge className="bg-orange-600/15 text-orange-500 border-orange-700/50 text-xs">VERDICT</Badge>;
     case 'finished':
-      return <Badge className="bg-stone-100 text-stone-500 border-stone-200 text-xs">FINISHED</Badge>;
+      return <Badge className="bg-stone-800 text-stone-500 border-stone-700 text-xs">FINISHED</Badge>;
     default:
       return null;
   }
@@ -83,13 +83,13 @@ function actionButton(status: string, onClick: () => void) {
   }
   if (status === 'waiting') {
     return (
-      <Button size="sm" variant="outline" className="border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/10 text-xs h-8" onClick={onClick}>
+      <Button size="sm" variant="outline" className="border-[#4D7C0F] text-[#4D7C0F] hover:bg-[#4D7C0F]/20 text-xs h-8" onClick={onClick}>
         SPECTATE
       </Button>
     );
   }
   return (
-    <Button size="sm" variant="outline" className="border-stone-300 text-stone-500 text-xs h-8" onClick={onClick}>
+    <Button size="sm" variant="outline" className="border-stone-600 text-stone-500 text-xs h-8" onClick={onClick}>
       VIEW VERDICT
     </Button>
   );
@@ -97,12 +97,12 @@ function actionButton(status: string, onClick: () => void) {
 
 function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
   return (
-    <Card className="bg-white border border-stone-200 hover:shadow-md transition-all">
+    <Card className="bg-stone-900 border border-stone-700 hover:shadow-md transition-all">
       <CardContent className="p-5">
         {/* Top Row */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-stone-900 truncate">
+            <h3 className="text-lg font-bold text-stone-100 truncate">
               {battle.sideA} ⚔️ {battle.sideB}
             </h3>
           </div>
@@ -114,7 +114,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
             {battle.difficulty}
           </Badge>
-          <Badge variant="secondary" className="text-xs bg-[#4D7C0F]/10 text-[#4D7C0F] border-none">
+          <Badge variant="secondary" className="text-xs bg-[#4D7C0F]/20 text-[#4D7C0F] border-none">
             {battle.category}
           </Badge>
         </div>
@@ -131,7 +131,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                   className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                     player
                       ? 'bg-[#4D7C0F] border-[#4D7C0F]'
-                      : 'bg-transparent border-stone-300'
+                      : 'bg-transparent border-stone-600'
                   }`}
                 >
                   {player ? player.avatar.substring(0, 2) : null}
@@ -140,7 +140,7 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
             </div>
           </div>
 
-          <span className="text-stone-300 font-bold text-sm">VS</span>
+          <span className="text-stone-600 font-bold text-sm">VS</span>
 
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs text-stone-500 font-medium mb-1">Team {battle.sideB}</span>
@@ -151,8 +151,8 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
                   title={player?.username}
                   className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
                     player
-                      ? 'bg-orange-500 border-orange-500'
-                      : 'bg-transparent border-stone-300'
+                      ? 'bg-orange-950/300 border-orange-500'
+                      : 'bg-transparent border-stone-600'
                   }`}
                 >
                   {player ? player.avatar.substring(0, 2) : null}
@@ -205,7 +205,7 @@ export default function BattlesSection({
             <ArrowLeft className="size-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-stone-900">Battle Arena</h1>
+            <h1 className="text-2xl font-bold text-stone-100">Battle Arena</h1>
             <p className="text-stone-500 text-sm">Choose a category to find your next battle</p>
           </div>
         </div>
@@ -216,7 +216,7 @@ export default function BattlesSection({
             return (
               <Card
                 key={cat.id}
-                className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-md hover:border-orange-300 transition-all cursor-pointer"
+                className="bg-stone-900 rounded-xl border border-stone-700 p-6 hover:shadow-md hover:border-orange-500 transition-all cursor-pointer"
                 onClick={() => onSelectCategory?.(cat.name)}
               >
                 <CardContent className="p-0 flex flex-col items-center text-center gap-3">
@@ -224,8 +224,8 @@ export default function BattlesSection({
                     {IconComp && <IconComp className="size-6" />}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-stone-900 text-sm">{cat.name}</h3>
-                    <Badge variant="secondary" className="mt-1.5 text-xs bg-stone-100 text-stone-600 border-none">
+                    <h3 className="font-semibold text-stone-100 text-sm">{cat.name}</h3>
+                    <Badge variant="secondary" className="mt-1.5 text-xs bg-stone-800 text-stone-400 border-none">
                       {cat.battleCount} battles
                     </Badge>
                   </div>
@@ -239,7 +239,7 @@ export default function BattlesSection({
         <div className="mt-8">
           <Button
             variant="outline"
-            className="border-dashed border-stone-300 text-stone-500 hover:text-orange-600 hover:border-orange-300 w-full py-8 flex flex-col items-center gap-2"
+            className="border-dashed border-stone-600 text-stone-500 hover:text-orange-600 hover:border-orange-500 w-full py-8 flex flex-col items-center gap-2"
             onClick={() => setShowSubmitForm(!showSubmitForm)}
           >
             <Plus className="size-5" />
@@ -247,14 +247,14 @@ export default function BattlesSection({
           </Button>
 
           {showSubmitForm && (
-            <Card className="mt-4 bg-white border border-stone-200">
+            <Card className="mt-4 bg-stone-900 border border-stone-700">
               <CardContent className="p-6 space-y-4">
-                <h3 className="font-semibold text-stone-900">Submit a Case for Voting</h3>
+                <h3 className="font-semibold text-stone-100">Submit a Case for Voting</h3>
                 <p className="text-stone-500 text-sm">Community will upvote — if popular, it becomes an official battle!</p>
 
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-sm text-stone-700">Category</Label>
+                    <Label className="text-sm text-stone-600">Category</Label>
                     <Select value={submitCategory} onValueChange={setSubmitCategory}>
                       <SelectTrigger className="w-full mt-1">
                         <SelectValue placeholder="Select a category" />
@@ -268,7 +268,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-700">Side A</Label>
+                    <Label className="text-sm text-stone-600">Side A</Label>
                     <Input
                       placeholder="e.g. Pushpa"
                       value={submitSideA}
@@ -278,7 +278,7 @@ export default function BattlesSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm text-stone-700">Side B</Label>
+                    <Label className="text-sm text-stone-600">Side B</Label>
                     <Input
                       placeholder="e.g. KGF"
                       value={submitSideB}
@@ -320,7 +320,7 @@ export default function BattlesSection({
           <ArrowLeft className="size-5" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold text-stone-900">{selectedCategory}</h1>
+          <h1 className="text-2xl font-bold text-stone-100">{selectedCategory}</h1>
           <p className="text-stone-500 text-sm">{categoryBattles.length} battles in this category</p>
         </div>
       </div>
@@ -335,7 +335,7 @@ export default function BattlesSection({
             className={
               filter === tab.key
                 ? 'bg-orange-600 text-white hover:bg-orange-700'
-                : 'border-stone-200 text-stone-500 hover:text-stone-700 hover:border-stone-300'
+                : 'border-stone-700 text-stone-500 hover:text-stone-300 hover:border-stone-600'
             }
             onClick={() => setFilter(tab.key)}
           >
@@ -365,7 +365,7 @@ export default function BattlesSection({
       <div className="mt-8">
         <Button
           variant="outline"
-          className="border-dashed border-stone-300 text-stone-500 hover:text-orange-600 hover:border-orange-300 w-full py-8 flex flex-col items-center gap-2"
+          className="border-dashed border-stone-600 text-stone-500 hover:text-orange-600 hover:border-orange-500 w-full py-8 flex flex-col items-center gap-2"
           onClick={() => setShowSubmitForm(!showSubmitForm)}
         >
           <Plus className="size-5" />
@@ -373,14 +373,14 @@ export default function BattlesSection({
         </Button>
 
         {showSubmitForm && (
-          <Card className="mt-4 bg-white border border-stone-200">
+          <Card className="mt-4 bg-stone-900 border border-stone-700">
             <CardContent className="p-6 space-y-4">
-              <h3 className="font-semibold text-stone-900">Submit a Case for Voting</h3>
+              <h3 className="font-semibold text-stone-100">Submit a Case for Voting</h3>
               <p className="text-stone-500 text-sm">Community will upvote — if popular, it becomes an official battle!</p>
 
               <div className="space-y-3">
                 <div>
-                  <Label className="text-sm text-stone-700">Side A</Label>
+                  <Label className="text-sm text-stone-600">Side A</Label>
                   <Input
                     placeholder={`e.g. Enter ${selectedCategory} option`}
                     value={submitSideA}
@@ -390,7 +390,7 @@ export default function BattlesSection({
                 </div>
 
                 <div>
-                  <Label className="text-sm text-stone-700">Side B</Label>
+                  <Label className="text-sm text-stone-600">Side B</Label>
                   <Input
                     placeholder="e.g. Enter opponent"
                     value={submitSideB}

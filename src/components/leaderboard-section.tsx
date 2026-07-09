@@ -31,15 +31,15 @@ const medalConfig = [
   },
   {
     badge: '#2 ELITE',
-    badgeClass: 'bg-stone-200 text-stone-700 border-none',
-    borderClass: 'border-stone-300',
+    badgeClass: 'bg-stone-200 text-stone-600 border-none',
+    borderClass: 'border-stone-600',
     medalIcon: <Medal className="size-6 text-stone-400" />,
     sizeClass: 'p-4',
   },
   {
     badge: '#3 VETERAN',
-    badgeClass: 'bg-orange-100 text-orange-700 border-none',
-    borderClass: 'border-orange-200',
+    badgeClass: 'bg-orange-600/15 text-orange-500 border-none',
+    borderClass: 'border-orange-600',
     medalIcon: <Medal className="size-6 text-orange-700" />,
     sizeClass: 'p-4',
   },
@@ -60,7 +60,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
       <div>
         <div className="flex items-center gap-3">
           <Trophy className="size-7 text-orange-500" />
-          <h1 className="text-2xl md:text-3xl font-bold text-stone-900">Champions</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-stone-100">Champions</h1>
         </div>
         <p className="text-stone-500 text-sm mt-1 ml-10">
           Top verdict warriors, ranked by Aura earned in battle
@@ -74,7 +74,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
           return (
             <Card
               key={user.id}
-              className={`bg-white border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
+              className={`bg-stone-900 border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
             >
               <CardContent className="p-0 flex flex-col items-center text-center gap-3">
                 <div className="flex items-center gap-2">
@@ -92,11 +92,11 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-stone-900 text-sm">{user.username}</h3>
+                  <h3 className="font-bold text-stone-100 text-sm">{user.username}</h3>
                   <p className="text-stone-400 text-xs mt-0.5">{user.id}</p>
                 </div>
 
-                <Badge className="bg-orange-100 text-orange-600 border-none text-xs">
+                <Badge className="bg-orange-600/15 text-orange-500 border-none text-xs">
                   {user.aura.toLocaleString()} Aura
                 </Badge>
 
@@ -110,11 +110,11 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
       </div>
 
       {/* Full Rankings Table */}
-      <Card className="bg-white border border-stone-200">
+      <Card className="bg-stone-900 border border-stone-700">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="bg-stone-50 hover:bg-stone-50">
+              <TableRow className="bg-stone-800/80 hover:bg-stone-800/80">
                 <TableHead className="w-12 text-stone-500 text-xs font-medium">#</TableHead>
                 <TableHead className="text-stone-500 text-xs font-medium">Fighter</TableHead>
                 <TableHead className="text-stone-500 text-xs font-medium text-right">Wins</TableHead>
@@ -129,12 +129,12 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                 return (
                   <TableRow
                     key={user.id}
-                    className={`${isUser ? 'bg-orange-50' : rank % 2 === 0 ? 'bg-stone-50/50' : 'bg-white'} ${
+                    className={`${isUser ? 'bg-orange-950/20' : rank % 2 === 0 ? 'bg-stone-800/30' : 'bg-stone-900'} ${
                       rank === 1 ? 'border-l-4 border-l-orange-500' : ''
-                    } cursor-pointer hover:bg-stone-100`}
+                    } cursor-pointer hover:bg-stone-800`}
                     onClick={() => onViewProfile(user.id)}
                   >
-                    <TableCell className="text-sm font-bold text-stone-900">{rank}</TableCell>
+                    <TableCell className="text-sm font-bold text-stone-100">{rank}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div
@@ -144,7 +144,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                           {user.avatar.substring(0, 2)}
                         </div>
                         <div className="min-w-0">
-                          <p className={`text-sm font-medium truncate ${isUser ? 'text-orange-600' : 'text-stone-900'}`}>
+                          <p className={`text-sm font-medium truncate ${isUser ? 'text-orange-600' : 'text-stone-100'}`}>
                             {user.username}
                             {isUser && <span className="text-orange-400 ml-1">(You)</span>}
                           </p>
@@ -152,10 +152,10 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right text-sm text-stone-700">{user.wins}</TableCell>
-                    <TableCell className="text-right text-sm text-stone-700">{user.winRate}%</TableCell>
+                    <TableCell className="text-right text-sm text-stone-600">{user.wins}</TableCell>
+                    <TableCell className="text-right text-sm text-stone-600">{user.winRate}%</TableCell>
                     <TableCell className="text-right">
-                      <Badge variant="secondary" className="bg-orange-100 text-orange-600 border-none text-xs font-semibold">
+                      <Badge variant="secondary" className="bg-orange-600/15 text-orange-500 border-none text-xs font-semibold">
                         {user.aura.toLocaleString()}
                       </Badge>
                     </TableCell>
@@ -169,15 +169,15 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
 
       {/* Your Rank Sticky Footer */}
       {!isCurrentInTop10 && currentUserRank > 0 && (
-        <Card className="bg-white border-2 border-orange-300 sticky bottom-4">
+        <Card className="bg-stone-900 border-2 border-orange-300 sticky bottom-4">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">
+                <div className="size-8 rounded-full bg-orange-950/200 flex items-center justify-center text-xs font-bold text-white">
                   {mockCurrentUser.avatar.substring(0, 2)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-stone-900">
+                  <p className="text-sm font-semibold text-stone-100">
                     Your Rank: #{currentUserRank}
                   </p>
                   <p className="text-xs text-stone-500">
@@ -188,7 +188,7 @@ export default function LeaderboardSection({ onViewProfile }: LeaderboardSection
               <Button
                 variant="outline"
                 size="sm"
-                className="text-orange-600 border-orange-200 hover:bg-orange-50 text-xs"
+                className="text-orange-500 border-orange-700/50 hover:bg-orange-950/20 text-xs"
                 onClick={() => onViewProfile(mockCurrentUser.id)}
               >
                 View Profile
