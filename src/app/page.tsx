@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ParticleTextEffect } from '@/components/ui/particle-text-effect';
 import LoginPage from '@/components/ui/gaming-login';
 import AppSidebar from '@/components/app-sidebar';
@@ -19,7 +19,6 @@ import { GuideTip, WelcomeOnboarding } from '@/components/newbie-guide';
 import { PageTransition } from '@/components/ui/page-transition';
 import { CursorGlow } from '@/components/ui/cursor-glow';
 import { EmberField } from '@/components/ui/ember-field';
-import { mockCurrentUser } from '@/lib/mock-data';
 import {
   Home,
   Flame,
@@ -42,6 +41,32 @@ type Page =
 
 type AppView = 'login' | 'app';
 
+interface AppUser {
+  id: string;
+  username: string;
+  email: string;
+  avatar: string;
+  aura: number;
+  wins: number;
+  losses: number;
+  streak: number;
+  coins: number;
+  rank: string;
+}
+
+interface VerdictResult {
+  battle: {
+    id: string;
+    topic: string;
+    sideA: string;
+    sideB: string;
+    winner: { id: string; username: string; avatar: string } | null;
+  };
+  verdict: string;
+  auraReward: number;
+  coinReward: number;
+}
+
 const MOBILE_NAV_ITEMS: { page: Page; label: string; icon: React.ElementType }[] = [
   { page: 'home', label: 'Feed', icon: Home },
   { page: 'battles', label: 'Arenas', icon: Flame },
@@ -49,6 +74,19 @@ const MOBILE_NAV_ITEMS: { page: Page; label: string; icon: React.ElementType }[]
   { page: 'groups', label: 'Crews', icon: Users },
   { page: 'profile', label: 'Profile', icon: User },
 ];
+
+const DEFAULT_USER: AppUser = {
+  id: '',
+  username: 'Loading...',
+  email: '',
+  avatar: '',
+  aura: 0,
+  wins: 0,
+  losses: 0,
+  streak: 0,
+  coins: 0,
+  rank: 'New Blood',
+};
 
 export default function RoastArenaApp() {
   const [view, setView] = useState<AppView>('login');
@@ -59,11 +97,60 @@ export default function RoastArenaApp() {
   const [showAdGate, setShowAdGate] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [appUser, setAppUser] = useState<AppUser>(DEFAULT_USER);
+  const [verdictData, setVerdictData] = useState<VerdictResult | null>(null);
 
-  const handleLogin = useCallback(() => {
-    setView('app');
+  const fetchUser = useCallback(async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.user) {
+          setAppUser(data.user);
+          return true;
+        }
+      }
+    } catch { /* ignore */ }
+    return false;
+  }, []);
+
+  // Try to restore session on mount
+  useEffect(() => {
+    fetchUser().then(hasUser => {
+      if (hasUser) {
+        setView('app');
+      }
+    });
+  }, [fetchUser]);
+
+  const handleLogin = useCallback(async (data: { email: string; password: string }) => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (res.ok && result.user) {
+        setAppUser(result.user);
+        setView('app');
+        setCurrentPage('home');
+        setShowOnboarding(true);
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch { /* ignore */ }
+    setView('login');
     setCurrentPage('home');
-    setShowOnboarding(true);
+    setSelectedCategory(null);
+    setActiveRoastId(null);
+    setShowVerdict(false);
+    setShowAdGate(false);
+    setAppUser(DEFAULT_USER);
   }, []);
 
   const navigateTo = useCallback((page: Page) => {
@@ -73,15 +160,6 @@ export default function RoastArenaApp() {
     setShowVerdict(false);
     setShowAdGate(false);
     setMobileMenuOpen(false);
-  }, []);
-
-  const handleLogout = useCallback(() => {
-    setView('login');
-    setCurrentPage('home');
-    setSelectedCategory(null);
-    setActiveRoastId(null);
-    setShowVerdict(false);
-    setShowAdGate(false);
   }, []);
 
   const handleSelectRoast = useCallback((roastId: string) => {
@@ -119,11 +197,22 @@ export default function RoastArenaApp() {
     setShowVerdict(false);
     setActiveRoastId(null);
     setCurrentPage('home');
-  }, []);
+    setVerdictData(null);
+    fetchUser(); // refresh user data for updated aura/coins
+  }, [fetchUser]);
 
   const handleVerdictAppeal = useCallback(() => {
     setShowVerdict(false);
   }, []);
+
+  const handleJudged = useCallback((data: VerdictResult) => {
+    setVerdictData(data);
+    setShowAdGate(true);
+  }, []);
+
+  const handleBattleCreated = useCallback(() => {
+    fetchUser(); // refresh user data for updated aura
+  }, [fetchUser]);
 
   // ─── Login View ────────────────────────────────────────────
   if (view === 'login') {
@@ -145,17 +234,16 @@ export default function RoastArenaApp() {
 
   // ─── App View ──────────────────────────────────────────────
   const sidebarUser = {
-    username: mockCurrentUser.username,
-    aura: mockCurrentUser.aura,
-    avatar: mockCurrentUser.avatar,
-    rank: mockCurrentUser.rank,
-    streak: mockCurrentUser.streak,
-    coins: mockCurrentUser.coins,
+    username: appUser.username,
+    aura: appUser.aura,
+    avatar: appUser.avatar,
+    rank: appUser.rank,
+    streak: appUser.streak,
+    coins: appUser.coins,
   };
 
   return (
     <div className="flex min-h-screen bg-[#070708]">
-      {/* Global cursor glow */}
       <CursorGlow />
 
       {/* Desktop Sidebar */}
@@ -166,7 +254,6 @@ export default function RoastArenaApp() {
           onLogout={handleLogout}
           user={sidebarUser}
         />
-        {/* Subtle glow line between sidebar and content */}
         <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-pink-500/15 to-transparent" />
       </div>
 
@@ -190,7 +277,6 @@ export default function RoastArenaApp() {
 
       {/* Main Content */}
       <main className="relative flex-1 overflow-y-auto pb-20 md:pb-6">
-        {/* Ambient background effects */}
         <div className="absolute inset-0 pointer-events-none gradient-mesh opacity-60" />
         <div className="absolute inset-0 pointer-events-none noise-overlay" />
         <EmberField count={18} height="100vh" className="opacity-40" />
@@ -211,7 +297,7 @@ export default function RoastArenaApp() {
             </span>
           </div>
           <div className="size-7 rounded-full bg-gradient-to-br from-pink-600 to-violet-600 flex items-center justify-center text-[10px] font-bold text-white shadow-[0_0_12px_rgba(236,72,153,0.3)]">
-            {sidebarUser.username.substring(0, 2)}
+            {appUser.username.substring(0, 2).toUpperCase()}
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-px bar-gradient" />
         </div>
@@ -233,6 +319,7 @@ export default function RoastArenaApp() {
               selectedCategory={selectedCategory}
               onBackToCategories={handleBackToCategories}
               onSelectCategory={handleSelectCategory}
+              onBattleCreated={handleBattleCreated}
             />
           )}
 
@@ -240,10 +327,11 @@ export default function RoastArenaApp() {
             <BattleRoom
               battleId={activeRoastId}
               onLeave={handleLeaveRoast}
+              onJudged={handleJudged}
               currentUser={{
-                id: mockCurrentUser.id,
-                username: mockCurrentUser.username,
-                avatar: mockCurrentUser.avatar,
+                id: appUser.id,
+                username: appUser.username,
+                avatar: appUser.avatar,
               }}
             />
           )}
@@ -251,12 +339,14 @@ export default function RoastArenaApp() {
           {currentPage === 'leaderboard' && (
             <LeaderboardSection
               onViewProfile={(userId) => navigateTo('profile')}
+              currentUserId={appUser.id}
             />
           )}
 
           {currentPage === 'profile' && (
             <ProfileSection
-              userId={mockCurrentUser.id}
+              userId={appUser.id}
+              username={appUser.username}
               onNavigateToReplays={() => navigateTo('replays')}
               onNavigateToMarketplace={() => navigateTo('marketplace')}
             />
@@ -271,6 +361,8 @@ export default function RoastArenaApp() {
           {currentPage === 'marketplace' && (
             <AuraMarketplace
               onBack={() => navigateTo('profile')}
+              userCoins={appUser.coins}
+              onCoinsChange={fetchUser}
             />
           )}
 
@@ -298,6 +390,8 @@ export default function RoastArenaApp() {
           <VerdictScreen
             onContinue={handleVerdictContinue}
             onAppeal={handleVerdictAppeal}
+            verdictData={verdictData}
+            userStreak={appUser.streak}
           />
         )}
       </main>

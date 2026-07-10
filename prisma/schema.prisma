@@ -1,32 +1,103 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  name      String?
+  username  String   @unique
+  password  String
+  avatar    String   @default("")
+  aura      Int      @default(1000)
+  wins      Int      @default(0)
+  losses    Int      @default(0)
+  streak    Int      @default(0)
+  coins     Int      @default(500)
+  rank      String   @default("New Blood")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  createdBattles    Battle[]       @relation("CreatedBattles")
+  opponentBattles   Battle[]       @relation("OpponentBattles")
+  wonBattles        Battle[]       @relation("WonBattles")
+  battleMessages    BattleMessage[] @relation("BattleMessages")
+  crewMemberships   CrewMember[]   @relation("CrewMemberships")
+  ownedItems        UserAuraItem[] @relation("OwnedItems")
 }
 
-model Post {
+model Battle {
+  id          String   @id @default(cuid())
+  topic       String
+  category    String
+  sideA       String
+  sideB       String
+  status      String   @default("open")
+  creatorId   String
+  opponentId  String?
+  winnerId    String?
+  aiVerdict   String?  @db.Text
+  auraStake   Int      @default(50)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creator     User     @relation("CreatedBattles", fields: [creatorId], references: [id])
+  opponent    User?    @relation("OpponentBattles", fields: [opponentId], references: [id])
+  winner      User?    @relation("WonBattles", fields: [winnerId], references: [id])
+  messages    BattleMessage[]
+}
+
+model BattleMessage {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  battleId  String
+  userId    String
+  content   String
+  side      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  battle    Battle   @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  user      User     @relation("BattleMessages", fields: [userId], references: [id])
+}
+
+model Crew {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  icon        String   @default("🔥")
+  memberId    String
+  createdAt   DateTime @default(now())
+  members     CrewMember[]
+}
+
+model CrewMember {
+  id        String   @id @default(cuid())
+  crewId    String
+  userId    String
+  role      String   @default("member")
+  joinedAt  DateTime @default(now())
+  crew      Crew     @relation(fields: [crewId], references: [id], onDelete: Cascade)
+  user      User     @relation("CrewMemberships", fields: [userId], references: [id])
+}
+
+model AuraItem {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  rarity    String   @default("common")
+  price     Int
+  icon      String
+  createdAt DateTime @default(now())
+  owners    UserAuraItem[]
+}
+
+model UserAuraItem {
+  id        String   @id @default(cuid())
+  userId    String
+  itemId    String
+  equipped  Boolean  @default(false)
+  boughtAt  DateTime @default(now())
+  user      User     @relation("OwnedItems", fields: [userId], references: [id])
+  item      AuraItem @relation(fields: [itemId], references: [id])
 }

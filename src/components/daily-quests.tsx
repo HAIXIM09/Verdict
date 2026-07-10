@@ -6,20 +6,24 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { TiltCard } from '@/components/ui/tilt-card';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { mockQuests, type Quest as QuestType } from '@/lib/mock-data';
 import { GuideTip } from '@/components/newbie-guide';
 
 interface DailyQuestsProps {
   onBack: () => void;
 }
 
+const quests = [
+  { id: 'q-1', title: 'Win 1 Battle', description: 'Drop into an arena and come out on top', progress: 0, target: 1, reward: { coins: 50, aura: 100 }, completed: false },
+  { id: 'q-2', title: 'Send 5 Arguments', description: 'Let your voice be heard in battle chat', progress: 0, target: 5, reward: { coins: 75, aura: 150 }, completed: false },
+  { id: 'q-3', title: 'Join a Crew', description: 'Find your people and create or join a crew', progress: 0, target: 1, reward: { coins: 40, aura: 80 }, completed: false },
+];
+
 export default function DailyQuests({ onBack }: DailyQuestsProps) {
-  const totalCoins = mockQuests.reduce((sum, q) => sum + q.reward.coins, 0);
-  const totalAura = mockQuests.reduce((sum, q) => sum + q.reward.aura, 0);
+  const totalCoins = quests.reduce((sum, q) => sum + q.reward.coins, 0);
+  const totalAura = quests.reduce((sum, q) => sum + q.reward.aura, 0);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <ScrollReveal>
         <div className="flex items-center justify-between">
           <div>
@@ -44,37 +48,24 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
         </GuideTip>
       </ScrollReveal>
 
-      {/* Quest Cards */}
       <ScrollReveal delay={0.15}>
         <div className="stagger-1 space-y-3">
-          {mockQuests.map((quest: QuestType) => {
+          {quests.map((quest) => {
             const progressPercent = Math.round((quest.progress / quest.target) * 100);
-            const isComplete = quest.completed;
 
             return (
               <TiltCard key={quest.id} maxTilt={3} shine={false} glow={false}>
                 <div
-                  className={`rounded-xl border p-4 bg-zinc-900 ${
-                    isComplete ? 'border-l-4 border-l-pink-500' : 'border-l-4 border-l-zinc-700'
-                  } border-zinc-800 hover:shadow-lg hover:shadow-black/20 transition-shadow`}
+                  className={`rounded-xl border p-4 bg-zinc-900 border-l-4 border-l-zinc-700 border-zinc-800 hover:shadow-lg hover:shadow-black/20 transition-shadow`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <h4 className="text-sm font-semibold text-zinc-100">{quest.title}</h4>
-                        {isComplete && (
-                          <Badge className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30">
-                            <Check className="size-3" />
-                            Claimed
-                          </Badge>
-                        )}
-                        {!isComplete && !quest.claimed && (
-                          <span className="text-xs text-zinc-400 font-medium">In Progress</span>
-                        )}
+                        <span className="text-xs text-zinc-400 font-medium">In Progress</span>
                       </div>
                       <p className="text-sm text-zinc-500 mt-0.5">{quest.description}</p>
 
-                      {/* Progress */}
                       <div className="mt-3 flex items-center gap-3">
                         <Progress
                           value={progressPercent}
@@ -85,7 +76,6 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
                         </span>
                       </div>
 
-                      {/* Reward */}
                       <div className="mt-2 flex items-center gap-3 text-xs">
                         {quest.reward.coins > 0 && (
                           <span className="flex items-center gap-1 text-emerald-400 font-mono-stat">
@@ -108,7 +98,6 @@ export default function DailyQuests({ onBack }: DailyQuestsProps) {
         </div>
       </ScrollReveal>
 
-      {/* Total Rewards Preview */}
       <ScrollReveal delay={0.2}>
         <div className="premium-glow rounded-xl border border-zinc-800 bg-pink-950/20 p-4">
           <p className="text-sm font-semibold text-zinc-300">Today&apos;s potential</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Film,
   Trophy,
@@ -31,12 +31,7 @@ import {
 } from '@/components/ui/select';
 import { TiltCard } from '@/components/ui/tilt-card';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-
-function getInitials(name: string): string {
-  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-}
-
-import { mockBattles, mockCategories, type BattleCase } from '@/lib/mock-data';
+import { mockCategories } from '@/lib/mock-data';
 import { GuideTip } from '@/components/newbie-guide';
 
 interface BattlesSectionProps {
@@ -45,6 +40,22 @@ interface BattlesSectionProps {
   selectedCategory: string | null;
   onBackToCategories: () => void;
   onSelectCategory?: (category: string) => void;
+  onBattleCreated?: () => void;
+}
+
+interface Battle {
+  id: string;
+  topic: string;
+  category: string;
+  sideA: string;
+  sideB: string;
+  status: string;
+  auraStake: number;
+  createdAt: string;
+  creator: { id: string; username: string; avatar: string };
+  opponent: { id: string; username: string; avatar: string } | null;
+  winner: { id: string; username: string; avatar: string } | null;
+  _count: { messages: number };
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -59,43 +70,31 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Flame,
 };
 
-function difficultyBadgeStyle(d: string): string {
-  switch (d) {
-    case 'Bronze': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
-    case 'Silver': return 'text-zinc-500 border-zinc-700 bg-zinc-800';
-    case 'Gold': return 'text-pink-500 border-pink-400 bg-pink-950/30';
-    case 'Platinum': return 'text-violet-300 border-violet-500/30 bg-violet-950/30';
-    default: return 'text-zinc-500 border-zinc-700 bg-zinc-800';
-  }
-}
-
 function statusBadge(s: string) {
   switch (s) {
-    case 'live':
+    case 'active':
       return <Badge className="bg-pink-500/15 text-pink-500 border-pink-800/50 text-xs">LIVE</Badge>;
-    case 'waiting':
-      return <Badge className="bg-violet-500/15 text-violet-400 border-violet-500/20 text-xs">WAITING</Badge>;
-    case 'verdict':
-      return <Badge className="bg-cyan-500/15 text-cyan-400 border-cyan-700/50 text-xs">SCORING</Badge>;
-    case 'finished':
-      return <Badge className="bg-zinc-800 text-zinc-500 border-zinc-800 text-xs">FINISHED</Badge>;
+    case 'open':
+      return <Badge className="bg-violet-500/15 text-violet-400 border-violet-500/20 text-xs">OPEN</Badge>;
+    case 'judged':
+      return <Badge className="bg-zinc-800 text-zinc-500 border-zinc-800 text-xs">JUDGED</Badge>;
     default:
       return null;
   }
 }
 
 function actionButton(status: string, onClick: () => void) {
-  if (status === 'live') {
+  if (status === 'active') {
     return (
       <Button size="sm" className="bg-pink-600 hover:bg-pink-700 text-white text-xs h-8" onClick={onClick}>
         JOIN
       </Button>
     );
   }
-  if (status === 'waiting') {
+  if (status === 'open') {
     return (
       <Button size="sm" variant="outline" className="border-violet-500 text-violet-400 hover:bg-violet-500/15 text-xs h-8" onClick={onClick}>
-        SPECTATE
+        JOIN
       </Button>
     );
   }
@@ -106,7 +105,7 @@ function actionButton(status: string, onClick: () => void) {
   );
 }
 
-function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => void }) {
+function BattleCard({ battle, onSelect }: { battle: Battle; onSelect: () => void }) {
   return (
     <TiltCard maxTilt={4}>
       <Card className="bg-zinc-900 border border-zinc-800 hover:shadow-md transition-all cursor-pointer">
@@ -123,54 +122,41 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
 
           {/* Badges */}
           <div className="flex items-center gap-2 mb-4">
-            <Badge className={`text-xs ${difficultyBadgeStyle(battle.difficulty)}`}>
-              {battle.difficulty}
-            </Badge>
             <Badge variant="secondary" className="text-xs bg-cyan-500/10 text-cyan-400 border-none">
               {battle.category}
             </Badge>
           </div>
 
-          {/* Team Slots */}
+          {/* Creator / Opponent */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex flex-col items-center gap-1">
-              <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideA}</span>
-              <div className="flex gap-1">
-                {battle.teamA.map((player, i) => (
-                  <div
-                    key={`a-${i}`}
-                    title={player?.username}
-                    className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
-                      player
-                        ? 'bg-[#8B5CF6]/10 border-violet-500 text-violet-400'
-                        : 'bg-transparent border-zinc-700'
-                    }`}
-                  >
-                    {player ? getInitials(player.username) : null}
-                  </div>
-                ))}
+              <span className="text-xs text-zinc-500 font-medium mb-1">Side A</span>
+              <div
+                title={battle.creator.username}
+                className="size-8 rounded-full border-2 border-pink-500 bg-pink-500/10 flex items-center justify-center text-[8px] font-bold text-pink-400"
+              >
+                {battle.creator.avatar || battle.creator.username.slice(0, 2).toUpperCase()}
               </div>
+              <span className="text-[10px] text-zinc-500">{battle.creator.username}</span>
             </div>
 
             <span className="text-zinc-400 font-bold text-sm">VS</span>
 
             <div className="flex flex-col items-center gap-1">
-              <span className="text-xs text-zinc-500 font-medium mb-1">Team {battle.sideB}</span>
-              <div className="flex gap-1">
-                {battle.teamB.map((player, i) => (
-                  <div
-                    key={`b-${i}`}
-                    title={player?.username}
-                    className={`size-6 rounded-full border-2 flex items-center justify-center text-[8px] font-bold text-white ${
-                      player
-                        ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400'
-                        : 'bg-transparent border-zinc-700'
-                    }`}
-                  >
-                    {player ? getInitials(player.username) : null}
-                  </div>
-                ))}
-              </div>
+              <span className="text-xs text-zinc-500 font-medium mb-1">Side B</span>
+              {battle.opponent ? (
+                <div
+                  title={battle.opponent.username}
+                  className="size-8 rounded-full border-2 border-violet-500 bg-violet-500/10 flex items-center justify-center text-[8px] font-bold text-violet-400"
+                >
+                  {battle.opponent.avatar || battle.opponent.username.slice(0, 2).toUpperCase()}
+                </div>
+              ) : (
+                <div className="size-8 rounded-full border-2 border-dashed border-zinc-700 flex items-center justify-center">
+                  <Plus className="size-3.5 text-zinc-500" />
+                </div>
+              )}
+              <span className="text-[10px] text-zinc-500">{battle.opponent?.username || 'Waiting...'}</span>
             </div>
           </div>
 
@@ -178,11 +164,8 @@ function BattleCard({ battle, onSelect }: { battle: BattleCase; onSelect: () => 
           <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
             <span className="flex items-center gap-1">
               <Eye className="size-3.5" />
-              {battle.spectators.length} spectators
+              {battle._count.messages} messages
             </span>
-            {battle.viewers > 0 && (
-              <span>{battle.viewers} watching</span>
-            )}
             <span><Flame className="size-3 text-pink-400 inline" /> {battle.auraStake} Aura at stake</span>
           </div>
 
@@ -202,12 +185,62 @@ export default function BattlesSection({
   selectedCategory,
   onBackToCategories,
   onSelectCategory,
+  onBattleCreated,
 }: BattlesSectionProps) {
   const [filter, setFilter] = useState<string>('all');
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [submitCategory, setSubmitCategory] = useState('');
   const [submitSideA, setSubmitSideA] = useState('');
   const [submitSideB, setSubmitSideB] = useState('');
+  const [battles, setBattles] = useState<Battle[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const fetchBattles = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (selectedCategory) params.set('category', selectedCategory);
+      const res = await fetch(`/api/battles?${params.toString()}`);
+      const data = await res.json();
+      setBattles(data.battles || []);
+    } catch {
+      setBattles([]);
+    }
+    setLoading(false);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    fetchBattles();
+  }, [fetchBattles]);
+
+  const handleCreateBattle = async () => {
+    if (!submitSideA || !submitSideB || !submitCategory) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/battles/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: `${submitSideA} vs ${submitSideB}`,
+          category: selectedCategory || submitCategory,
+          sideA: submitSideA,
+          sideB: submitSideB,
+          auraStake: 50,
+        }),
+      });
+      if (res.ok) {
+        setSubmitSideA('');
+        setSubmitSideB('');
+        setShowSubmitForm(false);
+        fetchBattles();
+        onBattleCreated?.();
+      }
+    } catch {
+      // silently fail
+    }
+    setSubmitting(false);
+  };
 
   // Category Grid
   if (selectedCategory === null) {
@@ -226,7 +259,7 @@ export default function BattlesSection({
         </ScrollReveal>
 
         <GuideTip id="arena_categories" title="Start Here" variant="inline" className="mb-4">
-          Each category contains live and upcoming debates. <strong className="text-zinc-200">Bronze</strong> is easiest for beginners. <strong className="text-zinc-200">Platinum</strong> arenas have the highest Aura rewards — but only the sharpest debaters survive. Pick a category to see available arenas!
+          Each category contains live and upcoming debates. Pick a category to see available arenas!
         </GuideTip>
 
         <ScrollReveal>
@@ -245,9 +278,6 @@ export default function BattlesSection({
                       </div>
                       <div>
                         <h3 className="font-semibold text-zinc-100 text-sm">{cat.name}</h3>
-                        <Badge variant="secondary" className="mt-1.5 text-xs bg-zinc-800 text-zinc-400 border-none">
-                          {cat.battleCount} arenas
-                        </Badge>
                       </div>
                     </CardContent>
                   </Card>
@@ -272,7 +302,7 @@ export default function BattlesSection({
             <Card className="mt-4 bg-zinc-900 border border-zinc-800">
               <CardContent className="p-6 space-y-4">
                 <h3 className="font-semibold text-zinc-100">Start a Debate</h3>
-                <p className="text-zinc-500 text-sm">Create a new arena — if it gets traction, it goes live.</p>
+                <p className="text-zinc-500 text-sm">Create a new arena — stake 50 Aura to begin.</p>
 
                 <div className="space-y-3">
                   <div>
@@ -309,9 +339,9 @@ export default function BattlesSection({
                     />
                   </div>
 
-                  <Button className="btn-primary w-full">
+                  <Button className="btn-primary w-full" onClick={handleCreateBattle} disabled={submitting}>
                     <Send className="size-4" />
-                    Post It
+                    {submitting ? 'Posting...' : 'Post It'}
                   </Button>
                 </div>
               </CardContent>
@@ -323,15 +353,15 @@ export default function BattlesSection({
   }
 
   // Category Arenas View
-  const categoryBattles = mockBattles.filter(b => b.category === selectedCategory);
+  const categoryBattles = battles;
   const filteredBattles = filter === 'all'
     ? categoryBattles
     : categoryBattles.filter(b => b.status === filter);
 
   const filterTabs = [
     { key: 'all', label: 'All' },
-    { key: 'live', label: 'Live' },
-    { key: 'waiting', label: 'Waiting' },
+    { key: 'active', label: 'Live' },
+    { key: 'open', label: 'Open' },
   ];
 
   return (
@@ -348,9 +378,9 @@ export default function BattlesSection({
         </div>
       </ScrollReveal>
 
-        <GuideTip id="arena_battle_list" title="Choosing an Arena" variant="inline" className="mb-4">
-          <strong className="text-zinc-200">LIVE</strong> arenas are happening now — jump in! <strong className="text-zinc-200">WAITING</strong> arenas need players — great for your first debate. Use the filters above to find your preferred match type.
-        </GuideTip>
+      <GuideTip id="arena_battle_list" title="Choosing an Arena" variant="inline" className="mb-4">
+        <strong className="text-zinc-200">LIVE</strong> arenas are happening now — jump in! <strong className="text-zinc-200">OPEN</strong> arenas need an opponent — great for your first debate.
+      </GuideTip>
 
       {/* Filter Tabs */}
       <div className="flex gap-2 mb-6">
@@ -372,7 +402,11 @@ export default function BattlesSection({
       </div>
 
       {/* Arena Cards Grid */}
-      {filteredBattles.length === 0 ? (
+      {loading ? (
+        <div className="text-center py-16">
+          <div className="size-8 border-2 border-pink-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        </div>
+      ) : filteredBattles.length === 0 ? (
         <ScrollReveal delay={0.05}>
           <div className="text-center py-16">
             <div className="size-16 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-5">
@@ -418,7 +452,7 @@ export default function BattlesSection({
           <Card className="mt-4 bg-zinc-900 border border-zinc-800">
             <CardContent className="p-6 space-y-4">
               <h3 className="font-semibold text-zinc-100">Start a Debate</h3>
-              <p className="text-zinc-500 text-sm">Create a new arena — if it gets traction, it goes live.</p>
+              <p className="text-zinc-500 text-sm">Create a new arena — stake 50 Aura to begin.</p>
 
               <div className="space-y-3">
                 <div>
@@ -441,9 +475,9 @@ export default function BattlesSection({
                   />
                 </div>
 
-                <Button className="btn-primary w-full">
+                <Button className="btn-primary w-full" onClick={handleCreateBattle} disabled={submitting}>
                   <Send className="size-4" />
-                  Post It
+                  {submitting ? 'Posting...' : 'Post It'}
                 </Button>
               </div>
             </CardContent>

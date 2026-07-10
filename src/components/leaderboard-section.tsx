@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import { Trophy, Medal } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -14,15 +15,23 @@ import {
 } from '@/components/ui/table';
 import { TiltCard } from '@/components/ui/tilt-card';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { mockUsers, mockCurrentUser } from '@/lib/mock-data';
 import { GuideTip } from '@/components/newbie-guide';
+
+interface LeaderboardUser {
+  id: string;
+  username: string;
+  avatar: string;
+  aura: number;
+  wins: number;
+  losses: number;
+  streak: number;
+  rank: string;
+}
 
 interface RankingsSectionProps {
   onViewProfile: (userId: string) => void;
+  currentUserId?: string;
 }
-
-const sortedUsers = [...mockUsers].sort((a, b) => b.aura - a.aura);
-const top3 = sortedUsers.slice(0, 3);
 
 const medalConfig = [
   {
@@ -60,9 +69,37 @@ function getInitials(name: string): string {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
-export default function RankingsSection({ onViewProfile }: RankingsSectionProps) {
-  const currentUserRank = sortedUsers.findIndex(u => u.id === mockCurrentUser.id) + 1;
+export default function RankingsSection({ onViewProfile, currentUserId }: RankingsSectionProps) {
+  const [users, setUsers] = useState<LeaderboardUser[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchLeaderboard = useCallback(async () => {
+    try {
+      const res = await fetch('/api/leaderboard');
+      const data = await res.json();
+      setUsers(data.users || []);
+    } catch {
+      setUsers([]);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchLeaderboard();
+  }, [fetchLeaderboard]);
+
+  const sortedUsers = users;
+  const top3 = sortedUsers.slice(0, 3);
+  const currentUserRank = currentUserId ? sortedUsers.findIndex(u => u.id === currentUserId) + 1 : 0;
   const isCurrentInTop10 = currentUserRank <= 10 && currentUserRank > 0;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="size-8 border-2 border-pink-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -80,53 +117,55 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
       </ScrollReveal>
 
       <GuideTip id="leaderboard_explain" title="Aura = Your Score" variant="inline">
-        The leaderboard ranks everyone by total <strong className="text-zinc-200">Aura</strong> — points earned from winning debates. The more you win, the higher you climb. Top 3 get special badges!
+        The leaderboard ranks everyone by total <strong className="text-zinc-200">Aura</strong> — points earned from winning debates. Top 3 get special badges!
       </GuideTip>
 
       {/* Top 3 Cards */}
-      <ScrollReveal delay={0.1}>
-        <div className="stagger-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {top3.map((user, i) => {
-            const config = medalConfig[i];
-            return (
-              <TiltCard key={user.id} maxTilt={6} glowColor={config.glowColor}>
-                <Card
-                  className={`card-premium border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
-                >
-                  <CardContent className="p-0 flex flex-col items-center text-center gap-3">
-                    <div className="flex items-center gap-2">
-                      {config.medalIcon}
-                      <Badge className={`text-xs ${config.badgeClass}`}>
-                        {config.badge}
+      {top3.length > 0 && (
+        <ScrollReveal delay={0.1}>
+          <div className="stagger-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {top3.map((user, i) => {
+              const config = medalConfig[i];
+              return (
+                <TiltCard key={user.id} maxTilt={6} glowColor={config.glowColor}>
+                  <Card
+                    className={`card-premium border-2 ${config.borderClass} ${config.sizeClass} ${i === 0 ? 'sm:scale-105' : ''}`}
+                  >
+                    <CardContent className="p-0 flex flex-col items-center text-center gap-3">
+                      <div className="flex items-center gap-2">
+                        {config.medalIcon}
+                        <Badge className={`text-xs ${config.badgeClass}`}>
+                          {config.badge}
+                        </Badge>
+                      </div>
+
+                      <div
+                        className="size-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
+                        style={{ backgroundColor: avatarBg(i) }}
+                      >
+                        {getInitials(user.username)}
+                      </div>
+
+                      <div>
+                        <h3 className="font-bold text-zinc-100 text-sm">{user.username}</h3>
+                        <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
+                      </div>
+
+                      <Badge className="bg-pink-600/15 text-pink-400 border-none text-xs">
+                        <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
                       </Badge>
-                    </div>
 
-                    <div
-                      className="size-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
-                      style={{ backgroundColor: avatarBg(i) }}
-                    >
-                      {getInitials(user.username)}
-                    </div>
-
-                    <div>
-                      <h3 className="font-bold text-zinc-100 text-sm">{user.username}</h3>
-                      <p className="text-zinc-400 text-xs mt-0.5">{user.rank}</p>
-                    </div>
-
-                    <Badge className="bg-pink-600/15 text-pink-400 border-none text-xs">
-                      <span className="font-mono-stat">{user.aura.toLocaleString()}</span> Aura
-                    </Badge>
-
-                    <p className="text-xs text-zinc-500 font-mono-stat">
-                      {user.wins}W · {user.winRate}% WR
-                    </p>
-                  </CardContent>
-                </Card>
-              </TiltCard>
-            );
-          })}
-        </div>
-      </ScrollReveal>
+                      <p className="text-xs text-zinc-500 font-mono-stat">
+                        {user.wins}W · {user.losses}L
+                      </p>
+                    </CardContent>
+                  </Card>
+                </TiltCard>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+      )}
 
       {/* Full Rankings Table */}
       <ScrollReveal delay={0.2}>
@@ -138,14 +177,16 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                   <TableHead className="w-12 text-zinc-500 text-xs font-medium">#</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium">Debater</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium text-right">Wins</TableHead>
-                  <TableHead className="text-zinc-500 text-xs font-medium text-right">Win Rate</TableHead>
+                  <TableHead className="text-zinc-500 text-xs font-medium text-right">Losses</TableHead>
                   <TableHead className="text-zinc-500 text-xs font-medium text-right">Aura</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {sortedUsers.map((user, index) => {
                   const rank = index + 1;
-                  const isUser = user.id === mockCurrentUser.id;
+                  const isUser = user.id === currentUserId;
+                  const totalGames = user.wins + user.losses;
+                  const winRate = totalGames > 0 ? Math.round((user.wins / totalGames) * 100) : 0;
                   return (
                     <TableRow
                       key={user.id}
@@ -161,7 +202,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                             className="size-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
                             style={{ backgroundColor: avatarBg(index) }}
                           >
-                            {getInitials(user.username)}
+                            {user.avatar || getInitials(user.username)}
                           </div>
                           <div className="min-w-0">
                             <p className={`text-sm font-medium truncate ${isUser ? 'text-pink-500' : 'text-zinc-100'}`}>
@@ -173,7 +214,7 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
                         </div>
                       </TableCell>
                       <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.wins}</TableCell>
-                      <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.winRate}%</TableCell>
+                      <TableCell className="text-right text-sm font-mono-stat text-zinc-300">{user.losses}</TableCell>
                       <TableCell className="text-right">
                         <Badge variant="secondary" className="bg-pink-600/15 text-pink-400 border-none text-xs font-semibold font-mono-stat">
                           {user.aura.toLocaleString()}
@@ -188,35 +229,12 @@ export default function RankingsSection({ onViewProfile }: RankingsSectionProps)
         </Card>
       </ScrollReveal>
 
-      {/* Your Rank Sticky Footer */}
-      {!isCurrentInTop10 && currentUserRank > 0 && (
-        <Card className="gradient-border bg-zinc-900 border-2 border-pink-400 sticky bottom-4">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-pink-950/20 flex items-center justify-center text-xs font-bold text-white">
-                  {getInitials(mockCurrentUser.username)}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-zinc-100">
-                    Your Position: <span className="font-mono-stat">#{currentUserRank}</span>
-                  </p>
-                  <p className="text-xs text-zinc-500 font-mono-stat">
-                    {mockCurrentUser.aura.toLocaleString()} Aura · {mockCurrentUser.winRate}% WR
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-pink-400 border-pink-700/50 hover:bg-pink-950/20 text-xs"
-                onClick={() => onViewProfile(mockCurrentUser.id)}
-              >
-                View Profile
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Empty state */}
+      {sortedUsers.length === 0 && (
+        <div className="text-center py-12">
+          <Trophy className="size-10 text-zinc-500 mx-auto mb-3" />
+          <p className="text-zinc-500 text-sm">No debaters on the leaderboard yet. Be the first!</p>
+        </div>
       )}
     </div>
   );

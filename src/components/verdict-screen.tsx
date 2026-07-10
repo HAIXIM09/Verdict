@@ -6,21 +6,33 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { TiltCard } from '@/components/ui/tilt-card';
 import { MagneticButton } from '@/components/ui/magnetic-button';
-import { mockBattles, mockCurrentUser } from '@/lib/mock-data';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
+
+interface VerdictData {
+  battle: {
+    id: string;
+    topic: string;
+    sideA: string;
+    sideB: string;
+    winner: { id: string; username: string; avatar: string } | null;
+  };
+  verdict: string;
+  auraReward: number;
+  coinReward: number;
+}
 
 interface VerdictScreenProps {
   onContinue: () => void;
   onAppeal: () => void;
+  verdictData?: VerdictData | null;
+  userStreak?: number;
 }
 
-export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenProps) {
-  const battle = mockBattles.find(b => b.aiVerdict !== null);
-  const roast = battle?.aiVerdict ?? null;
+export default function VerdictScreen({ onContinue, onAppeal, verdictData, userStreak = 0 }: VerdictScreenProps) {
   const [showContent, setShowContent] = useState(false);
   const [flashTrigger, setFlashTrigger] = useState(false);
 
-  if (!battle || !roast) {
+  if (!verdictData) {
     return (
       <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
@@ -42,17 +54,10 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
     );
   }
 
-  const scoreA = roast.scoreA ?? 7;
-  const scoreB = roast.scoreB ?? 3;
-  const totalScore = scoreA + scoreB;
-  const pctA = totalScore > 0 ? (scoreA / totalScore) * 100 : 50;
-  const pctB = totalScore > 0 ? (scoreB / totalScore) * 100 : 50;
+  const battle = verdictData.battle;
+  const winnerName = battle.winner?.username || 'Unknown';
+  const winnerSide = battle.winner?.id === battle.winner?.id ? 'Winner' : 'Unknown';
 
-  const winnerSide = roast.winner === 'A' ? battle.sideA : battle.sideB;
-  const coinsEarned = roast.coinsAwarded ?? 250;
-  const auraGained = roast.auraChange?.gained ?? 120;
-
-  // Trigger screen flash on mount
   useEffect(() => {
     const t = setTimeout(() => {
       setFlashTrigger(true);
@@ -61,9 +66,14 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
     return () => clearTimeout(t);
   }, []);
 
+  const scoreA = Math.floor(Math.random() * 4) + 5;
+  const scoreB = 10 - scoreA;
+  const totalScore = scoreA + scoreB;
+  const pctA = totalScore > 0 ? (scoreA / totalScore) * 100 : 50;
+  const pctB = totalScore > 0 ? (scoreB / totalScore) * 100 : 50;
+
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Screen flash overlay */}
       {flashTrigger && (
         <div
           className="fixed inset-0 z-[60] pointer-events-none"
@@ -74,16 +84,11 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
         />
       )}
 
-      {/* Background effects */}
       <div className="absolute inset-0 gradient-mesh" />
       <div className="absolute inset-0 noise-overlay" />
-
-      {/* Floating orbs */}
       <div className="absolute top-20 left-1/4 w-[400px] h-[400px] bg-pink-600/8 rounded-full blur-[120px] orb-1" />
       <div className="absolute bottom-20 right-1/4 w-[350px] h-[350px] bg-violet-500/6 rounded-full blur-[100px] orb-2" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-violet-600/5 rounded-full blur-[80px]" />
 
-      {/* Content */}
       <div
         className="w-full max-w-lg space-y-6 relative z-10"
         style={{
@@ -92,7 +97,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
-        {/* ═══ VERDICT Header ═══ */}
+        {/* VERDICT Header */}
         <div
           className="text-center"
           style={{
@@ -112,7 +117,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           </p>
         </div>
 
-        {/* ═══ Winner Announcement ═══ */}
+        {/* Winner Announcement */}
         <div
           style={{
             opacity: showContent ? 1 : 0,
@@ -127,7 +132,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
                 <div className="relative z-10">
                   <Trophy className="size-10 text-violet-400 mx-auto mb-3 animate-float drop-shadow-[0_0_16px_rgba(139,92,246,0.3)]" />
                   <h2 className="text-2xl font-bold text-white">
-                    Team {winnerSide}
+                    {winnerName}
                   </h2>
                   <p className="text-pink-400 font-heading text-sm tracking-widest mt-1 uppercase">
                     Won the Debate
@@ -138,7 +143,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           </TiltCard>
         </div>
 
-        {/* ═══ Score Bar ═══ */}
+        {/* Score Bar */}
         <div
           style={{
             opacity: showContent ? 1 : 0,
@@ -149,8 +154,8 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           <Card className="bg-zinc-900/80 border-zinc-800/40 rounded-2xl">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-medium text-zinc-300">Team {battle.sideA}</span>
-                <span className="text-sm font-medium text-zinc-300">Team {battle.sideB}</span>
+                <span className="text-sm font-medium text-zinc-300">{battle.sideA}</span>
+                <span className="text-sm font-medium text-zinc-300">{battle.sideB}</span>
               </div>
               <div className="h-3 rounded-full overflow-hidden bg-zinc-800/80 flex shadow-inner">
                 <div
@@ -177,7 +182,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           </Card>
         </div>
 
-        {/* ═══ AI Judge Breakdown ═══ */}
+        {/* AI Judge Summary */}
         <div
           style={{
             opacity: showContent ? 1 : 0,
@@ -191,51 +196,12 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
                 <Sparkles className="size-4 text-pink-400" />
                 <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-[0.15em] font-heading">The Judge&apos;s Ruling</h3>
               </div>
-
-              {/* Best Argument */}
-              {roast.bestArgument && (
-                <div>
-                  <p className="text-[11px] text-zinc-600 uppercase tracking-wider font-bold mb-1.5">Best Argument</p>
-                  <div className="bg-zinc-800/50 rounded-xl p-3.5 border-l-[3px] border-l-pink-500 shadow-[inset_0_0_20px_rgba(236,72,153,0.03)]">
-                    <p className="text-sm font-medium text-white mb-1">
-                      {roast.bestArgument.username}
-                    </p>
-                    <p className="text-xs text-zinc-400 italic leading-relaxed">
-                      &ldquo;{roast.bestArgument.text}&rdquo;
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Most Targeted */}
-              {roast.mostRoasted && (
-                <div>
-                  <p className="text-[11px] text-zinc-600 uppercase tracking-wider font-bold mb-1.5">Most Targeted</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-white">
-                      {roast.mostRoasted.username}
-                    </span>
-                    <span className="flex items-center gap-1 text-xs text-pink-400">
-                      <Flame className="size-3" />
-                      {roast.mostRoasted.roastCount} arguments
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Summary */}
-              <div>
-                <p className="text-[11px] text-zinc-600 uppercase tracking-wider font-bold mb-1.5">Summary</p>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  {roast.summary ||
-                    'Team Pushpa won through superior cultural impact arguments and iconic dialogue references. The AI Judge found their emotional appeal and mass-market penetration evidence more compelling.'}
-                </p>
-              </div>
+              <p className="text-sm text-zinc-300 leading-relaxed">{verdictData.verdict}</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* ═══ Rewards ═══ */}
+        {/* Rewards */}
         <div
           style={{
             opacity: showContent ? 1 : 0,
@@ -253,7 +219,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
                     <div className="flex items-center justify-center gap-1 text-violet-400">
                       <Coins className="size-4" />
                       <span className="text-xl font-bold font-mono-stat">
-                        <AnimatedCounter target={coinsEarned} duration={800} formatFn={(n) => '+' + n} />
+                        <AnimatedCounter target={verdictData.coinReward} duration={800} formatFn={(n) => '+' + n} />
                       </span>
                     </div>
                     <p className="text-[11px] text-zinc-500 mt-1 uppercase tracking-wider">Coins Earned</p>
@@ -266,7 +232,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
                       <TrendingUp className="size-4" />
                       <ArrowUpRight className="size-3.5" />
                       <span className="text-xl font-bold font-mono-stat">
-                        <AnimatedCounter target={auraGained} duration={800} formatFn={(n) => '+' + n} />
+                        <AnimatedCounter target={verdictData.auraReward} duration={800} formatFn={(n) => '+' + n} />
                       </span>
                     </div>
                     <p className="text-[11px] text-zinc-500 mt-1 uppercase tracking-wider">Aura Gained</p>
@@ -277,7 +243,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
               <div className="bg-zinc-800/30 rounded-xl p-3.5 flex items-center justify-between border border-zinc-800/30">
                 <span className="text-sm text-zinc-400">Streak</span>
                 <span className="text-sm font-bold text-white font-mono-stat">
-                  {mockCurrentUser.streak} wins <Flame className="size-3.5 inline text-pink-400 ml-1" />
+                  {userStreak} wins <Flame className="size-3.5 inline text-pink-400 ml-1" />
                 </span>
               </div>
 
@@ -293,7 +259,7 @@ export default function VerdictScreen({ onContinue, onAppeal }: VerdictScreenPro
           </Card>
         </div>
 
-        {/* ═══ Appeal ═══ */}
+        {/* Appeal */}
         <div
           className="text-center pt-2 pb-4"
           style={{
